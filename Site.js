@@ -1,4 +1,5 @@
- // Get the modal
+// This file is only used to test on layout.html not in any of the php
+// Get the modal
  /*var modal = document.getElementById("grey-cover");
         
  
