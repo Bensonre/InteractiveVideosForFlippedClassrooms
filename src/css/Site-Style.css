@@ -1,0 +1,285 @@
+body{
+    font-size: 2vh;
+    width: 100vw;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    height: 100vh;
+  }
+  .NavBar{
+   font-size: 5vh;
+   background-color: cornflowerblue;
+   color:grey;
+   width: 100vw;
+   height: 8vh;
+   padding: 0.3em 0;
+  }
+  .NavBar ul {
+      margin: 0;
+  }
+  .navItem{
+      display: inline-block;
+  }
+  .navItem:hover{
+      border-bottom: 0.2em solid palegoldenrod;
+      border-end-start-radius: 20%;
+      color: palegoldenrod;
+  }
+  #grey-cover{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  .modal{
+      background: white;
+      box-shadow: 10px 10px 10px black;
+      border-radius: 2em;
+      padding: 2em;
+      width: 30vw;
+      margin: 15% auto;
+  }
+ 
+  .modal > .label{
+    font-size: 1.5em;
+    margin:1em;
+    text-align: center;
+  }
+
+  .Selected{
+      color: white;
+  }
+  .title{
+      Font-size: 2em;
+      margin: 0;
+  }
+  .PushLeft5{
+      margin-left: 5vw;
+  }
+  .section-title{
+      font-size: 2.5em;
+      margin: 0.5em 0;
+  }
+  .label{
+      font-weight: bold;
+      margin: 0.5em 0 0.2em 0;
+  }
+  
+  .inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+  }
+  
+  .fileLable:hover {
+      cursor: pointer;
+  }
+
+  .fileLable:hover .dropdown-triangle{
+      border-top-color: goldenrod;
+  }
+
+  .input-mimic, input, select{
+      border: 0;
+      background: lightgrey;
+      width: 90%;
+      border-radius: 0.2em;
+      padding: 0.5em;
+  }
+  textarea{
+    border: 0;
+    background: lightgrey;
+    width: 90%;
+    border-radius: 0.2em;
+    padding: 0.2em;
+    min-height: 5em;
+  }
+  input:focus, .input-mimic:focus, textarea:focus, select:focus{
+      background-color:white;
+      border: 1px solid darkgray;
+  }
+  .grow-2{
+      flex-grow: 2;
+  }
+  .grow-1{
+      flex-grow: 1;
+  }
+  .flex-col{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  .PushLeft1{
+      margin-left: 1em;
+  }
+  .flex-container{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin: auto;
+      height: 100%;
+  }
+  .container{
+      height: 70%;
+  }
+  .flex-item{
+  }
+
+  .button-positive{
+        font-size: 1.5em;
+        margin-left: 20%;
+        color: white;
+        border: none;
+        background: cornflowerblue;
+        border-radius: 1em;
+        width: fit-content;
+        box-shadow: 3px 3px 5px rgb(20,20,20, .75);
+  }
+
+  .button-negative{
+    font-size: 1.5em;
+    margin-left: 20%;
+    color: white;
+    border: none;
+    background: palevioletred;
+    border-radius: 1em;
+    box-shadow: 3px 3px 5px rgb(20,20,20, .75);
+  }
+
+  .submit{
+      margin-top: 2em;
+      font-size: 1.5em;
+      margin-left: 80vw;
+      color: white;
+      border: none;
+      background: cornflowerblue;
+      border-radius: 1em;
+      box-shadow: 3px 3px 5px rgb(20,20,20, .75);
+  }
+  
+  button:hover{
+      box-shadow: inset 3px 3px 2px rgb(20,20,20, 0.5);
+  }
+
+  /* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* Hide Dropdowns by Default */
+nav ul ul {
+	display: none;
+	position: absolute; 
+    top: 15vh; /* the height of the main nav */
+    left:5vw;
+    color: white;
+    background-color: cornflowerblue;
+}
+
+a {
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+li{
+    display: block;
+}
+video{
+    width:80vw;
+    margin:auto;
+    display: block;
+    z-index: 1;
+}
+.small-video{
+  width: 30vw;
+}
+.video-bar{
+    width:76vw;
+    margin:auto;
+    display: block;
+}
+#Question-Modal{
+    display: none;
+    margin-top:-15px;
+    z-index: 5;
+}
+
+.up-triangle{
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 30px solid rgba(202, 202, 202,75);
+  margin-left: 0.2em;
+  position: relative;
+}
+
+.dropdown-triangle{
+  width: 0; 
+  height: 0; 
+  border-left: 0.5em solid transparent;
+  border-right: 0.5em solid transparent;
+  border-top: 1em solid black;
+  position: relative;
+  display: inline-block;
+  margin:0.5em;
+  margin-bottom: 0;
+}
+
+.question-container{
+  color: black;
+  background:rgb(202, 202, 202);
+  border-radius: 0.2em;
+  padding: 1em;
+}
+	
+/* Display Dropdowns on Hover */
+nav ul li a:focus + ul {
+    display:inherit;
+    z-index: 2;
+}
+nav ul li a + ul li:hover {
+    display:inherit;
+    background-color: black;
+}
+
+
+
+	
+/* Fisrt Tier Dropdown */
+nav ul ul li {
+	float:none;
+	display:list-item;
+	position: relative;
+}
+
+/* Second, Third and more Tiers	*/
+nav ul ul ul li {
+	position: relative;
+	top:-60px; 
+	left:170px;
+}
+
+.radio{
+    width: auto;
+    margin: 0;
+}
