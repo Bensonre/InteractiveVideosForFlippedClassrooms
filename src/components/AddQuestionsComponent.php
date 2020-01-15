@@ -31,4 +31,4 @@
         </div>
     </div><!-- >End Flex item <!-->
 </div><!-- >End Flex Container <!-->
-<script src="UpdateVideoTime.js"></script>
+<script src="../src/js/UpdateVideoTime.js"></script>

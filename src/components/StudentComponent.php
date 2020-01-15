@@ -21,4 +21,4 @@
                        </div> 
                     </div>
                 </div>
-    <script src="DisplayQuestions.js"></script>
+    <script src="../src/js/DisplayQuestions.js"></script>
