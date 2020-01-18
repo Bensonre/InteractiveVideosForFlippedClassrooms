@@ -22,15 +22,13 @@
     <div class="label">
         Selected Video
     </div>
-		<video-js
-
-		id="CreatePackage-video"
 		
-		controls 
-		
-		data-setup="{}">
+    <video-js
+    id="CreatePackage-video"
+    controls 
+    data-setup="{}"
+    >
+      <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+    </video-js>
 
-				<source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
-
-		</video-js>
 </div>
