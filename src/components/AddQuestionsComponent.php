@@ -21,8 +21,20 @@
         <div class="label">
             Selected Package <span id="selectedPkge"></span>
         </div>
-        <video class="PushLeft1 small-video" id="videoPlayer" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4" onclick="this.play()" controls>
-            </video>
+				
+        <!--<video class="PushLeft1 small-video" id="videoPlayer" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4" onclick="this.play()" controls>
+            </video> -->
+				<video-js
+
+				id="AddQuestions-video"
+				
+				controls 
+				
+				data-setup="{}">
+
+						<source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+
+				</video-js>
         <br />
         <div class="label">
             Question at Time Stamp
@@ -31,4 +43,4 @@
         </div>
     </div><!-- >End Flex item <!-->
 </div><!-- >End Flex Container <!-->
-<script src="../src/js/UpdateVideoTime.js"></script>
+<script src="../js/UpdateVideoTime.js"></script>

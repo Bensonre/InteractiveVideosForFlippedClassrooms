@@ -1,8 +1,17 @@
 <div class="section-title">
             <div ID="Package_Title">This is a Video</div>
         </div><!-- >End End section<!-->
-            <video id="videoPlayer" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4" onclick="this.play()" controls>
-            </video>
+						<video-js
+
+						id="Student-video"
+						
+						controls 
+						
+						data-setup="{}">
+
+								<source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+
+						</video-js>
             <div class="video-bar">
                 <div id="Question-Modal">
                     <div class="up-triangle"></div>
@@ -21,4 +30,4 @@
                        </div> 
                     </div>
                 </div>
-    <script src="../src/js/DisplayQuestions.js"></script>
+    <script src="../js/DisplayQuestions.js"></script>

@@ -40,4 +40,4 @@
             <button class="button-negative">No</button>
         </div>
     </div>
-    <script src="../src/js/Modal.js"></script>
+    <script src="../js/Modal.js"></script>
