@@ -8,19 +8,25 @@ $currentpage = "Instructor";
     <meta charset="UTF-8">
     <title>Flipped Classroom: Student</title>
     <link rel="stylesheet" href="../css/Site-Style.css">
-		<link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
+	<link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
 </head>
 
 <body>
 <?php
    include "../includes/header.php";
    
-   #include 'connectvars.php';	
-   
-   #$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-   #if (!$conn) {
-   #        die('Could not connect: ' . mysql_error());
-   #}
+   //include 'connectvars.php';
+   $dbhost = 'oniddb.cws.oregonstate.edu';
+   $dbname = 'bensonre-db';
+   $dbuser = 'bensonre-db';
+   $dbpass = 'AM8sgjoZzOQxVAeS';
+   $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+   if ($mysqli->connect_errno) {
+       echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+   }
+   //echo 'Successfully connected to database!';
+   //$mysqli->close();
+
 ?>
     <div class="containter PushLeft5">
             <?php include "../components/AddQuestionsComponent.php"; ?>
