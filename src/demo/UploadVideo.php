@@ -7,12 +7,12 @@ $currentpage = "Instructor";
 <head>
     <meta charset="UTF-8">
     <title>Flipped Classroom: Student</title>
-    <link rel="stylesheet" href="../src/css/Site-Style.css">
+    <link rel="stylesheet" href="../css/Site-Style.css">
 </head>
 
 <body>
 <?php
-   include "../src/includes/header.php";
+   include "../includes/header.php";
    
    #include 'connectvars.php';	
    
@@ -22,7 +22,7 @@ $currentpage = "Instructor";
    #}
 ?>
     <div class="containter PushLeft5">
-            <?php include "../src/components/UploadVideoComponent.php"; ?>
+            <?php include "../components/UploadVideoComponent.php"; ?>
     </div>
     </body>
 </html>
