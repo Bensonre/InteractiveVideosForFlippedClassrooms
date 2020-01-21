@@ -15,12 +15,7 @@ $currentpage = "Instructor";
 <?php
    include "../includes/header.php";
    
-   #include 'connectvars.php';	
-   
-   #$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-   #if (!$conn) {
-   #        die('Could not connect: ' . mysql_error());
-   #}
+   include 'connectvars.php';	
 ?>
     <div class="containter PushLeft5">
             <?php include "../components/CreateQuestionComponent.php"; ?>

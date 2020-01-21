@@ -15,7 +15,7 @@ $currentpage = "Instructor";
 <?php
    include "../includes/header.php";
    
-   //include 'connectvars.php';
+   include 'connectvars.php';
    $dbhost = 'oniddb.cws.oregonstate.edu';
    $dbname = 'bensonre-db';
    $dbuser = 'bensonre-db';
@@ -24,6 +24,9 @@ $currentpage = "Instructor";
    if ($mysqli->connect_errno) {
        echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
    }
+
+   $query = "SELECT Cid FROM Customer WHERE Email = '$username'";
+   	$result = mysqli_query($mysqli, $query);
    //echo 'Successfully connected to database!';
    //$mysqli->close();
 
