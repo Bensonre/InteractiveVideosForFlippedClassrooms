@@ -2,7 +2,7 @@
 
 class Database {
     
-    private $dbhost = 'oniddb.cws.oregonstate.edu';
+    private $dbhost = 'secure.oregonstate.edu/oniddb';
     private $dbname = 'bensonre-db';
     private $dbuser = 'bensonre-db';
     private $dbpass = 'AM8sgjoZzOQxVAeS';
@@ -12,7 +12,8 @@ class Database {
         $this->conn = null;
 
         try {
-            $conn = new PDO('mysql:host=' . $this->dbhost . ';dbname=' . $this->dbname, $this->dbuser, $this->dbpass);
+            $dsn = "mysql:dbname=$this->dbname;host=$this->dbhost";
+            $conn = new PDO($dsn, $this->dbuser, $this->dbpass);
             $this->conn-setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $e) {
             echo $e->getMessage();

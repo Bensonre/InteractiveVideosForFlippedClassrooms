@@ -19,12 +19,12 @@ class VideoController {
 
     public function create()
     {
-        $query = 'INSERT INTO 
-                    ' . $this->table . ' 
+        $query = "INSERT INTO 
+                    $this->table
                   SET
                     instructorID = :instructorId
                     FilePath = :filepath
-                    Title = :title';
+                    Title = :title";
 
         $stmt = $this->conn->prepare($query);
 
