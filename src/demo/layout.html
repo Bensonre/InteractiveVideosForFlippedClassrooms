@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Flipped Classroom</title>
+    <link rel="stylesheet" href="../css/Site-Style.css">
+</head>
+
+<body>
+    <header>
+        <div class=" title PushLeft5">Interactive Video for Flipped Classroom</div>
+        <nav class="NavBar">
+            <ul>
+
+                <li class="navItem PushLeft5 Selected"><a href="#">Instructor</a>
+                    <ul>
+                        <li><a href="#">Upload Video</a></li>
+                        <li><a href="./CreateQuestions.php">Create Questions</a></li>
+                        <li><a href="#">Create Package</a></li>
+                        <li><a href="#">Add Questions to Package</a></li>
+                        <li><a href="google.com">Update Question</a></li>
+                    </ul>
+                    </span>
+                <li class="navItem PushLeft5"><a href="#">Student</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="containter PushLeft5">
+        <div class="section-title">
+            <div ID="Package_Title">This is a Video</div>
+        </div><!-- >End End section<!-->
+            <video id="videoPlayer" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4" onclick="this.play()" controls>
+            </video>
+            <div class="video-bar">
+                <div id="Question-Modal">
+                    <div class="up-triangle"></div>
+                    <div class="question-container">container
+                        <div>
+                            What is the answer
+                        </div>
+                        <div>
+                           <input type="radio" class="radio" name="answer"><span>A</span><br/>
+                           <input type="radio" class="radio" name="answer"><span>B</span><br/>
+                           <input type="radio" class="radio" name="answer"><span>C</span><br/>
+                           <input type="radio" class="radio" name="answer"><span>D</span><br/>
+                        </div>
+                       <div>
+                            <button id="question-submit" type=button class="button-positive">submit</btn>
+                       </div> 
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+
+</body>
+
+</html>
+<script src="../js/Site.js"></script>

@@ -203,12 +203,14 @@ a {
 li{
     display: block;
 }
+/*
 video{
     width:80vw;
     margin:auto;
     display: block;
     z-index: 1;
 }
+*/
 .small-video{
   width: 30vw;
 }
@@ -251,7 +253,8 @@ video{
   border-radius: 0.2em;
   padding: 1em;
 }
-	
+
+
 /* Display Dropdowns on Hover */
 nav ul li a:focus + ul {
     display:inherit;
@@ -264,9 +267,11 @@ nav ul li a + ul li:hover {
 
 
 
+
+
 	
 /* Fisrt Tier Dropdown */
-nav ul ul li {
+nav ul ul li { 
 	float:none;
 	display:list-item;
 	position: relative;

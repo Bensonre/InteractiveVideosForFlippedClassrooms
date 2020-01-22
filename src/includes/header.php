@@ -5,13 +5,13 @@
             <?php
             $content = array(
                 "Instructor" => array(
-                    "Upload Video" => "../src/demo/UploadVideo.php",
-                    "Create Questions" => "../src/demo/CreateQuestion.php",
-                    "Create Package" => "../src/demo/Package.php",
-                    "Add Questions to Package" => "../src/demo/AddQuestions.php",
-                    "Update Question" => "../src/demo/UpdateQuestion.php"
+                    "Upload Video" => "../demo/UploadVideo.php",
+                    "Create Questions" => "../demo/CreateQuestion.php",
+                    "Create Package" => "../demo/Package.php",
+                    "Add Questions to Package" => "../demo/AddQuestions.php",
+                    "Update Question" => "../demo/UpdateQuestion.php"
                 ),
-                "Student" => "../src/demo/Student.php",
+                "Student" => "../demo/Student.php",
             );
 
             foreach ($content as $page => $location) {

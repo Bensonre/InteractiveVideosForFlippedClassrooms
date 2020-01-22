@@ -22,5 +22,13 @@
     <div class="label">
         Selected Video
     </div>
-    <video id="videoPlayer" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4" onclick="this.play()" controls></video>
+		
+    <video-js
+    id="CreatePackage-video"
+    controls 
+    data-setup="{}"
+    >
+      <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+    </video-js>
+
 </div>
