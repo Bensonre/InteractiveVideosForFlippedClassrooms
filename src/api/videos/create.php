@@ -26,7 +26,7 @@ if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $targetfile)) {
 $database = new Database();
 $db = $database->connect();
 
-$instructorId = '99'; // TODO: replace with actual instructor id from $_SESSION variable
+$instructorId = 99; // TODO: replace with actual instructor id from $_SESSION variable
 
 $controller = new VideoController($db, $instructorId, $_FILES['fileToUpload'], $_FILES['fileToUpload']['name'], $targetfile);
 $controller->create();
