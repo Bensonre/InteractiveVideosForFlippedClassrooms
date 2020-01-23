@@ -2,7 +2,7 @@
 
 class Database {
     
-    private $dbhost = 'secure.oregonstate.edu/oniddb';
+    private $dbhost = 'oniddb.cws.oregonstate.edu';
     private $dbname = 'bensonre-db';
     private $dbuser = 'bensonre-db';
     private $dbpass = 'AM8sgjoZzOQxVAeS';
@@ -11,13 +11,13 @@ class Database {
     public function connect() {
         $this->conn = null;
 
-        try {
-            $dsn = "mysql:dbname=$this->dbname;host=$this->dbhost";
-            $conn = new PDO($dsn, $this->dbuser, $this->dbpass);
-            $this->conn-setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) {
-            echo $e->getMessage();
+        $mysqli = new mysqli($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname);
+        
+        if ($mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
+        
+        $this->conn = $mysqli;
 
         return $this->conn;
     }

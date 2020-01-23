@@ -14,31 +14,34 @@ class VideoController {
         $this->conn = $db;
         $this->instructorId = $instructorId;
         $this->videoFile = $videoFile;
+        $this->fileName = $fileName;
         $this->filePath = $filePath;
     }
 
     public function create()
     {
-        $query = "INSERT INTO 
-                    $this->table
-                  SET
-                    instructorID = :instructorId
-                    FilePath = :filepath
-                    Title = :title";
-
-        $stmt = $this->conn->prepare($query);
-
         $this->instructorId = htmlspecialchars(strip_tags($this->instructorId));
         $this->filePath = htmlspecialchars(strip_tags($this->filePath));
         $this->fileName = htmlspecialchars(strip_tags($this->fileName));
 
-        $stmt->bindParam(':instructorId', $this->instructorId);
-        $stmt->bindParam(':filepath', $this->filePath);
-        $stmt->bindParam(':title', $this->fileName);
+        $query = "INSERT INTO 
+                    $this->table
+                  SET
+                    instructorID = ?
+                    FilePath = ?
+                    Title = ?";
 
-        $stmt->execute();
+        if ($stmt = mysqli_prepare($this->conn, $query)) {
+            $stmt->bind_param("i", $this->instructorId);
+            $stmt->bind_param("s", $this->filePath);
+            $stmt->bind_param("s", $this->fileName);
 
-        return $stmt;
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_bind_result($stmt, $result);
+            mysqli_stmt_fetch($stmt);
+        }
+
+        return $result;
     }
 }
 
