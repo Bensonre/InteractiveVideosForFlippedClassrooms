@@ -22,12 +22,36 @@
  var questionTimeStamps = [10,20, 40];
  var currentQuestion = 0;
  var mainVideo = document.getElementById("videoPlayer"); 
- var question = document.getElementById("Question-Modal")
+ var question = document.getElementById("Question-Modal");
 
  // Get the button that opens the modal
  var btn = document.getElementById("question-submit");
- 
- 
+
+
+ //Navbar dropdown
+ var dropdown = document.getElementById("drop-down");
+ var instructor = document.getElementById("instr");
+
+
+ //dropdown menu starts hidden
+ dropdown.style.display = "none";
+
+ //drop down menu on click effect
+ instructor.onclick = function(){
+	 if (dropdown.style.display === "none") {
+		 dropdown.style.display = "inherit";
+	 } else {
+		 dropdown.style.display = "none";
+	 }
+ }
+
+ //if window clicked closes dropdown
+ /*
+ window.onclick = function() {
+		 dropdown.style.display = "none";
+ }
+ */
+
 
  mainVideo.ontimeupdate = function(){
    if (mainVideo.currentTime >= questionTimeStamps[currentQuestion]){
@@ -46,6 +70,8 @@
    question.style.display ="none";
    mainVideo.play();
  }
+
+
 
  // When the user clicks anywhere outside of the modal, close it
  /*window.onclick = function(event) {

@@ -254,15 +254,21 @@ video{
   padding: 1em;
 }
 
-
 /* Display Dropdowns on Hover */
+/*
 nav ul li a:focus + ul {
-    display:inherit;
+    display: inherit;
     z-index: 2;
 }
+*/
+
 nav ul li a + ul li:hover {
-    display:inherit;
     background-color: black;
+}
+
+#drop-down {
+	display: none;
+	z-index: 3;
 }
 
 
