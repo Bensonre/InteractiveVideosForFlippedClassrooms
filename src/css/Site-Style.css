@@ -294,3 +294,41 @@ nav ul ul ul li {
     width: auto;
     margin: 0;
 }
+
+.big-buttons {
+	margin-left: 500px;
+	margin-top: 200px;
+}
+
+.big-buttons button{
+	background-color: cornflowerblue;
+	color: white;
+	font-size: 2em;
+	padding: .5em 3em;
+	width: 400px;
+}
+
+.big-buttons button:hover{
+border-bottom: 0.2em solid palegoldenrod;
+border-end-start-radius: 20%;
+color: palegoldenrod;
+}
+
+.big-buttons form{
+	display: inline;
+}
+
+.itext {
+	font-size: 30px;
+}
+
+.or {
+	display: inline;
+	margin: 0px 10px 0px 10px;
+}
+
+.big-buttons p {
+	margin-bottom: 0px;
+}
+
+
