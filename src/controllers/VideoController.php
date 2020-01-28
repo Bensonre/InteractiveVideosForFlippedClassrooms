@@ -7,7 +7,7 @@ class VideoController {
     private $videoFile;
     private $fileName;
     private $filePath;
-    private $table = 'Videos';
+    private $table = 'videos';
 
     public function __construct($db, $instructorId, $videoFile, $fileName, $filePath)
     {
