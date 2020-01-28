@@ -24,7 +24,7 @@ class VideoController {
         $this->filePath = htmlspecialchars(strip_tags($this->filePath));
         $this->fileName = htmlspecialchars(strip_tags($this->fileName));
 
-        $query = "INSERT INTO $this->table ('InstructorID', 'FilePath', 'Title') VALUES (?,?,?)";
+        $query = "INSERT INTO $this->table (`InstructorID`, `FilePath`, `Title`) VALUES (?,?,?)";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
