@@ -2,10 +2,10 @@
 
 class Database {
     
-    private $dbhost = 'oniddb.cws.oregonstate.edu';
-    private $dbname = 'bensonre-db';
-    private $dbuser = 'bensonre-db';
-    private $dbpass = 'AM8sgjoZzOQxVAeS';
+    private $dbhost = 'fliiped-classroom.mysql.database.azure.com';
+    private $dbname = 'capstone';
+    private $dbuser = 'PowerRangers@fliiped-classroom';
+    private $dbpass = 'Mighty-Morphin';
     private $conn;
 
     public function connect() {

@@ -9,6 +9,9 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+$fileUploaded = false;
+$databaseEntryCreated = false;
+
 // Upload the file to the server.
 $targetdir = "../../video_files/";
 $targetfile = $targetdir . basename($_FILES['fileToUpload']['name']);
@@ -18,8 +21,7 @@ echo "$fileName";
 
 if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $targetfile)) {
     echo 'File successfully upload to the server.\n';
-} else {
-
+    $fileUploaded = true;
 }
 
 // Create a record within the database for this file.
@@ -29,6 +31,11 @@ $db = $database->connect();
 $instructorId = 99; // TODO: replace with actual instructor id from $_SESSION variable
 
 $controller = new VideoController($db, $instructorId, $_FILES['fileToUpload'], $_FILES['fileToUpload']['name'], $targetfile);
-$controller->create();
+if ($controller->create()) {
+    $databaseEntryCreated = true;
+}
+
+echo "\nredirecting...\n";
+header("Location: {$_SERVER["HTTP_REFERER"]}");
 
 ?>
