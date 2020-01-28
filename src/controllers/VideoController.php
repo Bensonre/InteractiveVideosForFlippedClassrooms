@@ -26,8 +26,14 @@ class VideoController {
 
         $query = "INSERT INTO $this->table ('InstructorID', 'FilePath', 'Title') VALUES (?,?,?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iss", $this->instructorId, $this->filePath, $this->fileName);
-        return $stmt->execute();
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("iss", $this->instructorId, $this->filePath, $this->fileName);
+            return $stmt->execute();
+        }
+        return false;
     }
 }
 
