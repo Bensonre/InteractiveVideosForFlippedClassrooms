@@ -3,25 +3,26 @@
     <nav class="NavBar">
         <ul>
             <?php
+						$url = "http://localhost:8000";
             $content = array(
                 "Instructor" => array(
-                    "Upload Video" => "../demo/UploadVideo.php",
-                    "Create Questions" => "../demo/CreateQuestion.php",
-                    "Create Package" => "../demo/Package.php",
-                    "Add Questions to Package" => "../demo/AddQuestions.php",
-                    "Update Question" => "../demo/UpdateQuestion.php"
+                    "Upload Video" => ( "../demo/UploadVideo.php"),
+                    "Create Questions" => ("../demo/CreateQuestions.php"),
+                    "Create Package" => ("../demo/Package.php"),
+                    "Add Questions to Package" => ("../demo/AddQuestions.php"),
+                    "Update Question" => ("../demo/UpdateQuestion.php")
                 ),
-                "Student" => "../demo/Student.php",
+                "Student" => "../demo/Student.php"
             );
 
             foreach ($content as $page => $location) {
                 if (is_array($location)) {
                     if ($page == $currentpage) {
-                        echo "<li class='navItem PushLeft5 Selected'><a href='#'>$page</a>
-                                <ul>";
+                        echo "<li class='navItem PushLeft5 Selected'><a id='instr' href='#'>$page</a>
+                                <ul id='drop-down'>";
                     } else {
-                        echo "<li class='navItem PushLeft5'><a href='#'>$page</a>
-                        <ul>";
+                        echo "<li class='navItem PushLeft5'><a id='instr' href='#'>$page</a>
+                        <ul id='drop-down'>";
                     }
                     foreach ($location as $name => $link) {
                         echo "<li><a href='$link'>$name</a></li>";
@@ -38,3 +39,4 @@
         </ul>
     </nav>
 </header>
+<script src="/js/Site.js"></script>

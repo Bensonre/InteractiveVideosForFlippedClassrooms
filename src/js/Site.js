@@ -22,12 +22,49 @@
  var questionTimeStamps = [10,20, 40];
  var currentQuestion = 0;
  var mainVideo = document.getElementById("videoPlayer"); 
- var question = document.getElementById("Question-Modal")
+ var question = document.getElementById("Question-Modal");
 
  // Get the button that opens the modal
  var btn = document.getElementById("question-submit");
- 
- 
+
+
+ //Navbar dropdown
+ var dropdown = document.getElementById("drop-down");
+ var instructor = document.getElementById("instr");
+
+
+ //dropdown menu starts hidden
+ dropdown.style.display = "none";
+
+ //drop down menu on click effect
+ instructor.onclick = function(){
+	 if (dropdown.style.display === "none") {
+		 dropdown.style.display = "inherit";
+	 } else {
+		 dropdown.style.display = "none";
+	 }
+ }
+
+ //if window clicked closes dropdown
+ /*
+ window.onclick = function() {
+		 dropdown.style.display = "none";
+ }
+ */
+ function validateForm() {
+	 var s1 = document.forms["f1"]["question"].value;
+	 var s2 = document.forms["f1"]["category"].value;
+	 var s3 = document.forms["f1"]["a1"].value;
+	 var s4 = document.forms["f1"]["a2"].value;
+	 var s5 = document.forms["f1"]["a3"].value;
+	 var s6 = document.forms["f1"]["a4"].value;
+
+	 if( s1 == "" || s2 == "" || s3 == "" || s4 == "" || s5 == "" || s6 == "") {
+		 alert("There can't be any empty values");
+		 return false;
+	 }
+ }
+
 
  mainVideo.ontimeupdate = function(){
    if (mainVideo.currentTime >= questionTimeStamps[currentQuestion]){
@@ -46,6 +83,9 @@
    question.style.display ="none";
    mainVideo.play();
  }
+
+
+
 
  // When the user clicks anywhere outside of the modal, close it
  /*window.onclick = function(event) {

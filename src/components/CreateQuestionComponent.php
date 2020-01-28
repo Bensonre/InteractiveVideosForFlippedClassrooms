@@ -1,36 +1,37 @@
 <div class="section-title">
         Create Question
     </div>
-    <form method="Post">
+    <form method="Post" action="../controllers/QuestionController.php" name="f1" onSubmit="return validateForm()">
         <div class="label">
             Question
         </div>
-        <textarea Class="PushLeft1" placeholder="Write your question here..."></textarea>
+        <textarea Class="PushLeft1" placeholder="Write your question here..." name="question"></textarea>
         <div class="label">
             Catagory
         </div>
         <input class="PushLeft1" type="text"
-            placeholder="Input a catagory you can filter by later to help find this question" />
+            placeholder="Input a catagory you can filter by later to help find this question" name="category" />
         <div class="label">Answers</div>
         <!-- change this to loop in php-->
         <div class="inputgroup">
             <Span class="label"> 1 </Span>
-            <input type="text">
+            <input type="text" name="a1">
         </div>
         <div class="inputgroup">
             <Span class="label"> 2 </Span>
-            <input type="text">
+            <input type="text" name="a2">
         </div>
         <div class="inputgroup">
             <Span class="label"> 3 </Span>
-            <input type="text">
+            <input type="text" name="a3">
         </div>
         <div class="inputgroup">
             <Span class="label"> 4 </Span>
-            <input type="text">
+            <input type="text" name="a4">
         </div>
-        <button class="submit" id="question-submit" type="button">Submit</button>
+        <button class="submit" id="question-submit" type="submit" name="submit">Submit</button>
     </form>
+		<!--
     <div id="grey-cover">
         <div id="Another-Question-Modal" class="modal">
             <span class="close">&times;</span>
@@ -41,3 +42,4 @@
         </div>
     </div>
     <script src="../js/Modal.js"></script>
+		-->

@@ -18,7 +18,7 @@ $currentpage = "Instructor";
    include 'connectvars.php';
 ?>
     <div class="containter PushLeft5">
-            <?php include "../components/AddQuestionsComponent.php"; ?>
+            <?php include "../components/UpdateQuestionComponent.php"; ?>
     </div> 
     </body>
 </html>
