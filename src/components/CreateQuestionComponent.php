@@ -1,7 +1,7 @@
 <div class="section-title">
         Create Question
     </div>
-    <form method="Post" action="../controllers/QuestionController.php" name="f1" onSubmit="return validateForm()">
+    <form method="Post" action="../api/questions/create.php" name="f1" onSubmit="return validateForm()">
         <div class="label">
             Question
         </div>
