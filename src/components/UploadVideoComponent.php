@@ -1,9 +1,9 @@
 <div class="section-title">
         Upload Video
     </div>
-    <form method="Post">
+    <form enctype="multipart/form-data" action="../api/videos/create.php" method="post">
         <div class="label">Upload Video</div>
-        <input type="file" name="file" id="file" class="inputfile PushLeft1">
+        <input type="file" name="fileToUpload" id="file" class="inputfile PushLeft1">
         <label class="fileLable" for="file">
           <div class="input-mimic">
             <span></span>
