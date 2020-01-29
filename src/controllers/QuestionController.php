@@ -1,6 +1,4 @@
-  <?php
-	  $currentpage = "Instructor";
-	?>
+  <!--
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -10,6 +8,7 @@
 	<body>
 
 	<?php
+  /*
 		include "../includes/header.php";
 
 		$question = $_POST['question'];
@@ -66,6 +65,101 @@
 		echo "<p>Choice 2: $c2</p>";
 		echo "<p>Choice 3: $c3</p>";
 		echo "<p>Choice 4: $c4</p>";
+    */
 	?>
 	</body>
 </html>
+*/
+-->
+
+
+<?php
+class CreateQuestionController {
+  private $conn;
+  private $question;
+  private $category;
+  private $choice1;
+  private $choice2;
+  private $choice3;
+  private $choice4;
+  private $correct;
+  private $qtable = 'question';
+  private $ctable = 'choices';
+
+  private function InsertHelper($q)
+  {
+    $query = $this->conn->prepare($q);
+    if ($query == false) {
+      $error = $this->conn->errno . ' ' . $this->conn->error;
+      echo $error;
+    } else {
+      return $query->execute();
+    }
+  }
+
+
+  public function __construct($db, $category, $question, $choice1, $choice2, $choice3, $choice4, $correct)
+  {
+    $this->conn = $db;
+    $this->quesiton = $question;
+    $this->category = $category;
+    $this->choice1 = $choice1;
+    $this->choice2 = $choice2;
+    $this->choice3 = $choice3;
+    $this->choice4 = $choice4;
+  }
+
+  public function create()
+  {
+    $this->question = htmlspecialchars(strip_tags($this->instructorId));
+    $this->category = htmlspecialchars(strip_tags($this->category));
+    $this->choice1 = htmlspecialchars(strip_tags($this->choice1);
+    $this->choice2 = htmlspecialchars(strip_tags($this->choice2);
+    $this->choice3 = htmlspecialchars(strip_tags($this->choice3);
+    $this->choice4 = htmlspecialchars(strip_tags($this->choice4);
+    $this->correct = htmlspecialchars(strip_tags($this->correct);
+
+    $choices = [$this->choice1 => 1,
+                $this->chioce2 => 2,
+                $this->chioce3 => 3,
+                $this->chioce4 => 4]
+
+		$qquery = "INSERT INTO $this->qtable (QuestionText, Catagory, DateModified) VALUE ('$this->question', '$this->category',CURDATE() )";
+    
+    InsertHelper($qquery);
+
+    $last_id = mysqli_insert_id($this->conn);
+    
+		foreach( $choices as $choice => $ord ) {
+			if( $ord == $this->correct ) {
+				$cquery = "INSERT INTO choices (QuestionID, ChoiceText, ChoiceOrder, DateModified, correct) " .
+								 "VALUES ('$last_id', '$choice', '$ord', CURDATE(), TRUE )";
+
+			} else {
+				$cquery = "INSERT INTO choices (QuestionID, ChoiceText, ChoiceOrder, DateModified, correct) " .
+								 "VALUES ('$last_id', '$choice', '$ord', CURDATE(), FALSE)";
+			}
+        InsertHelper($cquery);
+		}
+    
+  }
+}
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
