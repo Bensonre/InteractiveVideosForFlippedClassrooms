@@ -15,46 +15,53 @@ $currentpage = "Instructor";
 <?php
    include "../includes/header.php";
    
-   $dbhost = 'oniddb.cws.oregonstate.edu';
-   $dbname = 'bensonre-db';
-   $dbuser = 'bensonre-db';
-   $dbpass = 'AM8sgjoZzOQxVAeS';
+   $dbhost = 'fliiped-classroom.mysql.database.azure.com';//'oniddb.cws.oregonstate.edu';
+   $dbname = 'fliiped-classroom';
+   $dbuser = 'PowerRangers@fliiped-classroom';
+   $dbpass = 'Mighty-Morphin';
    $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
    if ($mysqli->connect_errno) {
        echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+   }else{
+    echo "MySql connected";
    }
+// PHP Data Objects(PDO) Sample Code:
+/*try {
+    $conn = new PDO("sqlsrv:server = tcp:capstone2020.database.windows.net,1433; Database = Capstone", "PowerRangers", "Mighty-Morphin");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch (PDOException $e) {
+    print("Error connecting to SQL Server.");
+    die(print_r($e));
+}
 
-   $query = "SELECT ID FROM `Students`";
-   		$result = mysqli_query($mysqli, $query);	
-			
-			if (mysqli_num_rows($result) == 0) {
+   $result = $conn->query("SELECT ID FROM Students");
+   			
+			if ($result->rowCount() == 0) {
 			echo "<p> There are no Students at this time</p>";	
 			}
 
 			else{ // make reviews	
-					while ($row = mysqli_fetch_assoc($result)) {
+					while ($row = $result->fetch()) {
                         echo  "<p> Student ID: ";
                         echo  $row['ID'];
                         echo "</p>";
                     }
             }
 
-            $query = "SELECT ID FROM `Instructors`";
-            $result = mysqli_query($mysqli, $query);	
-             
-             if (mysqli_num_rows($result) == 0) {
-             echo "<p> There are no teachers at this time</p>";	
-             }
- 
-             else{ // make reviews	
-                     while ($row = mysqli_fetch_assoc($result)) {
-                         echo  "<p> Student ID";
-                         echo  $row['ID'];
-                         echo "</p>";
-                     }
-             }
-   //$mysqli->close();
+            $result = $conn->query("SELECT ID FROM Instructors");
+   			
+			if ($result->rowCount() == 0) {
+			echo "<p> There are no Instructors at this time</p>";	
+			}
 
+			else{ // make reviews	
+					while ($row = $result->fetch()) {
+                        echo  "<p> Insructor ID: ";
+                        echo  $row['ID'];
+                        echo "</p>";
+                    }
+            }*/
 ?>
     <div class="containter PushLeft5">
     </div> 

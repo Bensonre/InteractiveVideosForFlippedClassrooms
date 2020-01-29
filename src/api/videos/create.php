@@ -14,7 +14,9 @@ $databaseEntryCreated = false;
 
 // Upload the file to the server.
 $targetdir = "../../video_files/";
+$pathdir = "../video_files/";
 $targetfile = $targetdir . basename($_FILES['fileToUpload']['name']);
+$targetpath = $pathdir . basename($_FILES['fileToUpload']['name']);
 
 $fileName = $_FILES["fileToUpload"]["name"];
 echo "$fileName";
@@ -30,7 +32,7 @@ $db = $database->connect();
 
 $instructorId = 99; // TODO: replace with actual instructor id from $_SESSION variable
 
-$controller = new VideoController($db, $instructorId, $_FILES['fileToUpload'], $_FILES['fileToUpload']['name'], $targetfile);
+$controller = new VideoController($db, $instructorId, $_FILES['fileToUpload'], $_FILES['fileToUpload']['name'], $targetpath);
 if ($controller->create()) {
     $databaseEntryCreated = true;
 }

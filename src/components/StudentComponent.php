@@ -1,16 +1,40 @@
+<?php
+   include_once '../database/Database.php';
+   include_once '../controllers/PackagesController.php';
+   $packageId = intval($_GET['id']); 
+   if(!$packageId){
+       $packageId=1;
+   }
+   $database = new Database();
+   $db = $database->connect();
+    
+   $controller = new PackageController($db);
+   $VideoResult = $controller->getPackageWithVideo($packageId);
+?>
+
 <div class="section-title">
-            <div ID="Package_Title">This is a Video</div>
+            <div ID="Package_Title">
+            <?php
+                if(mysqli_num_rows($VideoResult)==0){
+                        echo"Invlaid Package ID $packageId";
+                }else{
+                    $row = mysqli_fetch_assoc($VideoResult);
+                    echo $row['Title'];
+                }
+             ?>
+            </div>
         </div><!-- >End End section<!-->
 						<video-js
 
-						id="Student-video"
+						id="videoPlayer"
 						
 						controls 
 						
 						data-setup="{}">
-
-								<source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
-
+                                <?php
+                                $path = $row['FilePath'];
+								echo"<source src='$path' type='video/mp4'>";
+                                ?>
 						</video-js>
             <div class="video-bar">
                 <div id="Question-Modal">

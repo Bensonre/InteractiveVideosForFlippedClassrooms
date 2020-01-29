@@ -12,7 +12,7 @@
                     "Add Questions to Package" => ("../demo/AddQuestions.php"),
                     "Update Question" => ("../demo/UpdateQuestion.php")
                 ),
-                "Student" => "../demo/Student.php"
+                "Student" => "../demo/Student.php?id=1"
             );
 
             foreach ($content as $page => $location) {
