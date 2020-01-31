@@ -22,11 +22,10 @@ $correct  = $_POST['correct'];
 $database = new Database();
 $db = $database->connect();
 
-$controller = new CreateQuestionController($db, $question, $category, $c1, $c2, $c3, $c4, $correct);
+$controller = new QuestionController($db, $question, $category, $c1, $c2, $c3, $c4, $correct);
 if ($controller->create()) {
     $databaseEntryCreated = true;
 }
-echo "<script type='text/javascript'>alert('message');</script>";
 
 echo "\nredirecting...\n";
 header("Location: {$_SERVER["HTTP_REFERER"]}");

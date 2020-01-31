@@ -1,5 +1,5 @@
 <?php
-class CreateQuestionController {
+class QuestionController {
   private $conn;
   private $question;
   private $category;
@@ -34,9 +34,6 @@ class CreateQuestionController {
     $this->choice3 = htmlspecialchars(strip_tags($this->choice3));
     $this->choice4 = htmlspecialchars(strip_tags($this->choice4));
     $this->correct = htmlspecialchars(strip_tags($this->correct));
-
-    $querySuccess1 = false;
-    $querySuccess2 = false;
 
 
     $this->choices = [$this->choice1 => 1,
