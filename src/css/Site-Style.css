@@ -331,4 +331,19 @@ color: palegoldenrod;
 	margin-bottom: 0px;
 }
 
+.rButtons{
+	
+}
 
+.radiobuttons input[type="radio"] {
+	width: 14px;
+	font-size: 90px;
+	display:inline;
+}
+.radiobuttons Span {
+}
+
+
+.radiobuttons {
+
+}
