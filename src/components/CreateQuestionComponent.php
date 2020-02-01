@@ -15,19 +15,19 @@
         <!-- change this to loop in php-->
         <div class="inputgroup">
             <Span class="label"> 1 </Span>
-            <input type="text" name="a1">
+            <input type="text" name="c1">
         </div>
         <div class="inputgroup">
             <Span class="label"> 2 </Span>
-            <input type="text" name="a2">
+            <input type="text" name="c2">
         </div>
         <div class="inputgroup">
             <Span class="label"> 3 </Span>
-            <input type="text" name="a3">
+            <input type="text" name="c3">
         </div>
         <div class="inputgroup">
             <Span class="label"> 4 </Span>
-            <input type="text" name="a4">
+            <input type="text" name="c4">
         </div>
 
          <div class="label"> 

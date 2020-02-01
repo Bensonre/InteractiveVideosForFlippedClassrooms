@@ -14,12 +14,11 @@ $currentpage = "Instructor";
 <body>
 <?php
    include "../includes/header.php";
-   
-   include 'connectvars.php';
 ?>
     <div class="containter PushLeft5">
             <?php include "../components/UpdateQuestionComponent.php"; ?>
     </div> 
     </body>
 </html>
+<script src="../js/Site.js"></script>
 <script src="https://vjs.zencdn.net/7.6.6/video.js"></script>

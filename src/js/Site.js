@@ -54,10 +54,10 @@
  function validateForm() {
 	 var s1 = document.forms["f1"]["question"].value;
 	 var s2 = document.forms["f1"]["category"].value;
-	 var s3 = document.forms["f1"]["a1"].value;
-	 var s4 = document.forms["f1"]["a2"].value;
-	 var s5 = document.forms["f1"]["a3"].value;
-	 var s6 = document.forms["f1"]["a4"].value;
+	 var s3 = document.forms["f1"]["c1"].value;
+	 var s4 = document.forms["f1"]["c2"].value;
+	 var s5 = document.forms["f1"]["c3"].value;
+	 var s6 = document.forms["f1"]["c4"].value;
 
 	 if( s1 == "" || s2 == "" || s3 == "" || s4 == "" || s5 == "" || s6 == "") {
 		 alert("There can't be any empty values");
