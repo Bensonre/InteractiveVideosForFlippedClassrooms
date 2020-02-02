@@ -68,10 +68,33 @@ class QuestionController {
 
   public function read()
   {
-    $query = "SELECT ID, QuestionText, Catagory, DateModified FROM $this->qtable"; 
+    $query = "SELECT " . $this->qtable . ".ID as QuestionID, QuestionText, Category, " . $this->qtable . ".DateModified as QuestionModified, " . 
+             $this->ctable . ".ID as AnswerID, ChoiceText, ChoiceOrder, " . $this->ctable . ".DateModified as ChoiceModified, correct FROM " . $this->qtable . " INNER JOIN " . 
+             $this->ctable . " on " . $this->qtable . ".ID=" . $this->ctable . ".QuestionID";
     $result = $this->sendQuery($query);
-    var_dump($result);
+    $result->store_result();
     return $result;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
   public function update($id, $question, $category, $c1, $c2, $c3, $c4, $correct)
