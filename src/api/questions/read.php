@@ -56,7 +56,5 @@
     }
     echo json_encode($question_records);
   }
-
-  //echo "\nredirecting...\n";
-  /*header("Location: {$_SERVER["HTTP_REFERER"]}");*/
+  header("Location: {$_SERVER["HTTP_REFERER"]}");
 ?>

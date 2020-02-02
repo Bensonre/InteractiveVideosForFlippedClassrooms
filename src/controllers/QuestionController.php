@@ -4,6 +4,15 @@ class QuestionController {
   private $qtable = 'questions';
   private $ctable = 'choices';
 
+  public $id;
+  public $question;
+  public $category;
+  public $a1;
+  public $a2;
+  public $a3;
+  public $a4;
+  public $correct;
+
   private function sendQuery($q) {
       $query = $this->conn->prepare($q);
       if ($query == false) {
@@ -22,25 +31,25 @@ class QuestionController {
   }
   
   //Creates question. All inputs are expected not to be NULL.
-  public function create($question, $category, $choice1, $choice2, $choice3, $choice4, $correct)
+  public function create() 
   {
-    $question = htmlspecialchars(strip_tags($question));
-    $category = htmlspecialchars(strip_tags($category));
-    $choice1 = htmlspecialchars(strip_tags($choice1));
-    $choice2 = htmlspecialchars(strip_tags($choice2));
-    $choice3 = htmlspecialchars(strip_tags($choice3));
-    $choice4 = htmlspecialchars(strip_tags($choice4));
-    $correct = htmlspecialchars(strip_tags($correct));
+    $this->question = htmlspecialchars(strip_tags($this->question));
+    $this->category = htmlspecialchars(strip_tags($this->category));
+    $this->c1       = htmlspecialchars(strip_tags($this->c1));
+    $this->c2       = htmlspecialchars(strip_tags($this->c2));
+    $this->c3       = htmlspecialchars(strip_tags($this->c3));
+    $this->c4       = htmlspecialchars(strip_tags($this->c4));
+    $this->correct = htmlspecialchars(strip_tags($this->correct));
 
     $createSuccess = True;
 
     //maps choices to their positions entered into the form
-    $choices = [$choice1 => 1,
-                $choice2 => 2,
-                $choice3 => 3,
-                $choice4 => 4];
+    $choices = [$this->c1 => 1,
+                $this->c2 => 2,
+                $this->c3 => 3,
+                $this->c4 => 4];
 
-    $qquery = "INSERT INTO $this->qtable (QuestionText, Catagory, DateModified) VALUES ('$question', '$category', CURDATE() )";
+    $qquery = "INSERT INTO $this->qtable (QuestionText, Category, DateModified) VALUES ('$this->question', '$this->category', CURDATE() )";
 
     $createSuccess = $this->sendQuery($qquery);
 
@@ -52,7 +61,7 @@ class QuestionController {
         break;
       }
 
-      if( $ord == $correct ) {
+      if( $ord == $this->correct ) {
         $cquery = "INSERT INTO $this->ctable (QuestionID, ChoiceText, ChoiceOrder, DateModified, correct) " .
                  "VALUES ('$last_id', '$choice', '$ord', CURDATE(), TRUE )";
 
@@ -74,48 +83,27 @@ class QuestionController {
     $result = $this->sendQuery($query);
     $result->store_result();
     return $result;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
 
-  public function update($id, $question, $category, $c1, $c2, $c3, $c4, $correct)
+  public function update()
   {
-    $id= htmlspecialchars(strip_tags($id));
-    $question = htmlspecialchars(strip_tags($question));
-    $category = htmlspecialchars(strip_tags($category));
-    $c1      = htmlspecialchars(strip_tags($c1));
-    $c2      = htmlspecialchars(strip_tags($c2));
-    $c3      = htmlspecialchars(strip_tags($c3));
-    $c4      = htmlspecialchars(strip_tags($c4));
-    $correct = htmlspecialchars(strip_tags($correct));
+    $this->id= htmlspecialchars(strip_tags($this->id));
+    $this->question = htmlspecialchars(strip_tags($this->question));
+    $this->category = htmlspecialchars(strip_tags($this->category));
+    $this->c1      = htmlspecialchars(strip_tags($this->c1));
+    $this->c2      = htmlspecialchars(strip_tags($this->c2));
+    $this->c3      = htmlspecialchars(strip_tags($this->c3));
+    $this->c4      = htmlspecialchars(strip_tags($this->c4));
+    $this->correct = htmlspecialchars(strip_tags($this->correct));
 
     $updateSuccess = True;
 
-    $choices = [$c1 => 1,
-                $c2 => 2,
-                $c3 => 3,
-                $c4 => 4];
+    $choices = [$this->c1 => 1,
+                $this->c2 => 2,
+                $this->c3 => 3,
+                $this->c4 => 4];
 
-    $qquery = "UPDATE $this->qtable SET QuestionText='$question', Catagory='$category', DateModified=CURDATE() WHERE ID=$id"; 
+    $qquery = "UPDATE $this->qtable SET QuestionText='$this->question', Category='$this->category', DateModified=CURDATE() WHERE ID=$this->id"; 
 
     if($this->sendQuery($qquery) == False) {
       $updateSuccess = False;
@@ -127,10 +115,10 @@ class QuestionController {
         break;
       }
 
-      if( $ord == $correct ) {
-        $cquery = "UPDATE $this->ctable SET ChoiceText='$choice', correct=True, DateModified=CURDATE() WHERE QuestionID=$id AND ChoiceOrder=$ord";
+      if( $ord == $this->correct ) {
+        $cquery = "UPDATE $this->ctable SET ChoiceText='$choice', correct=True, DateModified=CURDATE() WHERE QuestionID=$this->id AND ChoiceOrder=$ord";
       } else {
-        $cquery = "UPDATE $this->ctable SET ChoiceText='$choice', correct=False, DateModified=CURDATE()  WHERE QuestionID=$id AND ChoiceOrder=$ord";
+        $cquery = "UPDATE $this->ctable SET ChoiceText='$choice', correct=False, DateModified=CURDATE()  WHERE QuestionID=$this->id AND ChoiceOrder=$ord";
       }
 
       if($this->sendQuery($cquery) == False) {
@@ -138,6 +126,29 @@ class QuestionController {
       }
     }
     return $updateSuccess;
+  }
+
+  public function remove()
+  {
+    $this->id= htmlspecialchars(strip_tags($this->id));
+
+    $deleteSuccess = True;
+
+    $query = "DELETE FROM " . $this->qtable . " WHERE ID=" . $this->id ;
+    
+    //delete question
+    if($this->sendQuery($query) == False) {
+      $deleteSuccess = False;
+    }
+
+    $query = "DELETE FROM " . $this->ctable . " WHERE QuestionID=" . $this->id ;
+
+    //delete answers
+    if($this->sendQuery($query) == False) {
+      $deleteSuccess = False;
+    }
+
+    return $deleteSuccess;
   }
 }
 

@@ -1,38 +1,54 @@
 <?php
 
-include_once '../../database/Database.php';
-include_once '../../controllers/QuestionController.php';
+  include_once '../../database/Database.php';
+  include_once '../../controllers/QuestionController.php';
 
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  header("Access-Control-Allow-Origin: *");
+  header("Content-Type: application/json; charset=UTF-8");
+  header("Access-Control-Allow-Methods: POST");
+  header("Access-Control-Max-Age: 3600");
+  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-$databaseEntryCreated = false;
+  $databaseEntryCreated = false;
 
-$id       = $_POST['wutQ'];
-$question = $_POST['question'];
-$category = $_POST['category'];
-$c1       = $_POST['c1'];
-$c2       = $_POST['c2'];
-$c3       = $_POST['c3'];
-$c4       = $_POST['c4'];
-$correct  = $_POST['correct'];
+  $database = new Database();
+  $db = $database->connect();
 
-var_dump($id, $question, $category, $c1, $c2, $c3, $c4, $correct);
+  $controller = new QuestionController($db);
 
-$database = new Database();
-$db = $database->connect();
+  if(
+    !empty($_POST['id']) &&
+    !empty($_POST['question']) &&
+    !empty($_POST['category']) &&
+    !empty($_POST['a1']) &&
+    !empty($_POST['a2']) &&
+    !empty($_POST['a3']) &&
+    !empty($_POST['a4']) &&
+    !empty($_POST['correct'])
+  ){
+    $controller->id       = $_POST['id'];
+    $controller->question = $_POST['question'];
+    $controller->category = $_POST['category'];
+    $controller->c1       = $_POST['a1'];
+    $controller->c2       = $_POST['a2'];
+    $controller->c3       = $_POST['a3'];
+    $controller->c4       = $_POST['a4'];
+    $controller->correct  = $_POST['correct'];
 
-$controller = new QuestionController($db);
-if ($controller->update($id, $question, $category, $c1, $c2, $c3, $c4, $correct)) {
-    $databaseEntryCreated = true;
-} else {
-    echo "\nUpdate Question Failed\n";
-}
 
-echo "\nredirecting...\n";
-/*header("Location: {$_SERVER["HTTP_REFERER"]}");*/
 
+    if ($controller->update()) {
+        $databaseEntryCreated = True;
+    } else {
+      echo json_encode(array("message" => "Couldn't Update Question"));
+    }
+   } else {
+      echo json_encode(array("message" => "Can't Create Question. Insufficient Data."));
+   }
+
+   if($databaseEntryCreated == True) {
+     echo json_encode(array("message" => "Question Updated"));
+   }
+
+  header("Location: {$_SERVER["HTTP_REFERER"]}");
 ?>

@@ -1,18 +1,19 @@
 <div class="section-title">
         Update Question
     </div>
-    <form method="Post" action="../api/questions/update.php" name="f1" onSubmit="return validateForm()">
+    <form method="Post" action="../api/questions/update.php" name="f1">
         <div class="label">Select Question</div>
-        <select class="PushLeft1" name="wutQ">
+        <select class="PushLeft1" name="id">
         <?php
           include_once "../includes/connectvars.php";
           include_once "../controllers/QuestionController.php";
-          $rd = new QuestionController($mysqli);
-          $result = $rd->read();
-          $result->bind_result($id ,$text ,$cat, $date);
+          $query = "SELECT ID, QuestionText FROM questions";
+          $results = $mysqli->prepare($query);
+          $results->execute();
+          $results->bind_result($id ,$text);
 
-          echo "<option value='#'> ---- </option>"; 
-          while($result->fetch()) {
+          echo "<option value=''> Select a question to update </option>"; 
+          while($results->fetch()) {
             echo "<option value='" . $id . "'>" . $text . "</option>";
           }
         ?>
@@ -25,24 +26,24 @@
             Catagory
         </div>
         <input class="PushLeft1" type="text"
-            placeholder="Input a catagory you can filter by later to help find this question" name="category"/>
+            placeholder="Input a category you can filter by later to help find this question" name="category"/>
         <div class="label">Answers</div>
         <!-- change this to loop in php-->
         <div class="inputgroup">
             <Span class="label"> 1 </Span>
-            <input type="text" name="c1">
+            <input type="text" name="a1">
         </div>
         <div class="inputgroup">
             <Span class="label"> 2 </Span>
-            <input type="text" name="c2">
+            <input type="text" name="a2">
         </div>
         <div class="inputgroup">
             <Span class="label"> 3 </Span>
-            <input type="text" name="c3">
+            <input type="text" name="a3">
         </div>
         <div class="inputgroup">
             <Span class="label"> 4 </Span>
-            <input type="text" name="c4">
+            <input type="text" name="a4">
         </div>
          <div class="label"> 
 					 Which answer is the correct one?
@@ -54,6 +55,7 @@
 				  <option value="4">Answer 4</option>
 				</select>
 
-        <button class="submit" id="question-submit" type="Submit">Submit</button>
+        <button class="submit updatebuttonu" id="question-submit" type="Submit">Update</button>
+        <button class="submit updatebuttond" id="question-submit" type="Submit" formaction="../api/questions/delete.php">Delete</button>
     </form>
 </div>
