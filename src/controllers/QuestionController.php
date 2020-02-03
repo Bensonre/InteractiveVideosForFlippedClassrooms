@@ -84,6 +84,15 @@ class QuestionController {
     $result->store_result();
     return $result;
   }
+  public function read_one() {
+
+    $query = "SELECT " . $this->qtable . ".ID as QuestionID, QuestionText, Category, " . $this->qtable . ".DateModified as QuestionModified, " . 
+             $this->ctable . ".ID as AnswerID, ChoiceText, ChoiceOrder, " . $this->ctable . ".DateModified as ChoiceModified, correct FROM " . $this->qtable . " INNER JOIN " . 
+             $this->ctable . " on " . $this->qtable . ".ID=" . $this->ctable . ".QuestionID WHERE " . $this->qtable . ".ID=" . $this->id;
+    $result = $this->sendQuery($query);
+    $result->store_result();
+    return $result;
+  }
 
   public function update()
   {
@@ -149,8 +158,11 @@ class QuestionController {
     }
 
     return $deleteSuccess;
+  
   }
 }
+
+?>
 
 
 
