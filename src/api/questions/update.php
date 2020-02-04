@@ -17,6 +17,7 @@
   $controller = new QuestionController($db);
 
   if(
+    !empty($_POST['id']) &&
     !empty($_POST['question']) &&
     !empty($_POST['category']) &&
     !empty($_POST['a1']) &&
@@ -25,7 +26,7 @@
     !empty($_POST['a4']) &&
     !empty($_POST['correct'])
   ){
-
+    $controller->id       = $_POST['id'];
     $controller->question = $_POST['question'];
     $controller->category = $_POST['category'];
     $controller->c1       = $_POST['a1'];
@@ -33,18 +34,21 @@
     $controller->c3       = $_POST['a3'];
     $controller->c4       = $_POST['a4'];
     $controller->correct  = $_POST['correct'];
-  
-    if ($controller->create()) {
-        $databaseEntryCreated = true;
-    } else {
-        echo json_encode(array("message" => "Can't Create Question."));
-    }
-  } else {
-    echo json_encode(array("message" => "Can't Create Question. Insufficient Data."));
-  }
 
-  if($databaseEntryCreated == true) {
-    echo json_encode(array("message" => "Question Created."));
-  }
+
+
+    if ($controller->update()) {
+        $databaseEntryCreated = True;
+    } else {
+      echo json_encode(array("message" => "Couldn't Update Question"));
+    }
+   } else {
+      echo json_encode(array("message" => "Can't Create Question. Insufficient Data."));
+   }
+
+   if($databaseEntryCreated == True) {
+     echo json_encode(array("message" => "Question Updated"));
+   }
+
   header("Location: {$_SERVER["HTTP_REFERER"]}");
 ?>

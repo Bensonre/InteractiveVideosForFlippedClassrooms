@@ -1,7 +1,7 @@
 <div class="section-title">
         Create Question
     </div>
-    <form method="Post" action="../api/questions/create.php" name="f1" onSubmit="return validateForm()">
+    <form method="Post" action="../api/questions/create.php" name="f1">
         <div class="label">
             Question
         </div>
@@ -10,7 +10,7 @@
             Catagory
         </div>
         <input class="PushLeft1" type="text"
-            placeholder="Input a catagory you can filter by later to help find this question" name="category" />
+            placeholder="Input a category you can filter by later to help find this question" name="category" />
         <div class="label">Answers</div>
         <!-- change this to loop in php-->
         <div class="inputgroup">
