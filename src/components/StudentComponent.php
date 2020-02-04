@@ -1,16 +1,34 @@
+<?php
+$packageId = intval($_GET['id']); 
+    if(!$packageId){
+        $packageId=1;
+    }
+    $response = file_get_contents("http://web.engr.oregonstate.edu/~bensonre/Capstone/src/api/packages/get.php?id=$packageId");
+    $response = json_decode($response, true);
+?>
+
 <div class="section-title">
-            <div ID="Package_Title">This is a Video</div>
+            <div ID="Package_Title">
+            <?php
+                if(!array_key_exists('Title', $response)){
+                        echo"Invlaid Package ID $packageId";
+                }else{
+                    echo $response['Title'];
+                }
+             ?>
+            </div>
         </div><!-- >End End section<!-->
 						<video-js
 
-						id="Student-video"
+						id="videoPlayer"
 						
 						controls 
 						
 						data-setup="{}">
-
-								<source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
-
+                                <?php
+                                $path = $response['Path'];
+								echo"<source src='$path' type='video/mp4'>";
+                                ?>
 						</video-js>
             <div class="video-bar">
                 <div id="Question-Modal">

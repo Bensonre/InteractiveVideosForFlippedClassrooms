@@ -11,8 +11,9 @@
  var btn = document.getElementById("question-submit");
  
  
-
- mainVideo.ontimeupdate = function(){
+ window.addEventListener('load', function () {
+   mainVideo = this.document.getElementById("videoPlayer_html5_api");
+ mainVideo.ontimeupdate = function StopVideo(){
    if (mainVideo.currentTime >= questionTimeStamps[currentQuestion]){
      mainVideo.currentTime = questionTimeStamps[currentQuestion];
      mainVideo.pause();
@@ -20,6 +21,7 @@
      question.style.paddingLeft = mainVideo.currentTime/mainVideo.duration * 100 + "%";
    }
  }
+})
 
  btn.onclick = function(){
    currentQuestion ++;

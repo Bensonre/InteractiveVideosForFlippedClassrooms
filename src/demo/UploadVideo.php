@@ -14,8 +14,6 @@ $currentpage = "Instructor";
 <body>
 <?php
    include "../includes/header.php";
-   
-   include 'connectvars.php';
 ?>
     <div class="containter PushLeft5">
             <?php include "../components/UploadVideoComponent.php"; ?>
