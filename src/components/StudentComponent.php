@@ -1,25 +1,19 @@
 <?php
-   include_once '../database/Database.php';
-   include_once '../controllers/PackagesController.php';
-   $packageId = intval($_GET['id']); 
-   if(!$packageId){
-       $packageId=1;
-   }
-   $database = new Database();
-   $db = $database->connect();
-    
-   $controller = new PackageController($db);
-   $VideoResult = $controller->getPackageWithVideo($packageId);
+$packageId = intval($_GET['id']); 
+    if(!$packageId){
+        $packageId=1;
+    }
+    $response = file_get_contents("http://localhost/Capstone/InteractiveVideosForFlippedClassrooms/src/api/packages/get.php?id=$packageId");
+    $response = json_decode($response, true);
 ?>
 
 <div class="section-title">
             <div ID="Package_Title">
             <?php
-                if(mysqli_num_rows($VideoResult)==0){
+                if(!array_key_exists('Title', $response)){
                         echo"Invlaid Package ID $packageId";
                 }else{
-                    $row = mysqli_fetch_assoc($VideoResult);
-                    echo $row['Title'];
+                    echo $response['Title'];
                 }
              ?>
             </div>
@@ -32,7 +26,7 @@
 						
 						data-setup="{}">
                                 <?php
-                                $path = $row['FilePath'];
+                                $path = $response['Path'];
 								echo"<source src='$path' type='video/mp4'>";
                                 ?>
 						</video-js>

@@ -7,6 +7,7 @@
         <div class="label">
             Name the Package
         </div>
+        <input placeholder="Video Name" Type="text" class="PushLeft1"/>
             <button class="submit" type="Submit">Submit</button>
         <div class="label">
             Or

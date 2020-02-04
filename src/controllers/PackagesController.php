@@ -27,7 +27,7 @@ class PackageController {
         }else {
         $stmt->bind_param("i", $id);
         $stmt->execute();
-        return $stmt->get_result();
+        return $stmt;
         }
         return false;
     }
