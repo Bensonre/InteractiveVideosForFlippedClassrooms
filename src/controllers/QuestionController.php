@@ -137,7 +137,7 @@ class QuestionController {
     return $updateSuccess;
   }
 
-  public function remove()
+  public function delete()
   {
     $this->id= htmlspecialchars(strip_tags($this->id));
 

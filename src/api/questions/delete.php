@@ -21,7 +21,7 @@
   ){
     $controller->id       = $_POST['id'];
 
-    if ($controller->remove()) {
+    if ($controller->delete()) {
         $databaseEntryCreated = true;
     } else {
       echo json_encode(array("message" => "Couldn't Delete Question"));
