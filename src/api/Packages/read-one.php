@@ -14,10 +14,38 @@
    $num = mysqli_num_rows($VideoResult);
     if ($num > 0){
         $row = mysqli_fetch_assoc($VideoResult);
-        $result = array(
-            "Title" => $row['Title'],
-            "Path" => $row['FilePath']
-        );
+        while($row = mysqli_fetch_assoc($VideoResult)) {
+            $result = array(
+                "Title" => $row['Title'],
+                "Path" => $row['FilePath'],
+                "Questions" => $questions = []
+            );
+
+            do {
+            
+            $QuestionObj = [
+              "QuestionID" => $row["QuestionID"],
+              "QuestionTimestamp" => $row["QuestionTimeStamp"],
+              "QuestionText" => $row["QuestionText"],
+              "Answer" => $answers = []
+              ];
+      
+              do {
+                $AnswerObj = [
+                "AnswerID" => $row["ChoiceID"],
+                "AnswerText" => $row["ChoiceText"],
+                "AnswerOrder" => $row["ChoiceOrder"],
+                "Correct" => $row["correct"]
+                ];
+      
+                array_push($QuestionObj['Answer'], $AnswerObj);
+      
+              } while( $row["correct"] != 4 && $row =  mysqli_fetch_assoc($VideoResult));
+      
+              array_push($result["Questions"], $QuestionObj);
+            } while( $row =  mysqli_fetch_assoc($VideoResult));
+          }
+
         http_response_code(200);
      
         echo json_encode($result);

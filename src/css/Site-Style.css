@@ -37,6 +37,10 @@ body{
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
 
+  .hidden{
+      display: none;
+  }
+
   .modal{
       background: white;
       box-shadow: 10px 10px 10px black;
