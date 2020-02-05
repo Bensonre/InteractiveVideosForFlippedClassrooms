@@ -23,7 +23,9 @@
             placeholder="Input a link to an unlisted youtube video here" />
         <button class="submit" type="Submit">Submit</button>
     </form>
+    <div id="message"></div>
 </div>
+
 
 <script>
     function sendData() {
@@ -35,9 +37,23 @@
             formData.set("fileToUpload", file, file.name);
         }
 
-        var xhtml = new XMLHttpRequest();
-        xhtml.open("POST", "../api/videos/create.php");
-        xhtml.send(formData);
+        document.getElementById("message").innerText = "Processing...";
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var res = JSON.parse(this.responseText);
+                document.getElementById("message").innerText = res.message;
+
+                if (res.success) {
+                    document.getElementById("message").style.color = "green";
+                } else {
+                    document.getElementById("message").style.color = "red";
+                }
+            }
+        };
+        xhttp.open("POST", "../api/videos/create.php", false);
+        xhttp.send(formData);
     }
 </script>
 

@@ -19,10 +19,8 @@ $targetfile = $targetdir . basename($_FILES['fileToUpload']['name']);
 $targetpath = $pathdir . basename($_FILES['fileToUpload']['name']);
 
 $fileName = $_FILES["fileToUpload"]["name"];
-echo "$fileName";
 
 if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $targetfile)) {
-    echo 'File successfully upload to the server.\n';
     $fileUploaded = true;
 }
 
@@ -37,10 +35,11 @@ if ($controller->create()) {
     $databaseEntryCreated = true;
 }
 
-$response = array("success" => 0, "message" => "Your file was successfully uploaded.");
+$response = array("success" => 0, "message" => "Your file was not successfully uploaded.");
 
 if ($fileUploaded && $databaseEntryCreated) {
-    $response['success'] = 1;
+    $response["success"] = 1;
+    $response["message"] = "Your file was successfully uploaded.";
 }
 
 echo json_encode($response);
