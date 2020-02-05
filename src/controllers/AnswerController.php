@@ -43,7 +43,20 @@ class AnswerController {
     }
 
     public function update($questionID, $studentID, $choiceID) {
+        $questionID = htmlspecialchars(strip_tags($questionID));
+        $choiceID = htmlspecialchars(strip_tags($choiceID));
+        $studentID = htmlspecialchars(strip_tags($studentID));
 
+        $query = "UPDATE $this->table SET `ChoiceID` = ?, `AnswerDate` = CURDATE() WHERE `QuestionID` = ? AND `StudentID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("iii", $choiceID, $questionID, $studentID);
+            return $stmt->execute();
+        }
+        return false;
     }
 
     public function delete($id) {
