@@ -1,7 +1,7 @@
 <div class="section-title">
         Upload Video
     </div>
-    <form enctype="multipart/form-data" action="../api/videos/create.php" method="post">
+    <form>
         <div class="label">Upload Video</div>
         <input type="file" name="fileToUpload" id="file" class="inputfile PushLeft1">
         <label class="fileLable" for="file">
@@ -10,7 +10,7 @@
             <span class="dropdown-triangle"\>
           </div>
         </label>
-        <button class="submit" type="submit">Upload</button>
+        <button class="submit" type="button" onclick="sendData()">Upload</button>
         <div class="label">
             Or
         </div>
@@ -24,6 +24,23 @@
         <button class="submit" type="Submit">Submit</button>
     </form>
 </div>
+
+<script>
+    function sendData() {
+        var formData = new FormData();
+        var fileInput = document.getElementById("file");
+
+        if (fileInput.files && fileInput.files.length == 1) {
+            var file = fileInput.files[0];
+            formData.set("fileToUpload", file, file.name);
+        }
+
+        var xhtml = new XMLHttpRequest();
+        xhtml.open("POST", "../api/videos/create.php");
+        xhtml.send(formData);
+    }
+</script>
+
 <script>
 var inputs = document.querySelectorAll( '.inputfile' );
 Array.prototype.forEach.call( inputs, function( input )
