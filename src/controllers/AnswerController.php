@@ -60,7 +60,34 @@ class AnswerController {
     }
 
     public function delete($id) {
+        $id = htmlspecialchars(strip_tags($id));
 
+        $query = "DELETE FROM $this->table WHERE `ID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("i", $id);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
+    public function delete($questionID, $studentID) {
+        $questionID = htmlspecialchars(strip_tags($questionID));
+        $studentID = htmlspecialchars(strip_tags($studentID));
+
+        $query = "DELETE FROM $this->table WHERE `QuestionID` = ? AND `StudentID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("ii", $questionID, $studentID);
+            return $stmt->execute();
+        }
+        return false;
     }
 }
 ?>
