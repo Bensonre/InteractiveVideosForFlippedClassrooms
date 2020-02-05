@@ -20,5 +20,5 @@
         }
     }
 
-    echo "There is an error with the request.";
+    echo json_encode(false);
 ?>

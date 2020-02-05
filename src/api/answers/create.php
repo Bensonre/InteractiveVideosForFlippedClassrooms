@@ -16,9 +16,9 @@
     if(!empty($_POST['questionID']) && !empty($_POST['choiceID']) && !empty($_POST['studentID']) ) {
         $success = $controller->create($_POST['questionID'], $_POST['choiceID'], $_POST['studentID']);
         if ($success) {
-            echo "Answer submitted.";
+            echo json_encode(true);
         }
     }
 
-    echo "Answer was not successfully submitted.";
+    echo json_encode(false);
 ?>

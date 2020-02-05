@@ -16,9 +16,9 @@
     if(!empty($_POST['questionID']) && !empty($_POST['choiceID']) && !empty($_POST['studentID']) ) {
         $success = $controller->update($_POST['questionID'], $_POST['choiceID'], $_POST['studentID']);
         if ($success) {
-            echo "Answer updated.";
+            echo json_encode(true);
         }
     }
 
-    echo "Answer was not successfully updated.";
+    echo json_encode(false);
 ?>
