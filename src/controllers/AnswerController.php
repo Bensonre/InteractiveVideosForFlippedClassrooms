@@ -42,7 +42,7 @@ class AnswerController {
         return null;
     }
 
-    public function update($questionID, $studentID, $choiceID) {
+    public function update($questionID, $choiceID, $studentID) {
         $questionID = htmlspecialchars(strip_tags($questionID));
         $choiceID = htmlspecialchars(strip_tags($choiceID));
         $studentID = htmlspecialchars(strip_tags($studentID));
