@@ -26,7 +26,20 @@ class AnswerController {
     }
 
     public function read($questionID, $studentID) {
+        $questionID = htmlspecialchars(strip_tags($questionID));
+        $studentID = htmlspecialchars(strip_tags($studentID));
 
+        $query = "SELECT * FROM $this->table WHERE `QuestionID` = ? AND `StudentID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("ii", $questionID, $studentID);
+            $stmt->execute();
+            return $stmt->fetch_array(MYSQLI_ASSOC);
+        }
+        return null;
     }
 
     public function update($questionID, $studentID, $choiceID) {
