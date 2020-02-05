@@ -37,7 +37,7 @@ class AnswerController {
         } else {
             $stmt->bind_param("ii", $questionID, $studentID);
             $stmt->execute();
-            return $stmt->fetch_array(MYSQLI_ASSOC);
+            return $stmt->get_result()->fetch_assoc();
         }
         return null;
     }
