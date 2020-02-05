@@ -3,7 +3,7 @@
     include_once '../../controllers/AnswerController.php';
 
     header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json; charset=UTF-8");
+    header("Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
     header("Access-Control-Allow-Methods: POST");
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -13,12 +13,13 @@
 
     $controller = new AnswerController($db);
 
-    if(!empty($_POST['questionID']) && !empty($_POST['choiceID']) && !empty($_POST['studentID']) ) {
-        $success = $controller->create($_POST['questionID'], $_POST['choiceID'], $_POST['studentID']);
-        if ($success) {
-            echo json_encode(true);
+    $success = false;
+    if(isset($_POST['questionID']) && isset($_POST['choiceID']) && isset($_POST['studentID']) ) {
+        $result = $controller->create($_POST['questionID'], $_POST['choiceID'], $_POST['studentID']);
+        if ($result) {
+            $success = true;
         }
     }
 
-    echo json_encode(false);
+    echo json_encode($success);
 ?>
