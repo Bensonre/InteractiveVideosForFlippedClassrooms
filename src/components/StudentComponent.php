@@ -1,4 +1,5 @@
 <?php
+include "../includes/Display_Question_Component.php";
 $packageId = intval($_GET['id']); 
     if(!$packageId){
         $packageId=1;
@@ -35,26 +36,7 @@ $packageId = intval($_GET['id']);
                     <div class="up-triangle"></div>
                     <div class="question-container">
                         <?php
-                                $i=0;
-                                foreach($response['Questions'] as $question){
-                                    if($question['QuestionID'] == $response['Questions'][0]['QuestionID']){
-                                        echo "<div id='question$i' class='student-question'>";
-                                    }else{
-                                        echo '<div class="hidden student-question">';
-                                    }
-                                    echo '<div>';
-                                    echo $question['QuestionText'];
-                                    echo '</div>';
-                                    echo '<div>';
-                                    foreach($question['Answer'] as $ans){
-                                        echo '<input type="radio" class="radio" name="answer"><span>';
-                                        echo $ans['AnswerText'];
-                                        echo '</span><br/>';
-                                    }
-                                    echo '</div>';
-                                    echo '</div>';   
-                                    $i++;
-                                }
+                                getQuestionHtml($response)
                             ?>
                        <div>
                             <button id="question-submit" type=button class="button-positive">submit</btn>

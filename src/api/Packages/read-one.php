@@ -40,7 +40,7 @@
       
                 array_push($QuestionObj['Answer'], $AnswerObj);
       
-              } while( $row["correct"] != 4 && $row =  mysqli_fetch_assoc($VideoResult));
+              } while( $row["ChoiceOrder"] < 4 && $row =  mysqli_fetch_assoc($VideoResult));
       
               array_push($result["Questions"], $QuestionObj);
             } while( $row =  mysqli_fetch_assoc($VideoResult));
