@@ -327,8 +327,13 @@ color: palegoldenrod;
 	margin: 0px 10px 0px 10px;
 }
 
-.big-buttons p {
-	margin-bottom: 0px;
+.updatebuttonu {
+        display: inline-block;
+        margin-left: 70vw;
+}
+.updatebuttond {
+        display: inline-block;
+        margin-left: 50px;
 }
 
 
