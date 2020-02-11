@@ -1,9 +1,10 @@
 <?php
+include "../includes/Display_Question_Component.php";
 $packageId = intval($_GET['id']); 
     if(!$packageId){
         $packageId=1;
     }
-    $response = file_get_contents("http://web.engr.oregonstate.edu/~bensonre/Capstone/src/api/packages/get.php?id=$packageId");
+    $response = file_get_contents("http://web.engr.oregonstate.edu/~bensonre/Capstone/src/api/Packages/read-one.php?id=$packageId");
     $response = json_decode($response, true);
 ?>
 
@@ -33,16 +34,10 @@ $packageId = intval($_GET['id']);
             <div class="video-bar">
                 <div id="Question-Modal">
                     <div class="up-triangle"></div>
-                    <div class="question-container">container
-                        <div>
-                            What is the answer
-                        </div>
-                        <div>
-                           <input type="radio" class="radio" name="answer"><span>A</span><br/>
-                           <input type="radio" class="radio" name="answer"><span>B</span><br/>
-                           <input type="radio" class="radio" name="answer"><span>C</span><br/>
-                           <input type="radio" class="radio" name="answer"><span>D</span><br/>
-                        </div>
+                    <div class="question-container">
+                        <?php
+                                getQuestionHtml($response)
+                            ?>
                        <div>
                             <button id="question-submit" type=button class="button-positive">submit</btn>
                        </div> 

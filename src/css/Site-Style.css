@@ -37,6 +37,10 @@ body{
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
 
+  .hidden{
+      display: none;
+  }
+
   .modal{
       background: white;
       box-shadow: 10px 10px 10px black;
@@ -203,19 +207,17 @@ a {
 li{
     display: block;
 }
-/*
-video{
-    width:80vw;
+
+.video-js{
     margin:auto;
     display: block;
-    z-index: 1;
 }
-*/
+
 .small-video{
   width: 30vw;
 }
 .video-bar{
-    width:76vw;
+    width: 520px;
     margin:auto;
     display: block;
 }
