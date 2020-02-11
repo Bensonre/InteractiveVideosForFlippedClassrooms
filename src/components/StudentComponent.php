@@ -4,7 +4,7 @@ $packageId = intval($_GET['id']);
     if(!$packageId){
         $packageId=1;
     }
-    $response = file_get_contents("http://localhost/Capstone/InteractiveVideosForFlippedClassrooms/src/api/packages/read-one.php?id=$packageId");
+    $response = file_get_contents("http://web.engr.oregonstate.edu/~bensonre/Capstone/src/api/Packages/read-one.php?id=$packageId");
     $response = json_decode($response, true);
 ?>
 

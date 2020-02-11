@@ -18,6 +18,7 @@ getquestions();
   .then((myJson) => {
     console.log(myJson);
     questions = myJson.Questions;
+    questions.sort((a, b) => (a.QuestionTimestamp - b.QuestionTimestamp));
     console.log(questions)
   });
  // console.log(questions);
