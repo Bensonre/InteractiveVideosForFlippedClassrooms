@@ -4,7 +4,7 @@ include_once '../../database/Database.php';
 include_once '../../controllers/VideoController.php';
 
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
+header("Content-Type: multipart/form-data; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -19,10 +19,8 @@ $targetfile = $targetdir . basename($_FILES['fileToUpload']['name']);
 $targetpath = $pathdir . basename($_FILES['fileToUpload']['name']);
 
 $fileName = $_FILES["fileToUpload"]["name"];
-echo "$fileName";
 
 if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $targetfile)) {
-    echo 'File successfully upload to the server.\n';
     $fileUploaded = true;
 }
 
@@ -37,7 +35,13 @@ if ($controller->create()) {
     $databaseEntryCreated = true;
 }
 
-echo "\nredirecting...\n";
-header("Location: {$_SERVER["HTTP_REFERER"]}");
+$response = array("success" => 0, "message" => "Your file was not successfully uploaded.");
+
+if ($fileUploaded && $databaseEntryCreated) {
+    $response["success"] = 1;
+    $response["message"] = "Your file was successfully uploaded.";
+}
+
+echo json_encode($response);
 
 ?>
