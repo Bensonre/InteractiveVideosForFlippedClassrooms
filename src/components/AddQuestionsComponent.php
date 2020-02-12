@@ -2,7 +2,7 @@
     Add Questions to Package
 </div><!-- >End End section<!-->
 <div class="flex-container">
-    <form class="flex-item grow-2" action="../api/videoquestions/create.php" method="Post">
+    <form class="flex-item grow-2">
         <div class="label">Select a Package</div>
         <select class="PushLeft1" name="select-package" id="select-package">
         
@@ -19,8 +19,9 @@
         <input name="timestamp" id="TimeStamp" onkeyup="updateVideoTime()" type="string" class="PushLeft1" />
         <br />
         <br />
-        <input type="submit" class="button-positive">Add to Package</input>
+        <button onclick="sendData()" type="button" class="button-positive">Add to Package</button>
     </form><!-- >End Flex item <!-->
+    <div id="message"></div>
     <div class="flex-item grow-1">
         <div class="label">
             Selected Package <span id="selectedPkge"></span>
@@ -108,5 +109,32 @@
             let element = document.getElementById("select-question");
             element.appendChild(option);
         }
+    }
+
+    function sendData() {
+        var packageID = document.getElementById("select-package").value;
+        var questionID = document.getElementById("select-question").value;
+        var timestamp = document.getElementById("TimeStamp").value;
+
+        var info = {"packageID":packageID, "questionID":questionID, "timestamp":timestamp};
+        console.log(JSON.stringify(info));
+        document.getElementById("message").innerText = "Processing...";
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var res = JSON.parse(this.responseText);
+                document.getElementById("message").innerText = res.message;
+
+                if (res.success) {
+                    document.getElementById("message").style.color = "green";
+                } else {
+                    document.getElementById("message").style.color = "red";
+                }
+            }
+        };
+        xhttp.open("POST", "../api/videoquestions/create.php", false);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("data=" + JSON.stringify(info));
     }
 </script>
