@@ -1,13 +1,13 @@
 <div class="section-title">
         Create or Select a Package
     </div>
-    <form method="Post">
+    <form method="Post" action="../api/Packages/create.php">
         <div class="label">Select a video</div>
         <select class="PushLeft1"></select>
         <div class="label">
             Name the Package
         </div>
-        <input placeholder="Video Name" Type="text" class="PushLeft1"/>
+        <input name="Title" placeholder="Video Name" Type="text" class="PushLeft1"/>
             <button class="submit" type="Submit">Submit</button>
         <div class="label">
             Or
@@ -15,8 +15,9 @@
         <br/>
         <br/>
         <div class="label">Select an exsisting package</div>
-        <select class="PushLeft1"></select><div class="label">Select New video</div>
-        <select class="PushLeft1"></select>
+        <select class="PushLeft1" name="ExistingTItle"></select>
+        <div class="label">Select New video</div>
+        <select name="Video" class="PushLeft1"></select>
 
         <button class="submit" type="Submit">Submit</button>
     </form>

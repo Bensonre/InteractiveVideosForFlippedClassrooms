@@ -27,17 +27,32 @@ class PackageController {
         }
     }
 
-    public function create(){
-        $this->Date = htmlspecialchars(strip_tags($this->Date));
-        $this->Title = htmlspecialchars(strip_tags($this->Title));
+    public function delete($id){
+        $id = htmlspecialchars(strip_tags($id));
 
-        $query = "INSERT INTO $this->PackageTable (`Date`, `Title`) VALUES (?,?)";
+        $query = "DELETE FROM $this->PackageTable WHERE `ID` = ?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("ss", $this->Title, $this->Date);
+            $stmt->bind_param("i", $id);
+            return $stmt->execute();
+        }
+        return false;
+    }
+    
+    public function create($Title){
+       // $this->Date = htmlspecialchars(strip_tags($this->Date));
+        $this->Title = htmlspecialchars(strip_tags($Title));
+
+        $query = "INSERT INTO $this->PackageTable (`Title`) VALUES (?)";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("s", $this->Title);
             return $stmt->execute();
         }
     }
@@ -58,6 +73,26 @@ class PackageController {
             echo $error;
         }else {
         $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt;
+        }
+        return false;
+    }
+
+    public function getPackages()
+    {
+        $query = "Select FilePath, p.Title, PackageID, video_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from video_questions 
+		Join videos on video_questions.VideoID = videos.ID
+        Join packages As p on video_questions.PackageID = p.ID
+        Join questions on video_questions.QuestionID = Questions.ID
+        inner join choices As c on video_questions.QuestionID = c.QuestionID
+        ORDER BY PackageID,video_questions.QuestionID, ChoiceOrder ASC;";
+        $stmt = $this->conn->prepare($query);
+        if($stmt == false){
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo "Error in Get Packages with video path";
+            echo $error;
+        }else {
         $stmt->execute();
         return $stmt;
         }
