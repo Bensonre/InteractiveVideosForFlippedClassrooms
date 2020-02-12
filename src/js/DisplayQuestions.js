@@ -1,11 +1,21 @@
 
  
+//Code from https://davidwalsh.name/query-string-javascript
+function getUrlParameter(name) {
+  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  var results = regex.exec(location.search);
+  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
  // get video player
  // get time ints to display question
+ const PackageId= getUrlParameter("id");
+ const StudentID = 1;
  var questions;
 getquestions();
  function getquestions(){
-  fetch('../api/Packages/read-one.php?id=1',
+  fetch('../api/Packages/read-one.php?id=' + PackageId,
   {
     headers : { 
     'Content-Type': 'application/json',
@@ -51,7 +61,8 @@ getquestions();
 })
 
  btn.onclick = function(){
-    SetNextQuestion(currentQuestion);
+   q = document.getElementById("question" +currentQuestion).submit();
+   SetNextQuestion(currentQuestion);
    currentQuestion ++;
    question.style.display ="none";
    mainVideo.play();
