@@ -4,7 +4,9 @@
 <div class="flex-container">
     <form class="flex-item grow-2" method="Post">
         <div class="label">Select a Package</div>
-        <select class="PushLeft1"></select>
+        <select class="PushLeft1" name="select-package" id="select-package">
+        
+        </select>
         <br />
         <br />
         <div class="label">Select a Question</div>
@@ -42,3 +44,38 @@
     </div><!-- >End Flex item <!-->
 </div><!-- >End Flex Container <!-->
 <script src="../js/UpdateVideoTime.js"></script>
+
+<script>
+    window.onload = function() {
+        console.log("Getting packages...");
+        getPackages();
+    }
+
+    function getPackages() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                var obj = JSON.parse(this.responseText);
+                console.log("Packages received...");
+                fillPackages(obj);
+            }
+        };
+        xhttp.open("GET", "../api/Packages/read_all.php", true);
+        xhttp.send();
+    }
+    
+    function fillPackages(obj) {
+        console.log("Filling packages...");
+        var i;
+        for (i = 0; i < obj.length; i++) {
+            console.log(obj[i]);
+            let option = document.createElement("option");
+            option.value = obj[i].ID;
+            let text = document.createTextNode(obj[i].Title);
+            option.appendChild(text);
+            let element = document.getElementById("select-package");
+            element.appendChild(option);
+        }
+    }
+</script>

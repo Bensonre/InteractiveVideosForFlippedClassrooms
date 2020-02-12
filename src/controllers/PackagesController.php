@@ -42,6 +42,18 @@ class PackageController {
         }
     }
 
+    public function read_all() {
+        $query = "SELECT * FROM $this->PackageTable";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->execute();
+            return $stmt;
+        }
+    }
+
     public function getPackageWithVideo($id)
     {
         $query = "Select FilePath, p.Title, PackageID, video_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from video_questions 
