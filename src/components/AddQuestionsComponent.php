@@ -2,7 +2,7 @@
     Add Questions to Package
 </div><!-- >End End section<!-->
 <div class="flex-container">
-    <form class="flex-item grow-2" method="Post">
+    <form class="flex-item grow-2" action="../api/videoquestions/create.php" method="Post">
         <div class="label">Select a Package</div>
         <select class="PushLeft1" name="select-package" id="select-package">
         
@@ -16,10 +16,10 @@
         <br />
         <br />
         <div class="label">Time Stamp</div>
-        <input id="TimeStamp" onkeyup="updateVideoTime()" type="string" class="PushLeft1" />
+        <input name="timestamp" id="TimeStamp" onkeyup="updateVideoTime()" type="string" class="PushLeft1" />
         <br />
         <br />
-        <button class="button-positive">Add to Package</button>
+        <input type="submit" class="button-positive">Add to Package</input>
     </form><!-- >End Flex item <!-->
     <div class="flex-item grow-1">
         <div class="label">

@@ -15,10 +15,10 @@
     $result = $controller->read_all();
 
     $list = array();
-    $result->bind_result($id, $date, $title);
+    $result->bind_result($id, $date, $title, $videoID);
 
     while($result->fetch()) {
-        $obj = array("ID" => $id, "DateModified" => $date, "Title" => $title);
+        $obj = array("ID" => $id, "DateModified" => $date, "Title" => $title, "VideoID" => $videoID);
         array_push($list, $obj);
     }
 
