@@ -2,6 +2,7 @@
     function getQuestionHtml($response){
         $i=0;
         foreach($response['Questions'] as $question){
+
             $questionID = $question['QuestionID'];
             if($question['QuestionID'] == $response['Questions'][0]['QuestionID']){
                 echo "<form QuestionId='$questionID' id='question$i' class='student-question' method='POST' action='../api/answers/create.php'>";
@@ -23,7 +24,7 @@
             echo "<input type='hidden' value='1' name='studentID'>";
             echo '</div>';
             echo '<div><button id="question-submit" type="button" class="button-positive">submit</btn></div>';
-            echo '</form>'; 
+            echo '</form>';
             $i++;
         }
     }
