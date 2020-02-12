@@ -10,7 +10,9 @@
         <br />
         <br />
         <div class="label">Select a Question</div>
-        <select class="PushLeft1"></select>
+        <select class="PushLeft1" name="select-question" id="select-question">
+        
+        </select>
         <br />
         <br />
         <div class="label">Time Stamp</div>
@@ -47,8 +49,9 @@
 
 <script>
     window.onload = function() {
-        console.log("Getting packages...");
+        console.log("Getting packages and questions...");
         getPackages();
+        getQuestions();
     }
 
     function getPackages() {
@@ -75,6 +78,34 @@
             let text = document.createTextNode(obj[i].Title);
             option.appendChild(text);
             let element = document.getElementById("select-package");
+            element.appendChild(option);
+        }
+    }
+
+    function getQuestions() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                var obj = JSON.parse(this.responseText);
+                console.log("Questions received...");
+                fillQuestions(obj);
+            }
+        };
+        xhttp.open("GET", "../api/questions/read.php", true);
+        xhttp.send();
+    }
+    
+    function fillQuestions(obj) {
+        console.log("Filling questions...");
+        var i;
+        for (i = 0; i < obj.length; i++) {
+            console.log(obj[i]);
+            let option = document.createElement("option");
+            option.value = obj[i].QuestionID;
+            let text = document.createTextNode(obj[i].QuestionText);
+            option.appendChild(text);
+            let element = document.getElementById("select-question");
             element.appendChild(option);
         }
     }

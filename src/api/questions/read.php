@@ -28,8 +28,8 @@
     while($results->fetch()) {
 
       $QuestionObj = [
-        "Question ID" => $qid,
-        "Question Text" => $qt,
+        "QuestionID" => $qid,
+        "QuestionText" => $qt,
         "Category" => $cat,
         "Question Modified" => $qm,
         "Answer" => $answers = []
