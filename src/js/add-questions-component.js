@@ -1,7 +1,13 @@
 window.onload = function() {
     console.log("Getting packages and questions...");
+    initializeMarkerPlugin();
     getPackages();
     getQuestions();
+}
+
+function initializeMarkerPlugin() {
+    var player = videojs('AddQuestions-video');
+    player.markers({});
 }
 
 function getPackages() {
@@ -91,6 +97,11 @@ function sendData() {
     xhttp.send("data=" + JSON.stringify(info));
 }
 
+function packageChanged() {
+    getVideo();
+    getQuestionsInSelectedPackage();
+}
+
 function getVideo() {
     var packageID = document.getElementById("select-package").value;
     console.log("Getting video associated with the selected package.");
@@ -101,11 +112,12 @@ function getVideo() {
             var res = JSON.parse(this.responseText);
             console.log("filePath: " + res.filePath);
             var player = videojs('AddQuestions-video');
+            player.reset();
             player.src(res.filePath);
             player.load();
         }
     };
-    xhttp.open("GET", "../api/Packages/get-package-video.php?id=" + packageID, true);
+    xhttp.open("GET", "../api/Packages/get-package-video.php?id=" + packageID, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -121,6 +133,7 @@ function getQuestionsInSelectedPackage() {
             console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             fillQuestionTable(res);
+            placeMarkersOnVideo(res);
         }
     };
     xhttp.open("GET", "../api/videoquestions/get-questions-in-package.php?packageID=" + packageID + "&instructorID=" + instructorID, true);
@@ -169,4 +182,20 @@ function tableRowUpdate(button) {
 
 function tableRowDelete(button) {
     console.log("tableRowDelete() called.");
+}
+
+function placeMarkersOnVideo(questions) {
+    var player = videojs('AddQuestions-video');
+    var options = {};
+    options.markers = [];
+    var i;
+    for (i = 0; i < questions.length; i++) {
+        let timeStamp = questions[i].TimeStamp;
+        let newMarker = {};
+        newMarker.time = timeStamp;
+        options.markers.push(newMarker);
+        console.log(options);
+    }
+    player.markers.removeAll();
+    player.markers.add(options.markers);
 }

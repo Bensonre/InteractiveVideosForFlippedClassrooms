@@ -1,11 +1,13 @@
 <link href="../css/ivc.css" rel="stylesheet">
+<link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
+<link href="../dependencies/dist/videojs.markers.css" rel="stylesheet">
 
 <div class="ivc-container">
     <div class="section-title">Add Questions to a Package</div>
     <div class="quarter-width" id="ivc-add-questions-form-wrapper">
         <form>
             <div class="label">Select a Package</div>
-            <select name="select-package" id="select-package" onchange="getVideo(); getQuestionsInSelectedPackage()"></select>
+            <select name="select-package" id="select-package" onchange="packageChanged()"></select>
             <br />
             <br />
             <div class="label">Select a Question</div>
@@ -38,4 +40,6 @@
 </div> <!-- >End IVC Container <!-->
 
 <script src="../js/UpdateVideoTime.js"></script>
+<script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
+<script src='../dependencies/dist/videojs-markers.js'></script>
 <script src="../js/add-questions-component.js"></script>
