@@ -66,7 +66,7 @@ function sendData() {
     var questionID = document.getElementById("select-question").value;
     var timestamp = document.getElementById("TimeStamp").value;
 
-    var info = {"packageID":packageID, "questionID":questionID, "timestamp":timestamp};
+    var info = {"packageID":packageID, "questionID":questionID, "instructorID":99, "timestamp":timestamp}; // TODO: update with actual id
     console.log(JSON.stringify(info));
     document.getElementById("ivc-add-questions-status-message").innerText = "Processing...";
 

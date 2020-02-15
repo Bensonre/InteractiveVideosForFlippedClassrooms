@@ -15,17 +15,18 @@ $databaseEntryCreated = false;
 $data = json_decode($_POST['data']);
 $packageID = $data->packageID;
 $questionID = $data->questionID;
+$instructorID = $data->instructorID;
 $timestamp = $data->timestamp;
 
 $database = new Database();
 $db = $database->connect();
 
-$controller = new VideoQuestionsController($db);
+$videoQuestionsController = new VideoQuestionsController($db);
 $packageController = new PackageController($db);
 
 $videoID = $packageController->getVideoIdOfPackage($packageID);
 
-if ($controller->create($videoID, $questionID, $packageID, $timestamp)) {
+if ($videoQuestionsController->create($videoID, $questionID, $packageID, $instructorID, $timestamp)) {
     $databaseEntryCreated = true;
 }
 
