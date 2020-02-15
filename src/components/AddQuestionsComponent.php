@@ -24,16 +24,6 @@
     <div class="quarter-width" id="ivc-add-questions-added-table-wrapper">
         <table id="ivc-add-questions-added-table">
             <tr><th colspan="3">Questions in the Package</th></tr>
-            <tr>
-                <td>test question?</td>
-                <td>30</td>
-                <td><input /> <button>update</button> or <button>delete</button></td>
-            </tr>
-            <tr>
-                <td>test question?</td>
-                <td>10</td>
-                <td><input /> <button>update</button> or <button>delete</button></td>
-            </tr>
         </table>
     </div>
 				

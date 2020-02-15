@@ -130,4 +130,42 @@ function getQuestionsInSelectedPackage() {
 
 function fillQuestionTable(questions) {
     console.log(questions);
+    console.log("Filling question table...");
+    var i;
+    for (i = 0; i < questions.length; i++) {
+        let tr = document.createElement("tr");
+        tr.setAttribute("data-value", questions[i].ID);
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        let td3 = document.createElement("td");
+        let questionNode = document.createTextNode(questions[i].QuestionText);
+        let stampNode = document.createTextNode(questions[i].TimeStamp);
+        let inputNode = document.createElement("input");
+        let updateButton = document.createElement("button");
+        let deleteButton = document.createElement("button");
+        let orText = document.createTextNode(" or ");
+        updateButton.setAttribute("onclick", "tableRowUpdate(this)");
+        updateButton.innerHTML = "Update";
+        deleteButton.setAttribute("onclick", "tableRowDelete(this)");
+        deleteButton.innerHTML = "Delete";
+        td1.appendChild(questionNode);
+        td2.appendChild(stampNode);
+        td3.appendChild(inputNode);
+        td3.appendChild(updateButton);
+        td3.appendChild(orText);
+        td3.appendChild(deleteButton);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        let table = document.getElementById("ivc-add-questions-added-table");
+        table.appendChild(tr);
+    }
+}
+
+function tableRowUpdate(button) {
+    console.log("tableRowUpdate() called.");
+}
+
+function tableRowDelete(button) {
+    console.log("tableRowDelete() called.");
 }
