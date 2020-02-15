@@ -4,7 +4,7 @@
 <div class="flex-container">
     <form class="flex-item grow-2">
         <div class="label">Select a Package</div>
-        <select class="PushLeft1" name="select-package" id="select-package">
+        <select class="PushLeft1" name="select-package" id="select-package" onchange="getVideo()">
         
         </select>
         <br />
@@ -33,9 +33,10 @@
      <video-js
      id="AddQuestions-video"
      controls 
+     autoplay
      data-setup="{}"
 		 >
-       <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+       <source id="ivc-add-questions-player-src" type="video/mp4">
      </video-js>
 
         <br />

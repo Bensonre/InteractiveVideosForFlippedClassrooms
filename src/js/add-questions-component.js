@@ -30,6 +30,7 @@ function fillPackages(obj) {
         let element = document.getElementById("select-package");
         element.appendChild(option);
     }
+    getVideo();
 }
 
 function getQuestions() {
@@ -85,4 +86,25 @@ function sendData() {
     xhttp.open("POST", "../api/videoquestions/create.php", false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(info));
+}
+
+function getVideo() {
+    var packageID = document.getElementById("select-package").value;
+    console.log("Getting video associated with package id: " + packageID);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            var res = JSON.parse(this.responseText);
+            console.log("filePath: " + res.filePath);
+            var player = videojs('AddQuestions-video');
+            player.src(res.filePath);
+            player.load();
+            player.play();
+        }
+    };
+    xhttp.open("GET", "../api/Packages/get-package-video.php?id=" + packageID, false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
 }
