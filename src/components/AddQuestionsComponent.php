@@ -5,7 +5,7 @@
     <div class="quarter-width" id="ivc-add-questions-form-wrapper">
         <form>
             <div class="label">Select a Package</div>
-            <select name="select-package" id="select-package" onchange="getVideo()"></select>
+            <select name="select-package" id="select-package" onchange="getVideo() getQuestionsInSelectedPackage()"></select>
             <br />
             <br />
             <div class="label">Select a Question</div>

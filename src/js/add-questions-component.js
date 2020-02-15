@@ -31,6 +31,7 @@ function fillPackages(obj) {
         element.appendChild(option);
     }
     getVideo();
+    getQuestionsInSelectedPackage();
 }
 
 function getQuestions() {
@@ -81,6 +82,8 @@ function sendData() {
             } else {
                 document.getElementById("ivc-add-questions-status-message").style.color = "red";
             }
+
+            getQuestionsInSelectedPackage();
         }
     };
     xhttp.open("POST", "../api/videoquestions/create.php", false);
@@ -90,12 +93,11 @@ function sendData() {
 
 function getVideo() {
     var packageID = document.getElementById("select-package").value;
-    console.log("Getting video associated with package id: " + packageID);
+    console.log("Getting video associated with the selected package.");
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             console.log("filePath: " + res.filePath);
             var player = videojs('AddQuestions-video');
@@ -103,7 +105,29 @@ function getVideo() {
             player.load();
         }
     };
-    xhttp.open("GET", "../api/Packages/get-package-video.php?id=" + packageID, false);
+    xhttp.open("GET", "../api/Packages/get-package-video.php?id=" + packageID, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
+}
+
+function getQuestionsInSelectedPackage() {
+    var packageID = document.getElementById("select-package").value;
+    var instructorID = 99;                                            // TODO: use session variable
+    console.log("Getting all questions currently within the selected package.");
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            var res = JSON.parse(this.responseText);
+            fillQuestionTable(res);
+        }
+    };
+    xhttp.open("GET", "../api/videoquestions/get-questions-in-package.php?packageID=" + packageID + "&instructorID=" + instructorID, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+}
+
+function fillQuestionTable(questions) {
+    console.log(questions);
 }
