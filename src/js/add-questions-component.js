@@ -130,8 +130,10 @@ function getQuestionsInSelectedPackage() {
 
 function fillQuestionTable(questions) {
     console.log(questions);
+    console.log("Clearing question table...");
+    var table = document.getElementById("ivc-add-questions-added-table");
+    table.innerHTML = "<th colspan='3'>Questions in the Package</th>";
     console.log("Filling question table...");
-    var i;
     for (i = 0; i < questions.length; i++) {
         let tr = document.createElement("tr");
         tr.setAttribute("data-value", questions[i].ID);
@@ -157,7 +159,6 @@ function fillQuestionTable(questions) {
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
-        let table = document.getElementById("ivc-add-questions-added-table");
         table.appendChild(tr);
     }
 }

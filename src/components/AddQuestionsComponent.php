@@ -5,7 +5,7 @@
     <div class="quarter-width" id="ivc-add-questions-form-wrapper">
         <form>
             <div class="label">Select a Package</div>
-            <select name="select-package" id="select-package" onchange="getVideo() getQuestionsInSelectedPackage()"></select>
+            <select name="select-package" id="select-package" onchange="getVideo(); getQuestionsInSelectedPackage()"></select>
             <br />
             <br />
             <div class="label">Select a Question</div>
@@ -22,9 +22,7 @@
     </div>
 
     <div class="quarter-width" id="ivc-add-questions-added-table-wrapper">
-        <table id="ivc-add-questions-added-table">
-            <tr><th colspan="3">Questions in the Package</th></tr>
-        </table>
+        <table id="ivc-add-questions-added-table"></table>
     </div>
 				
     <div class="half-width" id="ivc-add-questions-player-wrapper">
