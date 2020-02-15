@@ -12,7 +12,7 @@ $currentpage = "Instructor";
 </head>
 
 <body>
-    <div class="containter PushLeft5">
+    <div class="container PushLeft5">
             <?php include "../components/AddQuestionsComponent.php"; ?>
     </div> 
     </body>

@@ -1,0 +1,52 @@
+.ivc-container {
+    display: block;
+    justify-content: center;
+    margin: auto;
+    height: 100%;
+    border: 1px solid black;
+}
+
+.quarter-width {
+    float: left;
+    width: 25%;
+    height: 100%;
+    max-width: 25%;
+    max-height: 100%;
+}
+
+.half-width {
+    float: left;
+    width: 50%;
+    height: 100%;
+    max-width: 50%;
+    max-height: 100%;
+}
+
+#ivc-add-questions-form-wrapper select {
+    width: 75%;
+}
+
+#ivc-add-questions-form-wrapper input {
+    width: 20%;
+}
+
+.ivc-button-positive {
+    font-size: 1.5em;
+    color: white;
+    border: none;
+    background: cornflowerblue;
+    border-radius: 1em;
+    width: fit-content;
+    box-shadow: 3px 3px 5px rgb(20,20,20, .75);
+}
+
+#ivc-add-questions-added-table-wrapper {
+    overflow: auto;
+}
+
+#ivc-add-questions-added-table input {
+    width: 10%;
+}
+
+#ivc-add-questions-player-wrapper {
+}

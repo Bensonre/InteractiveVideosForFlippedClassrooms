@@ -1,52 +1,53 @@
-<div class="section-title">
-    Add Questions to Package
-</div><!-- >End End section<!-->
-<div class="flex-container">
-    <form class="flex-item grow-2">
-        <div class="label">Select a Package</div>
-        <select class="PushLeft1" name="select-package" id="select-package" onchange="getVideo()">
-        
-        </select>
-        <br />
-        <br />
-        <div class="label">Select a Question</div>
-        <select class="PushLeft1" name="select-question" id="select-question">
-        
-        </select>
-        <br />
-        <br />
-        <div class="label">Time Stamp</div>
-        <input name="timestamp" id="TimeStamp" onkeyup="updateVideoTime()" type="string" class="PushLeft1" />
-        <br />
-        <br />
-        <button onclick="sendData()" type="button" class="button-positive">Add to Package</button>
-    </form><!-- >End Flex item <!-->
-    <div id="message"></div>
-    <div class="flex-item grow-1">
-        <div class="label">
-            Selected Package <span id="selectedPkge"></span>
-        </div>
+<link href="../css/ivc.css" rel="stylesheet">
+
+<div class="ivc-container">
+    <div class="section-title">Add Questions to a Package</div>
+    <div class="quarter-width" id="ivc-add-questions-form-wrapper">
+        <form>
+            <div class="label">Select a Package</div>
+            <select name="select-package" id="select-package" onchange="getVideo()"></select>
+            <br />
+            <br />
+            <div class="label">Select a Question</div>
+            <select name="select-question" id="select-question"></select>
+            <br />
+            <br />
+            <div class="label">Time Stamp</div>
+            <input name="timestamp" id="TimeStamp" onkeyup="updateVideoTime()" type="string" />
+            <br />
+            <br />
+            <button onclick="sendData()" type="button" class="ivc-button-positive">Add to Package</button>
+        </form>
+        <div id="ivc-add-questions-status-message"></div>
+    </div>
+
+    <div class="quarter-width" id="ivc-add-questions-added-table-wrapper">
+        <table id="ivc-add-questions-added-table">
+            <tr><th colspan="3">Questions in the Package</th></tr>
+            <tr>
+                <td>test question?</td>
+                <td>30</td>
+                <td><input /> <button>update</button> or <button>delete</button></td>
+            </tr>
+            <tr>
+                <td>test question?</td>
+                <td>10</td>
+                <td><input /> <button>update</button> or <button>delete</button></td>
+            </tr>
+        </table>
+    </div>
 				
-        <!--<video class="PushLeft1 small-video" id="videoPlayer" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4" onclick="this.play()" controls>
-            </video> -->
+    <div class="half-width" id="ivc-add-questions-player-wrapper">
+        <video-js
+        id="AddQuestions-video"
+        controls 
+        autoplay
+        data-setup="{}"
+		    >
+        </video-js>
+    </div>
 
-     <video-js
-     id="AddQuestions-video"
-     controls 
-     autoplay
-     data-setup="{}"
-		 >
-       <source id="ivc-add-questions-player-src" type="video/mp4">
-     </video-js>
+</div> <!-- >End IVC Container <!-->
 
-        <br />
-        <div class="label">
-            Question at Time Stamp
-        </div>
-        <div class="PushLeft1" id="QuestionDisplay">
-        </div>
-    </div><!-- >End Flex item <!-->
-</div><!-- >End Flex Container <!-->
 <script src="../js/UpdateVideoTime.js"></script>
-
 <script src="../js/add-questions-component.js"></script>

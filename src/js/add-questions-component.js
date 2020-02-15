@@ -68,18 +68,18 @@ function sendData() {
 
     var info = {"packageID":packageID, "questionID":questionID, "timestamp":timestamp};
     console.log(JSON.stringify(info));
-    document.getElementById("message").innerText = "Processing...";
+    document.getElementById("ivc-add-questions-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var res = JSON.parse(this.responseText);
-            document.getElementById("message").innerText = res.message;
+            document.getElementById("ivc-add-questions-status-message").innerText = res.message;
 
             if (res.success) {
-                document.getElementById("message").style.color = "green";
+                document.getElementById("ivc-add-questions-status-message").style.color = "green";
             } else {
-                document.getElementById("message").style.color = "red";
+                document.getElementById("ivc-add-questions-status-message").style.color = "red";
             }
         }
     };
@@ -101,7 +101,6 @@ function getVideo() {
             var player = videojs('AddQuestions-video');
             player.src(res.filePath);
             player.load();
-            player.play();
         }
     };
     xhttp.open("GET", "../api/Packages/get-package-video.php?id=" + packageID, false);
