@@ -7,7 +7,17 @@ window.onload = function() {
 
 function initializeMarkerPlugin() {
     var player = videojs('AddQuestions-video');
-    player.markers({});
+    player.markers({
+        markerTip:{
+            display: true,
+            text: function(marker) {
+            return marker.text;
+            },
+            time: function(marker) {
+            return marker.time;
+            }
+        }
+    });
 }
 
 function getPackages() {
@@ -259,8 +269,10 @@ function placeMarkersOnVideo(questions) {
     var i;
     for (i = 0; i < questions.length; i++) {
         let timeStamp = questions[i].TimeStamp;
+        let questionText = questions[i].QuestionText;
         let newMarker = {};
         newMarker.time = timeStamp;
+        newMarker.text = questionText;
         options.markers.push(newMarker);
         console.log(options);
     }
