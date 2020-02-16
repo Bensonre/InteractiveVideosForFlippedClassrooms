@@ -42,6 +42,21 @@ class VideoQuestionsController {
         return false;
     }
 
+    public function update($id, $timeStamp) {
+        $id = htmlspecialchars(strip_tags($id));
+        $timeStamp = htmlspecialchars(strip_tags($timeStamp));
+
+        $query = "UPDATE $this->table SET `QuestionTimeStamp` = ? WHERE `ID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            return false;
+        } else {
+            $stmt->bind_param("ii", $timeStamp, $id);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
     public function getQuestionsInPackage($packageID, $instructorID) {
         $packageID = htmlspecialchars(strip_tags($packageID));
         $instructorID = htmlspecialchars(strip_tags($instructorID));

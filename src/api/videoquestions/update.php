@@ -9,24 +9,25 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-$databaseEntryDeleted = false;
+$databaseEntryUpdated = false;
 
 $id = $_POST['id'];
+$timeStamp = $_POST['timeStamp'];
 
 $database = new Database();
 $db = $database->connect();
 
 $videoQuestionsController = new VideoQuestionsController($db);
 
-if ($videoQuestionsController->delete($id)) {
-    $databaseEntryDeleted = true;
+if ($videoQuestionsController->update($id, $timeStamp)) {
+    $databaseEntryUpdated = true;
 }
 
-$response = array("success" => 0, "message" => "Your question was not successfully removed.");
+$response = array("success" => 0, "message" => "Your question was not successfully updated.");
 
-if ($databaseEntryDeleted) {
+if ($databaseEntryUpdated) {
     $response["success"] = 1;
-    $response["message"] = "Your question was successfully removed.";
+    $response["message"] = "Your question was successfully updated.";
 }
 
 echo json_encode($response);

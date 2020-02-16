@@ -186,7 +186,37 @@ function fillQuestionTable(questions) {
 }
 
 function tableRowUpdate(button) {
-    console.log("tableRowUpdate() called.");
+    var row = button.parentNode.parentNode;
+    var timeStampNode = row.childNodes[1];
+    var oldTimeStamp = timeStampNode.innerText;
+    var newTimeStamp = row.childNodes[2].childNodes[0].value;
+    let id = row.getAttribute("data-value");
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var res = JSON.parse(this.responseText);
+            if (res.success) {
+                timeStampNode.innerText = newTimeStamp;
+                updateMarkerAtTimestamp(oldTimeStamp, newTimeStamp);
+            }
+        }
+    };
+    xhttp.open("POST", "../api/videoquestions/update.php", false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("id=" + id + "&timeStamp=" + newTimeStamp);
+}
+
+function updateMarkerAtTimestamp(oldTimeStamp, newTimeStamp) {
+    var player = videojs('AddQuestions-video');
+    var markers = player.markers.getMarkers();
+    for (let i = 0; i < markers.length; i++) {
+        if (markers[i].time == oldTimeStamp) {
+            markers[i].time = newTimeStamp;
+            break;
+        }
+    }
+    player.markers.updateTime();
 }
 
 function tableRowDelete(button) {
