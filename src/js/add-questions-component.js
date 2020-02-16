@@ -142,6 +142,12 @@ function getQuestionsInSelectedPackage() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
             var res = JSON.parse(this.responseText);
+            res.sort(function (a, b) {
+                    if (a.TimeStamp > b.TimeStamp) return 1;
+                    if (b.TimeStamp > a.TimeStamp) return -1;
+                    return 0;
+                }
+            );
             fillQuestionTable(res);
             placeMarkersOnVideo(res);
         }
