@@ -82,8 +82,9 @@ function sendData() {
     var packageID = document.getElementById("select-package").value;
     var questionID = document.getElementById("select-question").value;
     var timestamp = document.getElementById("TimeStamp").value;
+    let instructorID = ivcInstructorId;
 
-    var info = {"packageID":packageID, "questionID":questionID, "instructorID":99, "timestamp":timestamp}; // TODO: update with actual id
+    var info = {"packageID":packageID, "questionID":questionID, "instructorID":instructorID, "timestamp":timestamp};
     console.log(JSON.stringify(info));
     document.getElementById("ivc-add-questions-status-message").innerText = "Processing...";
 
@@ -134,7 +135,7 @@ function getVideo() {
 
 function getQuestionsInSelectedPackage() {
     var packageID = document.getElementById("select-package").value;
-    var instructorID = 99;                                            // TODO: use session variable
+    var instructorID = ivcInstructorId;                                         
     console.log("Getting all questions currently within the selected package.");
 
     var xhttp = new XMLHttpRequest();

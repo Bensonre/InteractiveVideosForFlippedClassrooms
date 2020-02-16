@@ -1,8 +1,3 @@
-<link href="../css/ivc.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
-<link href="../dependencies/dist/videojs.markers.css" rel="stylesheet">
-
 <div class="container">
     <div class="row">
         <div class="col m-4 border border-dark">
@@ -40,8 +35,3 @@
         </div>
     </div>
 </div> <!-- >End IVC Container <!-->
-
-<script src="../js/UpdateVideoTime.js"></script>
-<script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
-<script src='../dependencies/dist/videojs-markers.js'></script>
-<script src="../js/add-questions-component.js"></script>
