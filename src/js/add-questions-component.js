@@ -160,6 +160,8 @@ function fillQuestionTable(questions) {
         let questionNode = document.createTextNode(questions[i].QuestionText);
         let stampNode = document.createTextNode(questions[i].TimeStamp);
         let inputNode = document.createElement("input");
+        inputNode.type = "text";
+        inputNode.style = "width: 4vw;";
         let updateButton = document.createElement("button");
         let deleteButton = document.createElement("button");
         let orText = document.createTextNode(" or ");
