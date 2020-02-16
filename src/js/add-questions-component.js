@@ -160,7 +160,6 @@ function fillQuestionTable(questions) {
         let questionNode = document.createTextNode(questions[i].QuestionText);
         let stampNode = document.createTextNode(questions[i].TimeStamp);
         let inputNode = document.createElement("input");
-        inputNode.classList.add("col-sm-4");
         let updateButton = document.createElement("button");
         let deleteButton = document.createElement("button");
         let orText = document.createTextNode(" or ");
@@ -191,9 +190,9 @@ function tableRowUpdate(button) {
 }
 
 function tableRowDelete(button) {
-    console.log("tableRowDelete() called.");
     var row = button.parentNode.parentNode;
     var table = row.parentNode;
+    var timestamp = row.childNodes[1].innerText;
     let id = row.getAttribute("data-value");
 
     var xhttp = new XMLHttpRequest();
@@ -202,12 +201,23 @@ function tableRowDelete(button) {
             var res = JSON.parse(this.responseText);
             if (res.success) {
                 table.removeChild(row);
+                removeMarkerAtTimestamp(timestamp);
             }
         }
     };
     xhttp.open("POST", "../api/videoquestions/delete.php", false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("id=" + id);
+}
+
+function removeMarkerAtTimestamp(timestamp) {
+    var player = videojs('AddQuestions-video');
+    var markers = player.markers.getMarkers();
+    for (let i = 0; i < markers.length; i++) {
+        if (markers[i].time == timestamp) {
+            player.markers.remove([i]);
+        }
+    }
 }
 
 function placeMarkersOnVideo(questions) {
