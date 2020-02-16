@@ -42,13 +42,16 @@ class PackageController {
         }
     }
 
-    public function read_all() {
-        $query = "SELECT * FROM $this->PackageTable";
+    public function readAllWithInstructorId($instructorId) {
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
+
+        $query = "SELECT * FROM $this->PackageTable WHERE `InstructorID` = ?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
+            $stmt->bind_param("i", $instructorId);
             $stmt->execute();
             return $stmt;
         }

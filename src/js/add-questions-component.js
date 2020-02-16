@@ -21,6 +21,7 @@ function initializeMarkerPlugin() {
 }
 
 function getPackages() {
+    let instructorID = ivcInstructorId;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -30,7 +31,8 @@ function getPackages() {
             fillPackages(obj);
         }
     };
-    xhttp.open("GET", "../api/Packages/read_all.php", true);
+    xhttp.open("GET", "../api/Packages/read-all-with-instructor-id.php?instructorId=" + instructorID, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
 

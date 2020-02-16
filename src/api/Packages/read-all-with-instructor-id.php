@@ -8,14 +8,16 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+    $instructorId = $_GET['instructorId'];
+
     $database = new Database();
     $db = $database->connect();
 
     $controller = new PackageController($db);
-    $result = $controller->read_all();
+    $result = $controller->readAllWithInstructorId($instructorId);
 
     $list = array();
-    $result->bind_result($id, $date, $title, $videoID);
+    $result->bind_result($id, $date, $title, $videoID, $instructorId);
 
     while($result->fetch()) {
         $obj = array("ID" => $id, "DateModified" => $date, "Title" => $title, "VideoID" => $videoID);
