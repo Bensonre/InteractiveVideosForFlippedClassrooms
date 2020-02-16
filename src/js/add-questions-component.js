@@ -192,6 +192,22 @@ function tableRowUpdate(button) {
 
 function tableRowDelete(button) {
     console.log("tableRowDelete() called.");
+    var row = button.parentNode.parentNode;
+    var table = row.parentNode;
+    let id = row.getAttribute("data-value");
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var res = JSON.parse(this.responseText);
+            if (res.success) {
+                table.removeChild(row);
+            }
+        }
+    };
+    xhttp.open("POST", "../api/videoquestions/delete.php", false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("id=" + id);
 }
 
 function placeMarkersOnVideo(questions) {

@@ -28,6 +28,20 @@ class VideoQuestionsController {
         return false;
     }
 
+    public function delete($id) {
+        $id = htmlspecialchars(strip_tags($id));
+
+        $query = "DELETE FROM $this->table WHERE `ID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            return false;
+        } else {
+            $stmt->bind_param("i", $id);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
     public function getQuestionsInPackage($packageID, $instructorID) {
         $packageID = htmlspecialchars(strip_tags($packageID));
         $instructorID = htmlspecialchars(strip_tags($instructorID));
