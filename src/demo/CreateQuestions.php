@@ -23,10 +23,9 @@
 
 <body>
     <?php include "../includes/header.php"; ?>
+	
+    <?php include "../components/CreateQuestionComponent.php"; ?>
 
-    <div class="container">
-			<?php include "../components/CreateQuestionComponent.php"; ?>
-    </div> 
     </body>
 </html>
 <script src="../js/question-component.js"></script>

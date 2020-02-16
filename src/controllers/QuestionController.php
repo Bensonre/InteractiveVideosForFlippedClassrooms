@@ -31,25 +31,26 @@ class QuestionController {
   }
   
   //Creates question. All inputs are expected not to be NULL.
-  public function create() 
+  public function create($question, $category, $c1, $c2, $c3, $c4, $correct, $instructorId) 
   {
-    $this->question = htmlspecialchars(strip_tags($this->question));
-    $this->category = htmlspecialchars(strip_tags($this->category));
-    $this->c1       = htmlspecialchars(strip_tags($this->c1));
-    $this->c2       = htmlspecialchars(strip_tags($this->c2));
-    $this->c3       = htmlspecialchars(strip_tags($this->c3));
-    $this->c4       = htmlspecialchars(strip_tags($this->c4));
-    $this->correct = htmlspecialchars(strip_tags($this->correct));
+    $question = htmlspecialchars(strip_tags($question));
+    $category = htmlspecialchars(strip_tags($category));
+    $c1       = htmlspecialchars(strip_tags($c1));
+    $c2       = htmlspecialchars(strip_tags($c2));
+    $c3       = htmlspecialchars(strip_tags($c3));
+    $c4       = htmlspecialchars(strip_tags($c4));
+    $correct = htmlspecialchars(strip_tags($correct));
+    $instructorId = htmlspecialchars(strip_tags($instructorId));
 
     $createSuccess = True;
 
     //maps choices to their positions entered into the form
-    $choices = [$this->c1 => 1,
-                $this->c2 => 2,
-                $this->c3 => 3,
-                $this->c4 => 4];
+    $choices = [$c1 => 1,
+                $c2 => 2,
+                $c3 => 3,
+                $c4 => 4];
 
-    $qquery = "INSERT INTO $this->qtable (QuestionText, Category, DateModified) VALUES ('$this->question', '$this->category', CURDATE() )";
+    $qquery = "INSERT INTO $this->qtable (QuestionText, Category, DateModified, InstructorID) VALUES ('$this->question', '$this->category', CURDATE(), '$instructorId' )";
 
     $createSuccess = $this->sendQuery($qquery);
 
@@ -61,7 +62,7 @@ class QuestionController {
         break;
       }
 
-      if( $ord == $this->correct ) {
+      if( $ord == $correct ) {
         $cquery = "INSERT INTO $this->ctable (QuestionID, ChoiceText, ChoiceOrder, DateModified, correct) " .
                  "VALUES ('$last_id', '$choice', '$ord', CURDATE(), TRUE )";
 
