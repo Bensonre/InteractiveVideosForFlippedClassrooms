@@ -6,7 +6,7 @@ window.onload = function() {
 }
 
 function initializeMarkerPlugin() {
-    var player = videojs('AddQuestions-video');
+    var player = videojs('ivc-add-questions-player');
     player.markers({
         markerTip:{
             display: true,
@@ -83,7 +83,7 @@ function fillQuestions(obj) {
 function sendData() {
     var packageID = document.getElementById("select-package").value;
     var questionID = document.getElementById("select-question").value;
-    var timestamp = document.getElementById("TimeStamp").value;
+    var timestamp = document.getElementById("timestamp").value;
     let instructorID = ivcInstructorId;
 
     var info = {"packageID":packageID, "questionID":questionID, "instructorID":instructorID, "timestamp":timestamp};
@@ -124,7 +124,7 @@ function getVideo() {
         if (this.readyState == 4 && this.status == 200) {
             var res = JSON.parse(this.responseText);
             console.log("filePath: " + res.filePath);
-            var player = videojs('AddQuestions-video');
+            var player = videojs('ivc-add-questions-player');
             player.reset();
             player.src(res.filePath);
             player.load();
@@ -146,8 +146,8 @@ function getQuestionsInSelectedPackage() {
             console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             res.sort(function (a, b) {
-                    if (a.TimeStamp > b.TimeStamp) return 1;
-                    if (b.TimeStamp > a.TimeStamp) return -1;
+                    if (a.timestamp > b.timestamp) return 1;
+                    if (b.timestamp > a.timestamp) return -1;
                     return 0;
                 }
             );
@@ -177,7 +177,7 @@ function fillQuestionTable(questions) {
         let td2 = document.createElement("td");
         let td3 = document.createElement("td");
         let questionNode = document.createTextNode(questions[i].QuestionText);
-        let stampNode = document.createTextNode(questions[i].TimeStamp);
+        let stampNode = document.createTextNode(questions[i].timestamp);
         let inputNode = document.createElement("input");
         inputNode.type = "text";
         inputNode.style = "width: 4vw;";
@@ -208,9 +208,9 @@ function fillQuestionTable(questions) {
 
 function tableRowUpdate(button) {
     var row = button.parentNode.parentNode;
-    var timeStampNode = row.childNodes[1];
-    var oldTimeStamp = timeStampNode.innerText;
-    var newTimeStamp = row.childNodes[2].childNodes[0].value;
+    var timestampNode = row.childNodes[1];
+    var oldTimestamp = timestampNode.innerText;
+    var newTimestamp = row.childNodes[2].childNodes[0].value;
     let id = row.getAttribute("data-value");
 
     var xhttp = new XMLHttpRequest();
@@ -218,22 +218,22 @@ function tableRowUpdate(button) {
         if (this.readyState == 4 && this.status == 200) {
             var res = JSON.parse(this.responseText);
             if (res.success) {
-                timeStampNode.innerText = newTimeStamp;
-                updateMarkerAtTimestamp(oldTimeStamp, newTimeStamp);
+                timestampNode.innerText = newTimestamp;
+                updateMarkerAtTimestamp(oldTimestamp, newTimestamp);
             }
         }
     };
     xhttp.open("POST", "../api/videoquestions/update.php", false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("id=" + id + "&timeStamp=" + newTimeStamp);
+    xhttp.send("id=" + id + "&timestamp=" + newTimestamp);
 }
 
-function updateMarkerAtTimestamp(oldTimeStamp, newTimeStamp) {
-    var player = videojs('AddQuestions-video');
+function updateMarkerAtTimestamp(oldTimestamp, newTimestamp) {
+    var player = videojs('ivc-add-questions-player');
     var markers = player.markers.getMarkers();
     for (let i = 0; i < markers.length; i++) {
-        if (markers[i].time == oldTimeStamp) {
-            markers[i].time = newTimeStamp;
+        if (markers[i].time == oldTimestamp) {
+            markers[i].time = newTimestamp;
             break;
         }
     }
@@ -262,7 +262,7 @@ function tableRowDelete(button) {
 }
 
 function removeMarkerAtTimestamp(timestamp) {
-    var player = videojs('AddQuestions-video');
+    var player = videojs('ivc-add-questions-player');
     var markers = player.markers.getMarkers();
     for (let i = 0; i < markers.length; i++) {
         if (markers[i].time == timestamp) {
@@ -272,15 +272,15 @@ function removeMarkerAtTimestamp(timestamp) {
 }
 
 function placeMarkersOnVideo(questions) {
-    var player = videojs('AddQuestions-video');
+    var player = videojs('ivc-add-questions-player');
     var options = {};
     options.markers = [];
     var i;
     for (i = 0; i < questions.length; i++) {
-        let timeStamp = questions[i].TimeStamp;
+        let timestamp = questions[i].timestamp;
         let questionText = questions[i].QuestionText;
         let newMarker = {};
-        newMarker.time = timeStamp;
+        newMarker.time = timestamp;
         newMarker.text = questionText;
         options.markers.push(newMarker);
         console.log(options);

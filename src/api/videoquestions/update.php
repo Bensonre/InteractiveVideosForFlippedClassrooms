@@ -12,14 +12,14 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $databaseEntryUpdated = false;
 
 $id = $_POST['id'];
-$timeStamp = $_POST['timeStamp'];
+$timestamp = $_POST['timestamp'];
 
 $database = new Database();
 $db = $database->connect();
 
 $videoQuestionsController = new VideoQuestionsController($db);
 
-if ($videoQuestionsController->update($id, $timeStamp)) {
+if ($videoQuestionsController->update($id, $timestamp)) {
     $databaseEntryUpdated = true;
 }
 

@@ -9,12 +9,12 @@ class VideoQuestionsController {
         $this->conn = $db;
     }
 
-    public function create($videoID, $questionID, $packageID, $instructorID, $timeStamp) {
+    public function create($videoID, $questionID, $packageID, $instructorID, $timestamp) {
         $videoID = htmlspecialchars(strip_tags($videoID));
         $questionID = htmlspecialchars(strip_tags($questionID));
         $packageID = htmlspecialchars(strip_tags($packageID));
         $instructorID = htmlspecialchars(strip_tags($instructorID));
-        $timeStamp = htmlspecialchars(strip_tags($timeStamp));
+        $timestamp = htmlspecialchars(strip_tags($timestamp));
 
         $query = "INSERT INTO $this->table (`VideoID`, `QuestionID`, `PackageID`, `InstructorID`, `QuestionTimeStamp`) VALUES (?,?,?,?,?)";
         $stmt = $this->conn->prepare($query);
@@ -22,7 +22,7 @@ class VideoQuestionsController {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("iiiii", $videoID, $questionID, $packageID, $instructorID, $timeStamp);
+            $stmt->bind_param("iiiii", $videoID, $questionID, $packageID, $instructorID, $timestamp);
             return $stmt->execute();
         }
         return false;
@@ -42,16 +42,16 @@ class VideoQuestionsController {
         return false;
     }
 
-    public function update($id, $timeStamp) {
+    public function update($id, $timestamp) {
         $id = htmlspecialchars(strip_tags($id));
-        $timeStamp = htmlspecialchars(strip_tags($timeStamp));
+        $timestamp = htmlspecialchars(strip_tags($timestamp));
 
         $query = "UPDATE $this->table SET `QuestionTimeStamp` = ? WHERE `ID` = ?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             return false;
         } else {
-            $stmt->bind_param("ii", $timeStamp, $id);
+            $stmt->bind_param("ii", $timestamp, $id);
             return $stmt->execute();
         }
         return false;

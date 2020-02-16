@@ -18,13 +18,10 @@
     $result = $controller->getQuestionsInPackage($packageID, $instructorID);
 
     $list = array();
-    $result->bind_result($id, $text, $timeStamp);
-    //$result->bind_result($id, $videoID, $questionID, $packageID, $instructorID, $questionTimeStamp);
+    $result->bind_result($id, $text, $timestamp);
 
     while($result->fetch()) {
-        //$obj = array("ID" => $id, "VideoID" => $videoID, "QuestionID" => $questionID, "PackageID" => $packageID, 
-          //           "InstructorID" => $instructorID, "QuestionTimeStamp" => $questionTimeStamp);
-        $obj = array("ID" => $id, "QuestionText" => $text, "TimeStamp" => $timeStamp);
+        $obj = array("ID" => $id, "QuestionText" => $text, "timestamp" => $timestamp);
         array_push($list, $obj);
     }
 
