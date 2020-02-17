@@ -92,7 +92,32 @@ function updateQuestion() {
 }
 
 function deleteQuestion() {
+    let questionIndex = document.getElementById("ivc-question-select-delete").value;
+    let questionId = ivcQuestionComponentQuestions[questionIndex].questionId;
 
+    let data = {
+        "questionId":questionId,
+    };
+    console.log(JSON.stringify(data));
+    document.getElementById("ivc-delete-question-status-message").innerText = "Processing...";
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            var res = JSON.parse(this.responseText);
+            document.getElementById("ivc-delete-question-status-message").innerText = res.message;
+
+            if (res.success) {
+                document.getElementById("ivc-delete-question-status-message").style.color = "green";
+            } else {
+                document.getElementById("ivc-delete-question-status-message").style.color = "red";
+            }
+        }
+    };
+    xhttp.open("POST", "../api/questions/delete.php", false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data=" + JSON.stringify(data));
 }
 
 function getQuestions() {

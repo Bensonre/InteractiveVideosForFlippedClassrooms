@@ -9,6 +9,9 @@
   header("Access-Control-Max-Age: 3600");
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+  $data = json_decode($_POST['data']);
+  $questionId = $data->questionId;
+
   $databaseEntryCreated = false;
 
   $database = new Database();
@@ -16,23 +19,18 @@
 
   $controller = new QuestionController($db);
 
-  if(
-    !empty($_POST['id']) 
-  ){
-    $controller->id       = $_POST['id'];
+  $controller->id       = $questionId;
 
-    if ($controller->delete()) {
-        $databaseEntryCreated = true;
-    } else {
-      echo json_encode(array("message" => "Couldn't Delete Question"));
-    }
-   } else {
-      echo json_encode(array("message" => "Can't Delete Question. Insufficient Data."));
-   }
+  if ($controller->delete()) {
+      $databaseEntryCreated = true;
+  } 
 
-   if($databaseEntryCreated == true) {
-     echo json_encode(array("message" => "Question Deleted"));
-   }
+  $response = array("success" => 0, "message" => "The question was not successfully deleted.");
 
-  header("Location: {$_SERVER["HTTP_REFERER"]}");
+  if($databaseEntryCreated == true) {
+      $response['success'] = 1;
+      $response['message'] = "The question was successfully deleted.";
+  }
+
+  echo json_encode($response);
 ?>

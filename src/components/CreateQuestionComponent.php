@@ -85,7 +85,7 @@
                     <select id="ivc-question-select-delete" class="form-control" rows="3" name="question"></select>
                 </div>
                 <button class="form-control mt-3 btn btn-danger" type="button" onclick="deleteQuestion()">Delete</button>
-
+                <div id="ivc-delete-question-status-message" class="text-center"></div>
         </div>
 
     </div>
