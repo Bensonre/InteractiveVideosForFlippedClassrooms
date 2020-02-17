@@ -22,7 +22,7 @@
             echo "<input type='hidden' value='$questionID' name='questionID'>";
             echo "<input type='hidden' value='1' name='studentID'>";
             echo '</div>';
-            echo '<div><button id="question-submit" type="button" class="button-positive">submit</btn></div>';
+            echo '<div><button id="question-submit" type="button" onclick="submitAnswer()" class="button-positive">submit</btn></div>';
             echo '</form>'; 
             $i++;
         }

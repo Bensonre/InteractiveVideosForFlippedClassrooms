@@ -31,8 +31,6 @@ getquestions();
     questions.sort((a, b) => (a.QuestionTimestamp - b.QuestionTimestamp));
     console.log(questions)
   });
- // console.log(questions);
- // return questions;
 }
  var currentQuestion = 0;
  var mainVideo = document.getElementById("videoPlayer"); 
@@ -60,10 +58,10 @@ getquestions();
  }
 })
 
- btn.onclick = function(){
-   q = document.getElementById("question" +currentQuestion).submit();
-   SetNextQuestion(currentQuestion);
-   currentQuestion ++;
-   question.style.display ="none";
-   mainVideo.play();
- }
+function submitAnswer(){
+  q = document.getElementById("question" +currentQuestion).submit();
+  SetNextQuestion(currentQuestion);
+  currentQuestion ++;
+  question.style.display ="none";
+  mainVideo.play();
+}
