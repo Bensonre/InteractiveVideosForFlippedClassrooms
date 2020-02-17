@@ -27,6 +27,7 @@ class PackageController {
         }
     }
 
+
     public function delete($id){
         $id = htmlspecialchars(strip_tags($id));
 
