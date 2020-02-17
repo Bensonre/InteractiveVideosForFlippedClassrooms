@@ -24,7 +24,9 @@
 <body>
     <?php include "../includes/header.php"; ?>
 	
-    <?php include "../components/CreateQuestionComponent.php"; ?>
+    <div class="container mt-3">
+        <?php include "../components/CreateQuestionComponent.php"; ?>
+    </div>
 
     </body>
 </html>
