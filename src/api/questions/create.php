@@ -36,8 +36,6 @@
   
   if ($controller->create($question, $category, $a1, $a2, $a3, $a4, $correct, $instructorId)) {
       $databaseEntryCreated = true;
-  } else {
-      echo json_encode(array("message" => "Can't Create Question."));
   }
   
   $response = array("success" => 0, "message" => "The question was not successfully created.");

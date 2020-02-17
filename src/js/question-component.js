@@ -47,7 +47,48 @@ function createQuestion() {
 }
 
 function updateQuestion() {
+    let questionIndex = document.getElementById("ivc-question-select-update").value;
+    let questionId = ivcQuestionComponentQuestions[questionIndex].questionId;
+    let question = ivcQuestionComponentQuestions[questionIndex].questionText;
+    let category = document.getElementById("ivc-category-update").value;
+    let a1 = document.getElementById("ivc-a1-update").value;
+    let a2 = document.getElementById("ivc-a2-update").value;
+    let a3 = document.getElementById("ivc-a3-update").value;
+    let a4 = document.getElementById("ivc-a4-update").value;
+    let correct = document.getElementById("ivc-select-answer-update").value;
+    let instructorId = ivcInstructorId;
 
+    let data = {
+        "questionId":questionId,
+        "question":question, 
+        "category":category, 
+        "a1":a1, 
+        "a2":a2,
+        "a3":a3,
+        "a4":a4,
+        "correct":correct,
+        "instructorId":instructorId
+    };
+    console.log(JSON.stringify(data));
+    document.getElementById("ivc-update-question-status-message").innerText = "Processing...";
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            var res = JSON.parse(this.responseText);
+            document.getElementById("ivc-update-question-status-message").innerText = res.message;
+
+            if (res.success) {
+                document.getElementById("ivc-update-question-status-message").style.color = "green";
+            } else {
+                document.getElementById("ivc-update-question-status-message").style.color = "red";
+            }
+        }
+    };
+    xhttp.open("POST", "../api/questions/update.php", false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data=" + JSON.stringify(data));
 }
 
 function deleteQuestion() {

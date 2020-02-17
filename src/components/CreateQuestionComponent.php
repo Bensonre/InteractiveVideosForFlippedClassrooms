@@ -72,7 +72,7 @@
                             <option value="4">Answer 4</option>
                         </select>
 
-                    <button class="form-control mt-3 btn btn-warning" type="button" onclick="createQuestion()">Update</button>
+                    <button class="form-control mt-3 btn btn-warning" type="button" onclick="updateQuestion()">Update</button>
                 </div>
                 <div id="ivc-update-question-status-message" class="text-center"></div>
             </form>
