@@ -2,7 +2,7 @@
     <ul class="nav nav-pills">
         <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#ivc-create-question-form">Create</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ivc-update-question-form">Update</a></li>
-        <li class="nav-item"><a class="nav-link"data-toggle="pill" href="#ivc-delete-question-table">Delete</a></li>
+        <li class="nav-item"><a class="nav-link"data-toggle="pill" href="#ivc-delete-question-form">Delete</a></li>
     </ul>
 
     <div class="tab-content">
@@ -78,7 +78,7 @@
             </form>
         </div>
 
-        <div id="ivc-delete-question-table" class="tab-pane container fade">
+        <div id="ivc-delete-question-form" class="tab-pane container fade">
             <h2 class="text-center">Delete Questions</h2>
                 <div class="form-group">
                     <label>Question</label>
