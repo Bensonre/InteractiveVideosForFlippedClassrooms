@@ -30,24 +30,24 @@
     while($results->fetch()) {
 
       $QuestionObj = [
-        "Question ID" => $qid,
-        "Question Text" => $qt,
-        "Category" => $cat,
-        "Question Modified" => $qm,
-        "Answer" => $answers = []
+        "questionId" => $qid,
+        "questionText" => $qt,
+        "category" => $cat,
+        "questionModified" => $qm,
+        "answer" => $answers = []
         ];
 
         do {
 
           $AnswerObj = [
-          "Answer ID" => $aid,
-          "Answer Text" => $ct,
-          "Answer Order" => $co,
-          "Answer Modified" => $cm,
-          "Correct?" => $c
+          "answerId" => $aid,
+          "answerText" => $ct,
+          "answerOrder" => $co,
+          "answerModified" => $cm,
+          "correct" => $c
           ];
 
-          array_push($QuestionObj['Answer'], $AnswerObj);
+          array_push($QuestionObj['answer'], $AnswerObj);
 
         } while( $co != 4 && $results->fetch());
 
