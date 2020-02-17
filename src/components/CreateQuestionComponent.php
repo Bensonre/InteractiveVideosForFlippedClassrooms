@@ -47,7 +47,7 @@
             <form> 
                 <div class="form-group">
                     <label>Question</label>
-                    <select id="ivc-question-select-update" class="form-control" rows="3" placeholder="Write your question here..." name="question" onchange="fillUpdateForm()"></select>
+                    <select id="ivc-question-select-update" class="form-control" rows="3" name="question" onchange="fillUpdateForm()"></select>
                 </div>
 
                 <div class="form-group">
@@ -80,6 +80,12 @@
 
         <div id="ivc-delete-question-table" class="tab-pane container fade">
             <h2 class="text-center">Delete Questions</h2>
+                <div class="form-group">
+                    <label>Question</label>
+                    <select id="ivc-question-select-delete" class="form-control" rows="3" name="question"></select>
+                </div>
+                <button class="form-control mt-3 btn btn-danger" type="button" onclick="deleteQuestion()">Delete</button>
+
         </div>
 
     </div>

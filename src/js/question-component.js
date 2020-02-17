@@ -121,8 +121,11 @@ function fillQuestionSelectionBoxes() {
         option.value = i;
         let text = document.createTextNode(questions[i].questionText);
         option.appendChild(text);
-        let element = document.getElementById("ivc-question-select-update");
-        element.appendChild(option);
+        let updateSelection = document.getElementById("ivc-question-select-update");
+        let deleteSelection = document.getElementById("ivc-question-select-delete");
+        let option2 = option.cloneNode(true);
+        updateSelection.appendChild(option);
+        deleteSelection.appendChild(option2);
     }
     fillUpdateForm();
 }
