@@ -36,6 +36,7 @@ function createQuestion() {
 
             if (res.success) {
                 document.getElementById("ivc-create-question-status-message").style.color = "green";
+                getQuestions();
             } else {
                 document.getElementById("ivc-create-question-status-message").style.color = "red";
             }
@@ -137,12 +138,22 @@ function getQuestions() {
             console.log(this.responseText);
             ivcQuestionComponentQuestions = JSON.parse(this.responseText);
             console.log(ivcQuestionComponentQuestions);
+            clearQuestionSelectionBoxes();
             fillQuestionSelectionBoxes();
+            fillUpdateForm();
         }
     };
     xhttp.open("GET", "../api/questions/read.php?instructorId=" + instructorId, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
+}
+
+function clearQuestionSelectionBoxes() {
+    let updateSelectionBox = document.getElementById("ivc-question-select-update");
+    let deleteSelectionBox = document.getElementById("ivc-question-select-delete");
+
+    updateSelectionBox.innerHTML = "";
+    deleteSelectionBox.innerHTML = "";
 }
 
 function fillQuestionSelectionBoxes() {
@@ -154,13 +165,12 @@ function fillQuestionSelectionBoxes() {
         option.value = i;
         let text = document.createTextNode(questions[i].questionText);
         option.appendChild(text);
-        let updateSelection = document.getElementById("ivc-question-select-update");
-        let deleteSelection = document.getElementById("ivc-question-select-delete");
+        let updateSelectionBox = document.getElementById("ivc-question-select-update");
+        let deleteSelectionBox = document.getElementById("ivc-question-select-delete");
         let option2 = option.cloneNode(true);
-        updateSelection.appendChild(option);
-        deleteSelection.appendChild(option2);
+        updateSelectionBox.appendChild(option);
+        deleteSelectionBox.appendChild(option2);
     }
-    fillUpdateForm();
 }
 
 function fillUpdateForm() {

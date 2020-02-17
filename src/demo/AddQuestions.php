@@ -22,6 +22,7 @@
 </head>
 
 <body>
+    <?php include "../includes/header.php" ?>
     <div class="container">
             <?php include "../components/AddQuestionsComponent.php"; ?>
     </div>

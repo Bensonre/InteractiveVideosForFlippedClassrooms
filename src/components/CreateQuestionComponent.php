@@ -1,4 +1,4 @@
-<div class="container border bordered p-4">
+<div class="container border border-dark p-4">
     <ul class="nav nav-pills">
         <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#ivc-create-question-form">Create</a></li>
         <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ivc-update-question-form">Update</a></li>

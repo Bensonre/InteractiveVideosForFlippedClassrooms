@@ -61,7 +61,7 @@ class VideoQuestionsController {
         $packageID = htmlspecialchars(strip_tags($packageID));
         $instructorID = htmlspecialchars(strip_tags($instructorID));
 
-        $query = "SELECT a.ID, b.QuestionText, a.QuestionTimeStamp FROM $this->table a, $this->questionTable b WHERE `PackageID` = ? AND `InstructorID` = ? AND b.ID = a.QuestionID";
+        $query = "SELECT a.ID, b.QuestionText, a.QuestionTimeStamp FROM $this->table a, $this->questionTable b WHERE `PackageID` = ? AND a.InstructorID = ? AND b.ID = a.QuestionID";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;

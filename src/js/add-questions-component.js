@@ -53,6 +53,7 @@ function fillPackages(obj) {
 }
 
 function getQuestions() {
+    let instructorID = ivcInstructorId;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -62,7 +63,8 @@ function getQuestions() {
             fillQuestions(obj);
         }
     };
-    xhttp.open("GET", "../api/questions/read.php", true);
+    xhttp.open("GET", "../api/questions/read.php?instructorId=" + instructorID, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
 
@@ -72,8 +74,8 @@ function fillQuestions(obj) {
     for (i = 0; i < obj.length; i++) {
         console.log(obj[i]);
         let option = document.createElement("option");
-        option.value = obj[i].QuestionID;
-        let text = document.createTextNode(obj[i].QuestionText);
+        option.value = obj[i].questionId;
+        let text = document.createTextNode(obj[i].questionText);
         option.appendChild(text);
         let element = document.getElementById("select-question");
         element.appendChild(option);
