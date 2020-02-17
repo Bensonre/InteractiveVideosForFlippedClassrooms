@@ -114,8 +114,13 @@ function deleteQuestion() {
                 document.getElementById("ivc-delete-question-status-message").style.color = "red";
             }
 
+            let updateOption = document.querySelector("#ivc-question-select-update option[value='" + questionIndex + "']");
             let deleteOption = document.querySelector("#ivc-question-select-delete option[value='" + questionIndex + "']");
+            updateOption.remove();
             deleteOption.remove();
+
+            // Remove question from global array.
+            ivcQuestionComponentQuestions.splice(questionIndex, 1);
         }
     };
     xhttp.open("POST", "../api/questions/delete.php", false);
