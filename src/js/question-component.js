@@ -39,3 +39,11 @@ function createQuestion() {
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(data));
 }
+
+function updateQuestion() {
+
+}
+
+function deleteQuestion() {
+    
+}
