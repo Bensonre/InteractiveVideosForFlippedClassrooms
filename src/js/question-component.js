@@ -83,8 +83,22 @@ function fillQuestionSelectionBoxes() {
         let element = document.getElementById("ivc-question-select-update");
         element.appendChild(option);
     }
+    fillUpdateForm();
 }
 
 function fillUpdateForm() {
+    let questionIndex = document.getElementById("ivc-question-select-update").value;
+    let question = ivcQuestionComponentQuestions[questionIndex];
 
+    document.getElementById("ivc-category-update").value = question.category;
+    document.getElementById("ivc-a1-update").value = question.answers[0].answerText;
+    document.getElementById("ivc-a2-update").value = question.answers[1].answerText;
+    document.getElementById("ivc-a3-update").value = question.answers[2].answerText;
+    document.getElementById("ivc-a4-update").value = question.answers[3].answerText;
+
+    for (let i = 0; i < question.answers.length; i++) {
+        if (question.answers[i].correct === 1) {
+            document.getElementById("ivc-select-answer-update").value = i + 1;
+        }
+    }
 }

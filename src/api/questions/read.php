@@ -34,7 +34,7 @@
         "questionText" => $qt,
         "category" => $cat,
         "questionModified" => $qm,
-        "answer" => $answers = []
+        "answers" => $answers = []
         ];
 
         do {
@@ -47,7 +47,7 @@
           "correct" => $c
           ];
 
-          array_push($QuestionObj['answer'], $AnswerObj);
+          array_push($QuestionObj['answers'], $AnswerObj);
 
         } while( $co != 4 && $results->fetch());
 
