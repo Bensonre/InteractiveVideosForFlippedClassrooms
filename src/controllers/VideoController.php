@@ -42,21 +42,6 @@ class VideoController {
         }
         return false;
     }
-
-    public function get($id)
-    {
-        $query = "Select * from $this->table where `ID` = ?";
-        $stmt = $this->conn->prepare($query);
-        if($stmt == false){
-            $error = $this->conn->errno . ' ' . $this->conn->error;
-            echo $error;
-        }else {
-            $stmt->bind_param("s", $id);
-            return $stmt->execute();
-        }
-        return false;
-
-    }
 }
 
 ?>
