@@ -6,6 +6,8 @@
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
 
+  $instructorId = $_GET['instructorId'];
+
   $databaseEntryCreated = false;
   $results;
 
@@ -13,7 +15,7 @@
   $db = $database->connect();
 
   $controller = new QuestionController($db);
-  if ($results = $controller->read()) {
+  if ($results = $controller->read($instructorId)) {
       $databaseRead = true;
   } else {
       echo "\nQuestion Read Failed\n";
@@ -28,24 +30,24 @@
     while($results->fetch()) {
 
       $QuestionObj = [
-        "QuestionID" => $qid,
-        "QuestionText" => $qt,
-        "Category" => $cat,
-        "Question Modified" => $qm,
-        "Answer" => $answers = []
+        "questionId" => $qid,
+        "questionText" => $qt,
+        "category" => $cat,
+        "questionModified" => $qm,
+        "answers" => $answers = []
         ];
 
         do {
 
           $AnswerObj = [
-          "Answer ID" => $aid,
-          "Answer Text" => $ct,
-          "Answer Order" => $co,
-          "Answer Modified" => $cm,
-          "Correct?" => $c
+          "answerId" => $aid,
+          "answerText" => $ct,
+          "answerOrder" => $co,
+          "answerModified" => $cm,
+          "correct" => $c
           ];
 
-          array_push($QuestionObj['Answer'], $AnswerObj);
+          array_push($QuestionObj['answers'], $AnswerObj);
 
         } while( $co != 4 && $results->fetch());
 
