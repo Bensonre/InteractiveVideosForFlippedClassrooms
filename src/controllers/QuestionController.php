@@ -76,11 +76,13 @@ class QuestionController {
     return $createSuccess;
   }
 
-  public function read()
+  public function read($instructorId)
   {
+    $instructorId = htmlspecialchars(strip_tags($instructorId));
+
     $query = "SELECT " . $this->qtable . ".ID as QuestionID, QuestionText, Category, " . $this->qtable . ".DateModified as QuestionModified, " . 
              $this->ctable . ".ID as AnswerID, ChoiceText, ChoiceOrder, " . $this->ctable . ".DateModified as ChoiceModified, correct FROM " . $this->qtable . " INNER JOIN " . 
-             $this->ctable . " on " . $this->qtable . ".ID=" . $this->ctable . ".QuestionID";
+             $this->ctable . " on " . $this->qtable . ".ID=" . $this->ctable . ".QuestionID" . " WHERE `InstructorID` = $instructorId";
     $result = $this->sendQuery($query);
     $result->store_result();
     return $result;

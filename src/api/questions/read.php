@@ -6,6 +6,8 @@
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
 
+  $instructorId = $_GET['instructorId'];
+
   $databaseEntryCreated = false;
   $results;
 
@@ -13,7 +15,7 @@
   $db = $database->connect();
 
   $controller = new QuestionController($db);
-  if ($results = $controller->read()) {
+  if ($results = $controller->read($instructorId)) {
       $databaseRead = true;
   } else {
       echo "\nQuestion Read Failed\n";
