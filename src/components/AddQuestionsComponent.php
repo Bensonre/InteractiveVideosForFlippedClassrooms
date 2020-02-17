@@ -1,44 +1,41 @@
-<div class="section-title">
-    Add Questions to Package
-</div><!-- >End End section<!-->
-<div class="flex-container">
-    <form class="flex-item grow-2" method="Post">
-        <div class="label">Select a Package</div>
-        <select class="PushLeft1"></select>
-        <br />
-        <br />
-        <div class="label">Select a Question</div>
-        <select class="PushLeft1"></select>
-        <br />
-        <br />
-        <div class="label">Time Stamp</div>
-        <input id="TimeStamp" onkeyup="updateVideoTime()" type="string" class="PushLeft1" />
-        <br />
-        <br />
-        <button class="button-positive">Add to Package</button>
-    </form><!-- >End Flex item <!-->
-    <div class="flex-item grow-1">
-        <div class="label">
-            Selected Package <span id="selectedPkge"></span>
-        </div>
-				
-        <!--<video class="PushLeft1 small-video" id="videoPlayer" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4" onclick="this.play()" controls>
-            </video> -->
+<div class="container">
+    <div class="row">
 
-     <video-js
-     id="AddQuestions-video"
-     controls 
-     data-setup="{}"
-		 >
-       <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
-     </video-js>
+        <div class="col m-4 border border-dark">
+            <h2 class="text-center">Add Questions to a Package</h2>
+            <form>
+                <div class="form-group">
+                    <div class="label" for="select-package">Select a Package</div>
+                    <select class="form-control" name="select-package" id="select-package" onchange="packageChanged()"></select>
+                </div>
+                <div class="form-group">
+                    <div class="label" for="select-question">Select a Question</div>
+                    <select class="form-control" name="select-question" id="select-question"></select>
+                </div>
+                <div class="form-group">
+                    <div class="label" for="timestamp">Timestamp</div>
+                    <input class="form-control" name="timestamp" id="timestamp" onkeyup="updateVideoTime()" type="string" /> 
+                </div>
+                <button class="form-control mb-3 btn btn-primary" onclick="sendData()" type="button" class="">Add to Package</button>
+            </form>
+            <div class="text-center" id="ivc-add-questions-status-message"></div>
+        </div>
 
-        <br />
-        <div class="label">
-            Question at Time Stamp
+        <div class="col m-4 border border-dark">
+            <div class="mt-4 mb-4" style="height: 50vh; overflow: auto;">
+            <table class="table table-striped table-bordered table-sm" id="ivc-add-questions-added-table"></table>
+            </div>
         </div>
-        <div class="PushLeft1" id="QuestionDisplay">
+
+        <div class="col m-4 border border-dark">
+            <video-js
+            id="ivc-add-questions-player"
+            controls 
+            autoplay
+            data-setup="{}"
+		        >
+            </video-js>
         </div>
-    </div><!-- >End Flex item <!-->
-</div><!-- >End Flex Container <!-->
-<script src="../js/UpdateVideoTime.js"></script>
+
+    </div>
+</div>

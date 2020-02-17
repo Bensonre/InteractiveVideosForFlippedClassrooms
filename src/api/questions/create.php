@@ -9,6 +9,16 @@
   header("Access-Control-Max-Age: 3600");
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+  $data = json_decode($_POST['data']);
+  $question = $data->question;
+  $category = $data->category;
+  $a1 = $data->a1;
+  $a2 = $data->a2;
+  $a3 = $data->a3;
+  $a4 = $data->a4;
+  $correct = $data->correct;
+  $instructorId = $data->instructorId;
+
   $databaseEntryCreated = false;
 
   $database = new Database();
@@ -16,35 +26,24 @@
 
   $controller = new QuestionController($db);
 
-  if(
-    !empty($_POST['question']) &&
-    !empty($_POST['category']) &&
-    !empty($_POST['a1']) &&
-    !empty($_POST['a2']) &&
-    !empty($_POST['a3']) &&
-    !empty($_POST['a4']) &&
-    !empty($_POST['correct'])
-  ){
-
-    $controller->question = $_POST['question'];
-    $controller->category = $_POST['category'];
-    $controller->c1       = $_POST['a1'];
-    $controller->c2       = $_POST['a2'];
-    $controller->c3       = $_POST['a3'];
-    $controller->c4       = $_POST['a4'];
-    $controller->correct  = $_POST['correct'];
+  $controller->question = $question;
+  $controller->category = $category;
+  $controller->c1       = $a1;
+  $controller->c2       = $a2;
+  $controller->c3       = $a3;
+  $controller->c4       = $a4;
+  $controller->correct  = $correct;
   
-    if ($controller->create()) {
-        $databaseEntryCreated = true;
-    } else {
-        echo json_encode(array("message" => "Can't Create Question."));
-    }
-  } else {
-    echo json_encode(array("message" => "Can't Create Question. Insufficient Data."));
+  if ($controller->create($question, $category, $a1, $a2, $a3, $a4, $correct, $instructorId)) {
+      $databaseEntryCreated = true;
   }
+  
+  $response = array("success" => 0, "message" => "The question was not successfully created.");
 
   if($databaseEntryCreated == true) {
-    echo json_encode(array("message" => "Question Created."));
+      $response['success'] = 1;
+      $response['message'] = "The question was successfully created.";
   }
-  header("Location: {$_SERVER["HTTP_REFERER"]}");
+
+  echo json_encode($response);
 ?>

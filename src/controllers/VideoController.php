@@ -3,26 +3,18 @@
 class VideoController {
 
     private $conn;
-    private $instructorId;
-    private $videoFile;
-    private $fileName;
-    private $filePath;
     private $table = 'videos';
 
-    public function __construct($db, $instructorId, $videoFile, $fileName, $filePath)
+    public function __construct($db)
     {
         $this->conn = $db;
-        $this->instructorId = $instructorId;
-        $this->videoFile = $videoFile;
-        $this->fileName = $fileName;
-        $this->filePath = $filePath;
     }
 
-    public function create()
+    public function create($instructorId, $videoFile, $fileName, $filePath)
     {
-        $this->instructorId = htmlspecialchars(strip_tags($this->instructorId));
-        $this->filePath = htmlspecialchars(strip_tags($this->filePath));
-        $this->fileName = htmlspecialchars(strip_tags($this->fileName));
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
+        $filePath = htmlspecialchars(strip_tags($filePath));
+        $fileName = htmlspecialchars(strip_tags($fileName));
 
         $query = "INSERT INTO $this->table (`InstructorID`, `FilePath`, `Title`) VALUES (?,?,?)";
         $stmt = $this->conn->prepare($query);
@@ -30,25 +22,25 @@ class VideoController {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("iss", $this->instructorId, $this->filePath, $this->fileName);
+            $stmt->bind_param("iss", $instructorId, $filePath, $fileName);
             return $stmt->execute();
         }
         return false;
     }
 
-    public function get($id)
+    public function read($id)
     {
-        $query = "Select * from $this->table where `ID` = ?";
+        $query = "SELECT * FROM $this->table WHERE `ID` = ?";
         $stmt = $this->conn->prepare($query);
         if($stmt == false){
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         }else {
-            $stmt->bind_param("s", $id);
-            return $stmt->execute();
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            return $stmt;
         }
         return false;
-
     }
 }
 

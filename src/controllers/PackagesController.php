@@ -42,6 +42,38 @@ class PackageController {
         }
     }
 
+    public function readAllWithInstructorId($instructorId) {
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
+
+        $query = "SELECT * FROM $this->PackageTable WHERE `InstructorID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("i", $instructorId);
+            $stmt->execute();
+            return $stmt;
+        }
+    }
+
+    public function getVideoIdOfPackage($id) {
+        $query = "SELECT `VideoID` FROM $this->PackageTable WHERE `ID` = $id";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            if($stmt->execute()) {
+                $stmt->bind_result($videoID);
+                $stmt->fetch();
+                return $videoID;
+            } else {
+                return null;
+            }
+        }
+    }
+
     public function getPackageWithVideo($id)
     {
         $query = "Select FilePath, p.Title, PackageID, video_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from video_questions 

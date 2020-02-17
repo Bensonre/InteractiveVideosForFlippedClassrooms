@@ -1,7 +1,8 @@
-<header>
-    <div class=" title PushLeft5">Interactive Video for Flipped Classroom</div>
-    <nav class="NavBar">
-        <ul>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+
+    <a class="navbar-brand" href="#">Interactive Videos Demo</a>
+
+        <ul class="navbar-nav">
             <?php
 						$url = "http://localhost:8000";
             $content = array(
@@ -9,34 +10,27 @@
                     "Upload Video" => ( "../demo/UploadVideo.php"),
                     "Create Questions" => ("../demo/CreateQuestions.php"),
                     "Create Package" => ("../demo/Package.php"),
-                    "Add Questions to Package" => ("../demo/AddQuestions.php"),
-                    "Update Question" => ("../demo/UpdateQuestion.php")
+                    "Add Questions to Package" => ("../demo/AddQuestions.php")
                 ),
                 "Student" => "../demo/Student.php?id=1"
             );
 
+
             foreach ($content as $page => $location) {
                 if (is_array($location)) {
-                    if ($page == $currentpage) {
-                        echo "<li class='navItem PushLeft5 Selected'><a id='instr' href='#'>$page</a>
-                                <ul id='drop-down'>";
-                    } else {
-                        echo "<li class='navItem PushLeft5'><a id='instr' href='#'>$page</a>
-                        <ul id='drop-down'>";
-                    }
+                    echo "<li class='nav-item dropdown'>";
+                    echo "<a class='nav-link dropdown-toggle' href='#' id='navbardrop' data-toggle='dropdown'>Instructor</a>";
+                    echo "<div class='dropdown-menu'>";
                     foreach ($location as $name => $link) {
-                        echo "<li><a href='$link'>$name</a></li>";
+                        echo "<a class='dropdown-item' href='$link'>$name</a>";
                     }
-                    echo "</ul>";
+                    echo "</div>";
+                    echo "</li>";
                 }
-                else if ($page == $currentpage) {
-                    echo "<li class='navItem PushLeft5 Selected'><a href='$location'>$page</a></li>";
-                } else {
-                    echo "<li class='navItem PushLeft5'><a href='$location'>$page</a></li>";
+                else {
+                    echo "<li class='nav-item'><a class='nav-link' href='$location'>$page</a></li>";
                 }
             }
             ?>
         </ul>
-    </nav>
-</header>
-<script src="/js/Site.js"></script>
+</nav>
