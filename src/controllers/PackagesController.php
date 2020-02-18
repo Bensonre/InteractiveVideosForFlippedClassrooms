@@ -43,18 +43,18 @@ class PackageController {
         return false;
     }
     
-    public function create($Title, $videoId, $Date, $instructorId){
-        $this->Date = htmlspecialchars(strip_tags($Date));
-        $this->Title = htmlspecialchars(strip_tags($Title));
+    public function create($title, $instructorId, $videoId){
+        $title = htmlspecialchars(strip_tags($title));
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
         $videoId = htmlspecialchars(strip_tags($videoId));
 
-        $query = "INSERT INTO $this->PackageTable (`Title`, `VideoID`, `DateModified`, `InstructorID`) VALUES (?,?,?,?)";
+        $query = "INSERT INTO $this->PackageTable (`Title`, `VideoID`, `DateModified`, `InstructorID`) VALUES (?,?,CURDATE(),?)";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("sisi", $this->Title, $videoId, $this->date, $instructorId);
+            $stmt->bind_param("sii", $title, $videoId, $instructorId);
             return $stmt->execute();
         }
     }
