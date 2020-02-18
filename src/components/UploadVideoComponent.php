@@ -37,7 +37,7 @@
                     <input id="ivc-title-update" type="text" class="form-control" placeholder="Change the title..."></input>
                 </div>
 
-                <button class="form-control mt-3 btn btn-warning" type="button">Update</button>
+                <button class="form-control mt-3 btn btn-warning" type="button" onclick="updateVideo()">Update</button>
                 <div id="ivc-update-video-status-message" class="text-center"></div>
             </form>
         </div>

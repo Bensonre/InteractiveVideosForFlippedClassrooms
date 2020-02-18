@@ -37,6 +37,35 @@ function createVideo() {
     xhttp.send(formData);
 }
 
+function updateVideo() {
+    const videoIndex = document.getElementById("ivc-video-select-update").value;
+    const id = ivcVideoComponentVideos[videoIndex].id;
+    const title = document.getElementById("ivc-title-update").value;
+
+    const data = {
+        "id": id,
+        "title": title
+    };
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            var res = JSON.parse(this.responseText);
+            document.getElementById("ivc-update-video-status-message").innerText = res.message;
+
+            if (res.success) {
+                document.getElementById("ivc-update-video-status-message").style.color = "green";
+            } else {
+                document.getElementById("ivc-update-video-status-message").style.color = "red";
+            }
+        }
+    };
+    xhttp.open("POST", "../api/videos/update.php", false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send('data=' + JSON.stringify(data));
+}
+
 function getVideos() {
     const instructorId = ivcInstructorId;
 

@@ -43,6 +43,21 @@ class VideoController {
         return false;
     }
 
+    public function update($id, $title) {
+        $id = htmlspecialchars(strip_tags($id));
+        $title = htmlspecialchars(strip_tags($title));
+
+        $query = "UPDATE $this->table SET `Title` = ? WHERE `ID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            return false;
+        } else {
+            $stmt->bind_param("si", $title, $id);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
     public function getInstructorVideos($instructorId) {
         $instructorId = htmlspecialchars(strip_tags($instructorId));
 
