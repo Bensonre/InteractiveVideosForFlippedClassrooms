@@ -15,11 +15,12 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
    $controller = new PackageController($db);
 
     $success = false;
-    if(isset($_POST['Title']) && isset('VideoID')){
-            $result = $controller->create($_POST['Title'], $_POST('VideoID'), date(DATE_RSS));
+    
+            $result = $controller->create($_POST['Title'], $_POST['VideoId'], date(DATE_RSS), $_POST['InstructorID']);
         if ($result) {
             $success = true;
         }
-    }
+    //}
     echo json_encode($success);
+    header("Location: {$_SERVER["HTTP_REFERER"]}");
 ?>

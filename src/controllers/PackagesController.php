@@ -43,18 +43,18 @@ class PackageController {
         return false;
     }
     
-    public function create($Title, $videoId, $Date){
+    public function create($Title, $videoId, $Date, $instructorId){
         $this->Date = htmlspecialchars(strip_tags($Date));
         $this->Title = htmlspecialchars(strip_tags($Title));
         $videoId = htmlspecialchars(strip_tags($videoId));
 
-        $query = "INSERT INTO $this->PackageTable (`Title`, `VideoID`, `Date`) VALUES (???)";
+        $query = "INSERT INTO $this->PackageTable (`Title`, `VideoID`, `DateModified`, `InstructorID`) VALUES (?,?,?,?)";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("sis", $this->Title, $videoId, $this->date);
+            $stmt->bind_param("sisi", $this->Title, $videoId, $this->date, $instructorId);
             return $stmt->execute();
         }
     }
@@ -67,7 +67,7 @@ class PackageController {
         $valuesString = null;
         $bindParamString = null;
 
-        $query = "UPDATE $this->PackageTable SET (`Title`, `VideoID`, `Date`) VALUES (???) where ID=(?)";
+        $query = "UPDATE $this->PackageTable SET `Title` = ?, `VideoID` = ?, `DateModified` = ? where ID=?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;

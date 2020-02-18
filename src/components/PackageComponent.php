@@ -3,6 +3,7 @@
     $packageResponse = json_decode($packageResponse, true);
     $videoResponse = file_get_contents("http://localhost/Capstone/InteractiveVideosForFlippedClassrooms/src/api/videos/read-all-with-instructor-id.php?instructorId=99");
     $videoResponse = json_decode($videoResponse, true);
+    $instructorID = 99;
 ?>
 <div class="container border border-dark p-4">
     <ul class="nav nav-pills">
@@ -45,6 +46,7 @@
                 Title the Package
             </div>
             <input name="Title" placeholder="Package Name" Type="text" class="PushLeft1"/>
+            <input name="InstructorID" Type="hidden" value=<?php echo "\""; echo $instructorID; echo "\""; ?>/>
             <label class="label">
                 Selected Video
             </label>
@@ -61,9 +63,9 @@
 
         <div id="ivc-update-package-form" class="tab-pane container fade">
             <h2 class="text-center">Update Packages</h2>
-            <form method="Post" action="../api/Packages/update.php"> 
+            <form method="Post" action="../api/Packages/Update.php"> 
             <div class="label">Select an exsisting package</div>
-            <select id="update-package-selection" class="PushLeft1" name="Id" onchange="updateUpdatePackageOnNewPackageSelected()">
+            <select id="update-package-selection" class="PushLeft1" name="ID" onchange="updateUpdatePackageOnNewPackageSelected()">
                 <?php
                     foreach($packageResponse as $package){
                         echo "<option video-id=\"";
@@ -91,7 +93,7 @@
             <label class="label"> Package Title </label>
             <input id="update-package-title" name="Title" placeholder="Package Name" Type="text" class="PushLeft1"/>
             <div class="label">Select New video</div>
-            <select id="update-package-select-video" name="videoID" class="PushLeft1" onchange="updateUpdatePackageVideoFilePath()">
+            <select id="update-package-select-video" name="VideoID" class="PushLeft1" onchange="updateUpdatePackageVideoFilePath()">
             <?php
                     foreach($videoResponse as $video){
                         echo "<option video-path=\"";
@@ -116,7 +118,7 @@
                     }
                 ?>
             </select>
-            
+            <input name="InstructorID" Type="hidden" value=<?php echo "\""; echo $instructorID; echo "\""; ?>/>
             <label class="label">
                 Selected Video
             </label>
@@ -133,9 +135,9 @@
 
         <div id="ivc-delete-package-form" class="tab-pane container fade">
             <h2 class="text-center">Delete Packages</h2>
-            <form method="Post" action="../api/Packages/update.php"> 
+            <form method="Post" action="../api/Packages/delete.php"> 
                 <div class="label">Select a Package to delete</div>
-                <select class="PushLeft1" name="ExistingTitle">
+                <select class="PushLeft1" name="id">
                 <?php
                     foreach($packageResponse as $package){
                         echo "<option video-id=\"";
