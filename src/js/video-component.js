@@ -68,10 +68,17 @@ function updateVideo() {
 function deleteVideo() {
     const videoIndex = document.getElementById("ivc-video-select-delete").value;
     const id = ivcVideoComponentVideos[videoIndex].id;
+    const filePath = ivcVideoComponentVideos[videoIndex].filePath;
+
+    const data = {
+        "id": id,
+        "filePath": filePath
+    };
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-delete-video-status-message").innerText = res.message;
 
@@ -92,7 +99,7 @@ function deleteVideo() {
     };
     xhttp.open("POST", "../api/videos/delete.php", false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send('id=' + id);
+    xhttp.send('data=' + JSON.stringify(data));
 }
 
 function getVideos() {

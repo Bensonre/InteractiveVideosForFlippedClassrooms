@@ -8,24 +8,22 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-    $databaseEntryDeleted = false;
-
-    $id = $_POST['id'];
-
-    $database = new Database();
-    $db = $database->connect();
-
-    $controller = new VideoController($db);
-    if ($controller->delete($id)) {
-        $databaseEntryDeleted = true;
-    }
-
     $response = array("success" => 0, "message" => "Your video was not successfully deleted.");
 
-    if ($databaseEntryDeleted) {
-        $response["success"] = 1;
-        $response["message"] = "Your video was successfully deleted.";
-    }
+    $data = json_decode($_POST['data']);
+    $id = $data->id;
+    $filePath = "../" . $data->filePath;
+
+    if (unlink($filePath)) {
+        $database = new Database();
+        $db = $database->connect();
+        $controller = new VideoController($db);
+
+        if ($controller->delete($id)) {
+            $response["success"] = 1;
+            $response["message"] = "Your video was successfully deleted.";
+        }
+    } 
 
     echo json_encode($response);
 ?>
