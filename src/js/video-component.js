@@ -91,6 +91,9 @@ function clearVideoSelectionBoxes() {
 }
 
 function fillVideoSelectionBoxes() {
+    ivcVideoComponentVideos.sort( (a, b) => {
+        if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; } else { return 0; }
+    } );
     const videos = ivcVideoComponentVideos;
     for (let i = 0; i < videos.length; i++) {
         let option = document.createElement("option");
