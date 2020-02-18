@@ -50,7 +50,6 @@ function updateVideo() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-update-video-status-message").innerText = res.message;
 
@@ -64,6 +63,36 @@ function updateVideo() {
     xhttp.open("POST", "../api/videos/update.php", false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send('data=' + JSON.stringify(data));
+}
+
+function deleteVideo() {
+    const videoIndex = document.getElementById("ivc-video-select-delete").value;
+    const id = ivcVideoComponentVideos[videoIndex].id;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var res = JSON.parse(this.responseText);
+            document.getElementById("ivc-delete-video-status-message").innerText = res.message;
+
+            if (res.success) {
+                document.getElementById("ivc-delete-video-status-message").style.color = "green";
+            } else {
+                document.getElementById("ivc-delete-video-status-message").style.color = "red";
+            }
+
+            let updateOption = document.querySelector("#ivc-video-select-update option[value='" + videoIndex + "']");
+            let deleteOption = document.querySelector("#ivc-video-select-delete option[value='" + videoIndex + "']");
+            updateOption.remove();
+            deleteOption.remove();
+
+            // Remove video from global array.
+            ivcVideoComponentVideos.splice(videoIndex, 1);
+        }
+    };
+    xhttp.open("POST", "../api/videos/delete.php", false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send('id=' + id);
 }
 
 function getVideos() {

@@ -49,7 +49,7 @@
                     <select id="ivc-video-select-delete" class="form-control"></select>
                 </div>
 
-                <button class="form-control mt-3 btn btn-danger" type="button">Delete</button>
+                <button class="form-control mt-3 btn btn-danger" type="button" onclick="deleteVideo()">Delete</button>
                 <div id="ivc-delete-video-status-message" class="text-center"></div>
         </div>
 
