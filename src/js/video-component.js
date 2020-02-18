@@ -31,6 +31,8 @@ function createVideo() {
             } else {
                 document.getElementById("ivc-create-video-status-message").style.color = "red";
             }
+
+            getVideos();
         }
     };
     xhttp.open("POST", "../api/videos/create.php", false);
@@ -58,6 +60,8 @@ function updateVideo() {
             } else {
                 document.getElementById("ivc-update-video-status-message").style.color = "red";
             }
+
+            getVideos();
         }
     };
     xhttp.open("POST", "../api/videos/update.php", false);
