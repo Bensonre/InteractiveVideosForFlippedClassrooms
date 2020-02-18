@@ -1,11 +1,13 @@
 function createVideo() {
-    var formData = new FormData();
-    var fileInput = document.getElementById("ivc-video-select-create");
+    let formData = new FormData();
+    const fileInput = document.getElementById("ivc-video-select-create");
+    const title = document.getElementById("ivc-video-title-create").value;
 
     if (fileInput.files && fileInput.files.length == 1) {
         var file = fileInput.files[0];
         formData.set("local-video-file", file, file.name);
     }
+    formData.append("title", title);
 
     document.getElementById("ivc-create-video-status-message").innerText = "Processing...";
 

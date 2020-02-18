@@ -7,7 +7,6 @@ $currentpage = "Instructor";
 <head>
     <meta charset="UTF-8">
     <title>Flipped Classroom: Student</title>
-    <link rel="stylesheet" href="../css/Site-Style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
 </head>

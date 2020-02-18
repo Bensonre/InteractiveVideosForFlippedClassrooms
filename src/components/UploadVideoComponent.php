@@ -14,6 +14,11 @@
                     <input id="ivc-video-select-create" type="file" class="form-control-file" name="local-video-file">
                 </div>
 
+                <div class="form-group">
+                    <label>Title</label>
+                    <input id="ivc-video-title-create" type="text" class="form-control" placeholder="Name the video..."></input>
+                </div>
+
                 <button class="form-control mt-3 btn btn-primary" type="button" onclick="createVideo()">Create</button>
                 <div id="ivc-create-video-status-message" class="text-center"></div>
             </form>
