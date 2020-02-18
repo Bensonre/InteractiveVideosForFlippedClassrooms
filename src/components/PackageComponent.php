@@ -90,37 +90,14 @@
 
         <div id="ivc-delete-package-form" class="tab-pane container fade">
             <h2 class="text-center">Delete Packages</h2>
-            <form method="Post" action="../api/Packages/delete.php"> 
+            <form> 
                 <div class="form-group">
                     <label>Select a package to delete</label>
-                    <select id="delete-package-selection" class="form-control" name="id">
-                    <?php
-                        foreach($packageResponse as $package){
-                            echo "<option video-id=\"";
-                            if(!array_key_exists('videoId', $package)){
-                                echo"error";
-                            }else{
-                                echo $package['videoId'];
-                            }
-                            echo "\" value=";
-                            if(!array_key_exists('id', $package)){
-                                echo"error";
-                            }else{
-                                echo $package['id'];
-                            }
-                            echo ">";
-                            if(!array_key_exists('title', $package)){
-                                echo"error";
-                            }else{
-                                echo $package['title'];
-                            }
-                            echo "</option>";
-                        }
-                    ?>
-                    </select>
+                    <select id="delete-package-selection" class="form-control" name="id"></select>
                 </div>
                 <input name="ID" type="hidden"/>
-                <button class="form-control mt-3 btn btn-danger" type="Submit">Delete</button>
+                <button class="form-control mt-3 btn btn-danger" type="button" onclick="deletePackage()">Delete</button>
+                <div id="ivc-delete-package-status-message"></div>
             </form>
         </div>
 

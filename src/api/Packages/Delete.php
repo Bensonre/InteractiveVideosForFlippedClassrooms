@@ -1,35 +1,33 @@
 <?php
-  include_once '../../database/Database.php';
-  include_once '../../controllers/PackagesController.php';
+    include_once '../../database/Database.php';
+    include_once '../../controllers/PackagesController.php';
 
-  header("Access-Control-Allow-Origin: *");
-  header("Content-Type: application/json; charset=UTF-8");
-  header("Access-Control-Allow-Methods: POST");
-  header("Access-Control-Max-Age: 3600");
-  header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    header("Access-Control-Allow-Origin: *");
+    header("Content-Type: application/json; charset=UTF-8");
+    header("Access-Control-Allow-Methods: POST");
+    header("Access-Control-Max-Age: 3600");
+    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-  $databaseEntryCreated = false;
+    $data = json_decode($_POST['data']);
+    $packageId = $data->packageId;
 
-  $database = new Database();
-  $db = $database->connect();
-    
-   $controller = new PackageController($db);
+    $databaseEntryCreated = false;
 
-  if(
-    !empty($_POST['id']) 
-  ){
-    if ($controller->delete($_POST['id'])) {
+    $database = new Database();
+    $db = $database->connect();
+
+    $controller = new PackageController($db);
+
+    if ($controller->delete($packageId)) {
         $databaseEntryCreated = true;
-    } else {
-      echo json_encode(array("message" => "Couldn't Delete Package"));
     }
-   } else {
-      echo json_encode(array("message" => "Can't Delete Package. Insufficient Data."));
-   }
 
-   if($databaseEntryCreated == true) {
-     echo json_encode(array("message" => "Package Deleted"));
-   }
+    $response = array("success" => 0, "message" => "The package was not successfully deleted.");
 
-   header("Location: {$_SERVER["HTTP_REFERER"]}");
+    if($databaseEntryCreated == true) {
+        $response['success'] = 1;
+        $response['message'] = "The package was successfully deleted.";
+    }
+
+    echo json_encode($response);
 ?>

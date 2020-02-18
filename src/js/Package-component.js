@@ -61,6 +61,38 @@ function createPackage() {
    xhttp.send("data=" + JSON.stringify(data));
 }
 
+function deletePackage() {
+   const packageId = document.getElementById("delete-package-selection").value;
+
+   let data = {
+      "packageId": packageId
+   };
+
+   document.getElementById("ivc-delete-package-status-message").innerText = "Processing...";
+
+   let xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         var res = JSON.parse(this.responseText);
+         document.getElementById("ivc-delete-package-status-message").innerText = res.message;
+
+         if (res.success) {
+               document.getElementById("ivc-delete-package-status-message").style.color = "green";
+         } else {
+               document.getElementById("ivc-delete-package-status-message").style.color = "red";
+         }
+
+         let updateOption = document.querySelector("#update-package-selection option[value='" + packageId + "']");
+         let deleteOption = document.querySelector("#delete-package-selection option[value='" + packageId + "']");
+         updateOption.remove();
+         deleteOption.remove();
+      }
+   };
+   xhttp.open("POST", "../api/Packages/delete.php", false);
+   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xhttp.send("data=" + JSON.stringify(data));
+}
+
 function getPackages() {
    const instructorId = ivcInstructorId;
    let xhttp = new XMLHttpRequest();
