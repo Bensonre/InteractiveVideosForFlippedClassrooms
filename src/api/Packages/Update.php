@@ -15,8 +15,8 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
    $controller = new PackageController($db);
 
     $success = false;
-    if(isset($_POST['Title']) && isset('VideoID')){
-            $result = $controller->create($_POST['Title'], $_POST('VideoID'), date(DATE_RSS));
+    if(isset($_POST[`ID`]) && isset($_POST['Title']) && isset('VideoID')){
+            $result = $controller->update($_POST[`ID`],$_POST['Title'], $_POST('VideoID'), date(DATE_RSS));
         if ($result) {
             $success = true;
         }

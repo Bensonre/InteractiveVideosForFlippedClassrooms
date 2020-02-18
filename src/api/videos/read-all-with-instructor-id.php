@@ -14,7 +14,7 @@
     $db = $database->connect();
 
     $controller = new VideoController($db);
-    $result = $controller->getInstructorVideos($instructorId);
+    $result = $controller->readAllWithInstructorId($instructorId);
 
     $list = array();
     $result->bind_result($id, $title, $instructorId, $filePath, $dateModified);

@@ -17,29 +17,7 @@
   $database = new Database();
   $db = $database->connect();
 
-  $controller = new PackageController($db);
-
-<<<<<<< HEAD
-  if(
-    !empty($_POST['id']) 
-  ){
-    $id= $_POST['id'];
-
-    if ($controller->delete($id)) {
-        $databaseEntryCreated = true;
-    } else {
-      echo json_encode(array("message" => "Couldn't Delete Question"));
-    }
-   } else {
-      echo json_encode(array("message" => "Can't Delete Question. Insufficient Data."));
-   }
-
-   if($databaseEntryCreated == true) {
-     echo json_encode(array("message" => "Question Deleted"));
-   }
-
-  header("Location: {$_SERVER["HTTP_REFERER"]}");
-=======
+  $controller = new QuestionController($db);
   $controller->id       = $questionId;
 
   if ($controller->delete()) {
@@ -54,5 +32,4 @@
   }
 
   echo json_encode($response);
->>>>>>> master
 ?>

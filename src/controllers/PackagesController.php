@@ -43,17 +43,37 @@ class PackageController {
         return false;
     }
     
-    public function create($Title){
-       // $this->Date = htmlspecialchars(strip_tags($this->Date));
+    public function create($Title, $videoId, $Date){
+        $this->Date = htmlspecialchars(strip_tags($Date));
         $this->Title = htmlspecialchars(strip_tags($Title));
+        $videoId = htmlspecialchars(strip_tags($videoId));
 
-        $query = "INSERT INTO $this->PackageTable (`Title`) VALUES (?)";
+        $query = "INSERT INTO $this->PackageTable (`Title`, `VideoID`, `Date`) VALUES (???)";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("s", $this->Title);
+            $stmt->bind_param("sis", $this->Title, $videoId, $this->date);
+            return $stmt->execute();
+        }
+    }
+
+    public function Update($id, $Title, $videoId, $Date){
+        $this->Date = htmlspecialchars(strip_tags($Date));
+        $this->Title = htmlspecialchars(strip_tags($Title));
+        $videoId = htmlspecialchars(strip_tags($videoId));
+        $querySetString = null;
+        $valuesString = null;
+        $bindParamString = null;
+
+        $query = "UPDATE $this->PackageTable SET (`Title`, `VideoID`, `Date`) VALUES (???) where ID=(?)";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("sisi", $this->Title, $videoId, $this->date, $id);
             return $stmt->execute();
         }
     }
@@ -76,6 +96,7 @@ class PackageController {
     public function getVideoIdOfPackage($id) {
         $query = "SELECT `VideoID` FROM $this->PackageTable WHERE `ID` = $id";
         $stmt = $this->conn->prepare($query);
+        $videoId = null;
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;

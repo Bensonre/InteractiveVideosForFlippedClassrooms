@@ -42,6 +42,21 @@ class VideoController {
         }
         return false;
     }
+
+    public function readAllWithInstructorId($instructorId)
+    {
+        $query = "SELECT * FROM $this->table WHERE `InstructorID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if($stmt == false){
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        }else {
+            $stmt->bind_param("i", $instructorId);
+            $stmt->execute();
+            return $stmt;
+        }
+        return false;
+    }
 }
 
 ?>
