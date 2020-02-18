@@ -21,7 +21,7 @@ function initializeMarkerPlugin() {
 }
 
 function getPackages() {
-    let instructorID = ivcInstructorId;
+    let instructorId = ivcInstructorId;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -31,7 +31,7 @@ function getPackages() {
             fillPackages(obj);
         }
     };
-    xhttp.open("GET", "../api/Packages/read-all-with-instructor-id.php?instructorId=" + instructorID, true);
+    xhttp.open("GET", "../api/Packages/read-all-with-instructor-id.php?instructorId=" + instructorId, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -42,8 +42,8 @@ function fillPackages(obj) {
     for (i = 0; i < obj.length; i++) {
         console.log(obj[i]);
         let option = document.createElement("option");
-        option.value = obj[i].ID;
-        let text = document.createTextNode(obj[i].Title);
+        option.value = obj[i].id;
+        let text = document.createTextNode(obj[i].title);
         option.appendChild(text);
         let element = document.getElementById("select-package");
         element.appendChild(option);

@@ -65,9 +65,9 @@ class PackageController {
             echo $error;
         } else {
             if($stmt->execute()) {
-                $stmt->bind_result($videoID);
+                $stmt->bind_result($videoId);
                 $stmt->fetch();
-                return $videoID;
+                return $videoId;
             } else {
                 return null;
             }

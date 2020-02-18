@@ -13,15 +13,16 @@
     $db = $database->connect();
 
     $packageController = new PackageController($db);
-    $videoID = $packageController->getVideoIdOfPackage($_GET['id']);
+    $videoId = $packageController->getVideoIdOfPackage($_GET['id']);
 
     $videoController = new VideoController($db);
-    $result = $videoController->read($videoID);
+    $result = $videoController->read($videoId);
 
-    $result->bind_result($id, $instructorId, $filePath, $title, $dateModified);
+    $result->bind_result($id, $title, $instructorId, $filePath, $dateModified);
 
     $result->fetch();
-    $obj = array("filePath" => $filePath);
+    $obj = array('id' => $id, 'title' => $title, 'instructorId' => $instructorId, 
+                 'filePath' => $filePath, 'dateModified' => $dateModified);
 
     echo json_encode($obj);
 ?>

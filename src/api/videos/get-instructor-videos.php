@@ -17,12 +17,13 @@
     $result = $controller->getInstructorVideos($instructorId);
 
     $list = array();
-    $result->bind_result($id, $instructorId, $filePath, $title, $dateModified);
+    $result->bind_result($id, $title, $instructorId, $filePath, $dateModified);
 
     while($result->fetch()) {
-        $obj = array("id" => $id, "instructorId" => $instructorId, "filePath" => $filePath, 
-                     "title" => $title, "dateModified" => $dateModified);
+        $obj = array('id' => $id, 'title' => $title, 'instructorId' => $instructorId, 
+                     'filePath' => $filePath, 'dateModified' => $dateModified);
         array_push($list, $obj);
     }
 
     echo json_encode($list);
+?>
