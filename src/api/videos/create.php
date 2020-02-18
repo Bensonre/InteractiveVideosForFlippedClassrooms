@@ -19,6 +19,7 @@ $targetfile = $targetdir . basename($_FILES['local-video-file']['name']);
 $targetpath = $pathdir . basename($_FILES['local-video-file']['name']);
 
 $title = $_POST['title'];
+$instructorId = $_POST['instructorId'];
 
 if (move_uploaded_file($_FILES['local-video-file']['tmp_name'], $targetfile)) {
     $fileUploaded = true;
@@ -27,8 +28,6 @@ if (move_uploaded_file($_FILES['local-video-file']['tmp_name'], $targetfile)) {
 // Create a record within the database for this file.
 $database = new Database();
 $db = $database->connect();
-
-$instructorId = 99; // TODO: replace with actual instructor id from $_SESSION variable
 
 $controller = new VideoController($db);
 if ($controller->create($instructorId, $_FILES['local-video-file'], $title, $targetpath)) {
