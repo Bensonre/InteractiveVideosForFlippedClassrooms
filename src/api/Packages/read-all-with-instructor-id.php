@@ -17,10 +17,11 @@
     $result = $controller->readAllWithInstructorId($instructorId);
 
     $list = array();
-    $result->bind_result($id, $date, $title, $videoID, $instructorId);
+    $result->bind_result($id, $title, $instructorId, $videoId, $dateModified);
 
     while($result->fetch()) {
-        $obj = array("ID" => $id, "DateModified" => $date, "Title" => $title, "VideoID" => $videoID);
+        $obj = array('id' => $id, 'title' => $title, 'instructorId' => $instructorId, 
+                     'videoId' => $videoId, 'dateModified' => $dateModified);
         array_push($list, $obj);
     }
 

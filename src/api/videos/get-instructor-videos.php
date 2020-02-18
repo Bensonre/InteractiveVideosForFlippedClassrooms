@@ -1,6 +1,5 @@
 <?php
     include_once '../../database/Database.php';
-    include_once '../../controllers/PackagesController.php';
     include_once '../../controllers/VideoController.php';
 
     header("Access-Control-Allow-Origin: *");
@@ -9,20 +8,22 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+    $instructorId = $_GET['instructorId'];
+
     $database = new Database();
     $db = $database->connect();
 
-    $packageController = new PackageController($db);
-    $videoId = $packageController->getVideoIdOfPackage($_GET['id']);
+    $controller = new VideoController($db);
+    $result = $controller->getInstructorVideos($instructorId);
 
-    $videoController = new VideoController($db);
-    $result = $videoController->read($videoId);
-
+    $list = array();
     $result->bind_result($id, $title, $instructorId, $filePath, $dateModified);
 
-    $result->fetch();
-    $obj = array('id' => $id, 'title' => $title, 'instructorId' => $instructorId, 
-                 'filePath' => $filePath, 'dateModified' => $dateModified);
+    while($result->fetch()) {
+        $obj = array('id' => $id, 'title' => $title, 'instructorId' => $instructorId, 
+                     'filePath' => $filePath, 'dateModified' => $dateModified);
+        array_push($list, $obj);
+    }
 
-    echo json_encode($obj);
+    echo json_encode($list);
 ?>
