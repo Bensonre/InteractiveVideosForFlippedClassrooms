@@ -1,3 +1,9 @@
+var ivcVideoComponentVideos = [];
+
+window.onload = function() {
+    getVideos();
+}
+
 function createVideo() {
     let formData = new FormData();
     const fileInput = document.getElementById("ivc-video-select-create");
@@ -29,4 +35,43 @@ function createVideo() {
     };
     xhttp.open("POST", "../api/videos/create.php", false);
     xhttp.send(formData);
+}
+
+function getVideos() {
+    const instructorId = ivcInstructorId;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            ivcVideoComponentVideos = JSON.parse(this.responseText);
+            clearVideoSelectionBoxes();
+            fillVideoSelectionBoxes();
+        }
+    };
+    xhttp.open("GET", "../api/videos/get-instructor-videos.php?instructorId=" + instructorId, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+}
+
+function clearVideoSelectionBoxes() {
+    let updateSelectionBox = document.getElementById("ivc-video-select-update");
+    let deleteSelectionBox = document.getElementById("ivc-video-select-delete");
+
+    updateSelectionBox.innerHTML = "";
+    deleteSelectionBox.innerHTML = "";
+}
+
+function fillVideoSelectionBoxes() {
+    const videos = ivcVideoComponentVideos;
+    for (let i = 0; i < videos.length; i++) {
+        let option = document.createElement("option");
+        option.value = i;
+        let text = document.createTextNode(videos[i].title);
+        option.appendChild(text);
+        let updateSelectionBox = document.getElementById("ivc-video-select-update");
+        let deleteSelectionBox = document.getElementById("ivc-video-select-delete");
+        let option2 = option.cloneNode(true);
+        updateSelectionBox.appendChild(option);
+        deleteSelectionBox.appendChild(option2);
+    }
 }

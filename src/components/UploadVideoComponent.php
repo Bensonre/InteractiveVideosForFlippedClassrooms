@@ -32,6 +32,11 @@
                     <select id="ivc-video-select-update" class="form-control"></select>
                 </div>
 
+                <div class="form-group">
+                    <label>Title</label>
+                    <input id="ivc-title-update" type="text" class="form-control" placeholder="Change the title..."></input>
+                </div>
+
                 <button class="form-control mt-3 btn btn-warning" type="button">Update</button>
                 <div id="ivc-update-video-status-message" class="text-center"></div>
             </form>

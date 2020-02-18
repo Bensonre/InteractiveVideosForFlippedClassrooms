@@ -42,6 +42,21 @@ class VideoController {
         }
         return false;
     }
+
+    public function getInstructorVideos($instructorId) {
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
+
+        $query = "SELECT * FROM $this->table WHERE `InstructorID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            return null;
+        } else {
+            $stmt->bind_param("i", $instructorId);
+            $stmt->execute();
+            return $stmt;
+        }
+        return null;
+    }
 }
 
 ?>
