@@ -117,7 +117,7 @@ function getVideos() {
             fillVideoSelectionBoxes();
         }
     };
-    xhttp.open("GET", "../api/videos/get-instructor-videos.php?instructorId=" + instructorId, true);
+    xhttp.open("GET", "../api/videos/read-all-with-instructor-id.php?instructorId=" + instructorId, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
