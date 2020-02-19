@@ -13,6 +13,18 @@ function createQuestion() {
     let a4 = document.getElementById("ivc-a4").value;
     let correct = document.getElementById("ivc-select-answer").value;
     let instructorId = ivcInstructorId;
+    
+    //Form Validation for Creating Questions
+    if(!(question.length > 0) ||
+       !(category.length > 0) ||
+       !(a1.length       > 0) ||
+       !(a2.length       > 0) ||
+       !(a3.length       > 0) ||
+       !(a4.length       > 0) ||
+       !(correct.length  > 0)) {
+            alert("All fields must be filled out");
+            return false;
+    }
 
     let data = {
         "question":question, 
@@ -24,6 +36,7 @@ function createQuestion() {
         "correct":correct,
         "instructorId":instructorId
     };
+
     console.log(JSON.stringify(data));
     document.getElementById("ivc-create-question-status-message").innerText = "Processing...";
 
@@ -58,6 +71,18 @@ function updateQuestion() {
     let a4 = document.getElementById("ivc-a4-update").value;
     let correct = document.getElementById("ivc-select-answer-update").value;
     let instructorId = ivcInstructorId;
+
+    //Form Validation for Updatint Questions
+    if(!(question.length > 0) ||
+       !(category.length > 0) ||
+       !(a1.length       > 0) ||
+       !(a2.length       > 0) ||
+       !(a3.length       > 0) ||
+       !(a4.length       > 0) ||
+       !(correct.length  > 0)) {
+            alert("All fields must be filled out");
+            return false;
+    }
 
     let data = {
         "questionId":questionId,
