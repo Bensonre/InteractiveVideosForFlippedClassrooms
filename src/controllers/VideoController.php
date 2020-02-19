@@ -16,7 +16,7 @@ class VideoController {
         $filePath = htmlspecialchars(strip_tags($filePath));
         $fileName = htmlspecialchars(strip_tags($fileName));
 
-        $query = "INSERT INTO $this->table (`InstructorID`, `FilePath`, `Title`) VALUES (?,?,?)";
+        $query = "INSERT INTO $this->table (`InstructorID`, `FilePath`, `Title`, `DateModified`) VALUES (?,?,?, CURDATE())";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
@@ -41,6 +41,50 @@ class VideoController {
             return $stmt;
         }
         return false;
+    }
+
+    public function update($id, $title) {
+        $id = htmlspecialchars(strip_tags($id));
+        $title = htmlspecialchars(strip_tags($title));
+
+        $query = "UPDATE $this->table SET `Title` = ? WHERE `ID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            return false;
+        } else {
+            $stmt->bind_param("si", $title, $id);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
+    public function delete($id) {
+        $id = htmlspecialchars(strip_tags($id));
+
+        $query = "DELETE FROM $this->table WHERE `ID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            return false;
+        } else {
+            $stmt->bind_param("i", $id);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
+    public function getInstructorVideos($instructorId) {
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
+
+        $query = "SELECT * FROM $this->table WHERE `InstructorID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            return null;
+        } else {
+            $stmt->bind_param("i", $instructorId);
+            $stmt->execute();
+            return $stmt;
+        }
+        return null;
     }
 }
 
