@@ -10,6 +10,16 @@ function createVideo() {
     const title = document.getElementById("ivc-video-title-create").value;
     const instructorId = ivcInstructorId;
 
+    if(!(fileInput.files.length > 0)) {
+            alert("You must select a video");
+            return false;
+    }
+
+    if(!(title.length > 0)) {
+            alert("You must select a title");
+            return false;
+    }
+
     if (fileInput.files && fileInput.files.length == 1) {
         var file = fileInput.files[0];
         formData.set("local-video-file", file, file.name);
@@ -43,6 +53,11 @@ function updateVideo() {
     const videoIndex = document.getElementById("ivc-video-select-update").value;
     const id = ivcVideoComponentVideos[videoIndex].id;
     const title = document.getElementById("ivc-title-update").value;
+
+    if(!(title.length > 0)) {
+            alert("You must select a title");
+            return false;
+    }
 
     const data = {
         "id": id,

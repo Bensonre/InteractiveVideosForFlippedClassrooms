@@ -11,7 +11,7 @@
             <form>
                 <div class="form-group">
                     <label>Video</label>
-                    <input id="ivc-video-select-create" type="file" class="form-control-file" name="local-video-file">
+                    <input id="ivc-video-select-create" type="file" class="form-control-file" name="local-video-file" accept="video/*">
                 </div>
 
                 <div class="form-group">
