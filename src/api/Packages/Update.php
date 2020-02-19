@@ -1,26 +1,36 @@
 <?php
+    include_once '../../database/Database.php';
+    include_once '../../controllers/PackagesController.php';
 
-include_once '../../database/Database.php';
-include_once '../../controllers/PackagesController.php';
+    header("Access-Control-Allow-Origin: *");
+    header("Content-Type: application/json; charset=UTF-8");
+    header("Access-Control-Allow-Methods: POST");
+    header("Access-Control-Max-Age: 3600");
+    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    $data = json_decode($_POST['data']);
+    $packageId = $data->packageId;
+    $title = $data->title;
+    $instructorId = $data->instructorId;
+    $videoId = $data->videoId;
 
-   $database = new Database();
-   $db = $database->connect();
-    
-   $controller = new PackageController($db);
+    $databaseEntryCreated = false;
 
-    $success = false;
-    
-  
-            $result = $controller->update($_POST['ID'],$_POST['Title'], $_POST['VideoID'], date(DATE_RSS));
-            if ($result) {
-                $success = true;
-            }
-    echo json_encode($success);
-    header("Location: {$_SERVER["HTTP_REFERER"]}");
+    $database = new Database();
+    $db = $database->connect();
+
+    $controller = new PackageController($db);
+
+    if ($controller->update($packageId, $title, $instructorId, $videoId)) {
+        $databaseEntryCreated = true;
+    }
+
+    $response = array("success" => 0, "message" => "The package was not successfully updated.");
+
+    if($databaseEntryCreated == true) {
+        $response['success'] = 1;
+        $response['message'] = "The package was successfully updated.";
+    }
+
+    echo json_encode($response);
 ?>

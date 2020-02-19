@@ -49,31 +49,7 @@
 
             <div class="form-group">
                 <label>Select new video</label>
-                <select id="update-package-select-video" name="VideoID" class="form-control" onchange="updateUpdatePackageVideoFilePath()">
-                <?php
-                        foreach($videoResponse as $video){
-                            echo "<option video-path=\"";
-                            if(!array_key_exists('filePath', $video)){
-                                echo"Invlaid Package";
-                            }else{
-                                echo $video['filePath'];
-                            }
-                            echo "\" value=";
-                            if(!array_key_exists('id', $video)){
-                                echo"Invlaid Package";
-                            }else{
-                                echo $video['id'];
-                            }
-                            echo ">";
-                            if(!array_key_exists('title', $video)){
-                                echo"Invlaid Package";
-                            }else{
-                                echo $video['title'];
-                            }
-                            echo "</option>";
-                        }
-                    ?>
-                </select>
+                <select id="update-package-select-video" name="VideoID" class="form-control" onchange="updateUpdatePackageVideoFilePath()"></select>
             </div>
             <input name="InstructorID" Type="hidden" value=<?php echo "\""; echo $instructorID; echo "\""; ?>/>
             <label>Selected video</label>
@@ -84,7 +60,8 @@
                 <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
             </video-js>
             
-            <button class="form-control mt-3 btn btn-warning" type="Submit">Update</button>
+            <button class="form-control mt-3 btn btn-warning" type="button" onclick="updatePackage()">Update</button>
+            <div id="ivc-update-package-status-message"></div>
             </form>
         </div>
 

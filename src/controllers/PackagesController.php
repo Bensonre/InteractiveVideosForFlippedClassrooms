@@ -59,21 +59,22 @@ class PackageController {
         }
     }
 
-    public function Update($id, $Title, $videoId, $Date){
-        $this->Date = htmlspecialchars(strip_tags($Date));
-        $this->Title = htmlspecialchars(strip_tags($Title));
+    public function update($id, $title, $instructorId, $videoId){
+        $id = htmlspecialchars(strip_tags($id));
+        $title = htmlspecialchars(strip_tags($title));
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
         $videoId = htmlspecialchars(strip_tags($videoId));
         $querySetString = null;
         $valuesString = null;
         $bindParamString = null;
 
-        $query = "UPDATE $this->PackageTable SET `Title` = ?, `VideoID` = ?, `DateModified` = ? where ID=?";
+        $query = "UPDATE $this->PackageTable SET `Title` = ?, `VideoID` = ?, `InstructorID` = ?, `DateModified` = CURDATE() where ID=?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("sisi", $this->Title, $videoId, $this->date, $id);
+            $stmt->bind_param("siii", $title, $videoId, $instructorId, $id);
             return $stmt->execute();
         }
     }
