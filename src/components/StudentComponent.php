@@ -1,7 +1,7 @@
 <?php
 include "../includes/Display_Question_Component.php";
-$packageId = intval($_GET['id']); 
-    if(!$packageId){
+$packageId = intval($_GET['id']);
+    if($packageId==Null){
         $packageId=1;
     }
     $response = file_get_contents("http://web.engr.oregonstate.edu/~bensonre/Capstone/src/api/Packages/read-one.php?id=$packageId");

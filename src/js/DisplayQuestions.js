@@ -28,7 +28,8 @@ getquestions();
   .then((myJson) => {
     console.log(myJson);
     questions = myJson.Questions;
-    questions.sort((a, b) => (a.QuestionTimestamp - b.QuestionTimestamp));
+    questions.sort((a,b) => (a.QuestionTimestamp > b.QuestionTimestamp) ? 1 : ((b.QuestionTimestamp > a.QuestionTimestamp) ? -1 : 0));
+    
     console.log(questions)
   });
 }
@@ -59,7 +60,7 @@ getquestions();
 })
 
 function submitAnswer(){
-  q = document.getElementById("question" +currentQuestion).submit();
+  document.getElementById("question" +currentQuestion).submit();
   SetNextQuestion(currentQuestion);
   currentQuestion ++;
   question.style.display ="none";
