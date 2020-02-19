@@ -1,7 +1,7 @@
 <?php
 
   include_once '../../database/Database.php';
-  include_once '../../controllers/QuestionController.php';
+  include_once '../../controllers/PackageController.php';
 
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
@@ -18,7 +18,6 @@
   $db = $database->connect();
 
   $controller = new QuestionController($db);
-
   $controller->id       = $questionId;
 
   if ($controller->delete()) {

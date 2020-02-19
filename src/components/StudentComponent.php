@@ -38,9 +38,6 @@ $packageId = intval($_GET['id']);
                         <?php
                                 getQuestionHtml($response)
                             ?>
-                       <div>
-                            <button id="question-submit" type=button class="button-positive">submit</btn>
-                       </div> 
                     </div>
                 </div>
     <script src="../js/DisplayQuestions.js"></script>

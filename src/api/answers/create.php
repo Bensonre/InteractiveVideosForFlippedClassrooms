@@ -19,7 +19,6 @@
         if ($result) {
             $success = true;
         }
-    }
-
+     }
     echo json_encode($success);
 ?>

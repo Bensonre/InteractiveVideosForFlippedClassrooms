@@ -18,9 +18,11 @@
             $result = array(
                 "Title" => $row['Title'],
                 "Path" => $row['FilePath'],
-                "Questions" => $questions = []
+                "Package"=>$row['PackageID'],
+                "Questions" => $questions = [],
+                
             );
-
+            $package = $row['PackageID'];
             do {
             
             $QuestionObj = [
@@ -40,10 +42,10 @@
       
                 array_push($QuestionObj['Answer'], $AnswerObj);
       
-              } while( $row["ChoiceOrder"] < 4 && $row =  mysqli_fetch_assoc($VideoResult));
+              } while( $row["ChoiceOrder"] < 4 && $package == $row['PackageID'] &&$row =  mysqli_fetch_assoc($VideoResult));
       
               array_push($result["Questions"], $QuestionObj);
-            } while( $row =  mysqli_fetch_assoc($VideoResult));
+            } while( $package == $row['PackageID'] && $row =  mysqli_fetch_assoc($VideoResult));
           }
 
         http_response_code(200);

@@ -10,6 +10,9 @@
 
     $data = json_decode($_POST['data']);
     $packageId = $data->packageId;
+    $title = $data->title;
+    $instructorId = $data->instructorId;
+    $videoId = $data->videoId;
 
     $databaseEntryCreated = false;
 
@@ -18,15 +21,15 @@
 
     $controller = new PackageController($db);
 
-    if ($controller->delete($packageId)) {
+    if ($controller->update($packageId, $title, $instructorId, $videoId)) {
         $databaseEntryCreated = true;
     }
 
-    $response = array("success" => 0, "message" => "The package was not successfully deleted.");
+    $response = array("success" => 0, "message" => "The package was not successfully updated.");
 
     if($databaseEntryCreated == true) {
         $response['success'] = 1;
-        $response['message'] = "The package was successfully deleted.";
+        $response['message'] = "The package was successfully updated.";
     }
 
     echo json_encode($response);
