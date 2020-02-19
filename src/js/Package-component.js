@@ -161,6 +161,8 @@ function fillPackages(packages) {
    for (let i = 0; i < packages.length; i++) {
       console.log(packages[i]);
       let option = document.createElement("option");
+      option.S
+      option.setAttribute('video-id', packages[i].videoId);
       option.value = packages[i].id;
       let text = document.createTextNode(packages[i].title);
       option.appendChild(text);

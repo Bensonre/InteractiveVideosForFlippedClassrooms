@@ -6,6 +6,10 @@
     border: 1px solid black;
 }
 
+.container{
+  min-height:min-content;
+}
+
 .quarter-width {
     float: left;
     width: 25%;
