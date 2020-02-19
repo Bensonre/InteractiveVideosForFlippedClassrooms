@@ -1,8 +1,9 @@
-<div class="container">
-    <div class="row">
 
-        <div class="col m-4 border border-dark">
-            <h2 class="text-center">Add Questions to a Package</h2>
+<div class="container border border-dark">
+    <h2 class="text-center">Add Questions to a Package</h2>
+
+    <div class="row">
+        <div class="col">
             <form>
                 <div class="form-group">
                     <div class="label" for="select-package">Select a Package</div>
@@ -16,26 +17,28 @@
                     <div class="label" for="timestamp">Timestamp</div>
                     <input class="form-control" name="timestamp" id="timestamp" onkeyup="updateVideoTime()" type="string" /> 
                 </div>
-                <button class="form-control mb-3 btn btn-primary" onclick="sendData()" type="button" class="">Add to Package</button>
+                <div class="form-group">
+                    <button class="form-control mb-3 btn btn-primary" onclick="sendData()" type="button" class="">Add to Package</button>
+                    <div class="text-center" id="ivc-add-questions-status-message"></div>
+                </div>
             </form>
-            <div class="text-center" id="ivc-add-questions-status-message"></div>
         </div>
 
-        <div class="col m-4 border border-dark">
-            <div class="mt-4 mb-4" style="height: 50vh; overflow: auto;">
-            <table class="table table-striped table-bordered table-sm" id="ivc-add-questions-added-table"></table>
+        <div class="col align-self-center">
+            <div class="form-group">
+                <video-js
+                    id="ivc-add-questions-player"
+                    class="video-js vjs-16-9"
+                    controls 
+                    autoplay
+                    data-setup="{}"
+                >
+                </video-js>
             </div>
         </div>
-
-        <div class="col m-4 border border-dark">
-            <video-js
-            id="ivc-add-questions-player"
-            controls 
-            autoplay
-            data-setup="{}"
-		        >
-            </video-js>
-        </div>
-
     </div>
+    
+        <div class="form-group">
+        <table class="table table-dark table-bordered table-sm" id="ivc-add-questions-added-table"></table>
+        </div>
 </div>
