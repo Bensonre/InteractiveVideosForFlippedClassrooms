@@ -167,7 +167,7 @@ function fillQuestionTable(questions) {
     console.log("Clearing question table...");
     var table = document.getElementById("ivc-add-questions-added-table");
     table.innerHTML = "<thead class='text-center'>";
-    table.innerHTML = "<tr><th colspan='3'>Questions in the Package</th></tr>";
+    table.innerHTML = "<tr><th class='text-center' colspan='3'>Questions in the Package</th></tr>";
     table.innerHTML += "<tr><th>Question</th><th>Timestamp</th><th>Options</th></tr>";
     table.innerHTML += "</thead>";
     console.log("Filling question table...");
