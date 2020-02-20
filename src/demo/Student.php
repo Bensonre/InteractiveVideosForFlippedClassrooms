@@ -1,9 +1,10 @@
 <?php
     $currentpage = "Student";
-    $packageId = intval($_GET['id']);
-    if($packageId==Null){
-        $packageId=1;
-    }
+    if(!isset($_GET['id'])){
+        $packageId = 1;
+    } else {
+        $packageId = intval($_GET['id']);
+    }    
 ?>
 <!DOCTYPE html>
 <html>

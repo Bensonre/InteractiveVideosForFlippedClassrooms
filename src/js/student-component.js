@@ -10,7 +10,8 @@ function getUrlParameter(name) {
 }
 
 function getPackage() {
-    const packageId = getUrlParameter('id');
+    let packageId = getUrlParameter('id');
+    if (packageId === "") {packageId = 1;}
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
