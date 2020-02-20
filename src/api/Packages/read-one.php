@@ -52,6 +52,15 @@
       
               } while( $row["ChoiceOrder"] < 4 && $package == $row['PackageID'] &&$row =  mysqli_fetch_assoc($VideoResult));
               
+              $AnswerObj = [
+                "AnswerID" => $row["ChoiceID"],
+                "AnswerText" => $row["ChoiceText"],
+                "AnswerOrder" => $row["ChoiceOrder"],
+                "Correct" => $row["correct"]
+              ];
+              
+              array_push($QuestionObj['Answer'], $AnswerObj);
+
               array_push($result["Questions"], $QuestionObj);
             } while( $package == $row['PackageID'] && $row =  mysqli_fetch_assoc($VideoResult));
           }
