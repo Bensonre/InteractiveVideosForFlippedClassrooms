@@ -135,6 +135,11 @@ body{
   .container{
       height: 70%;
   }
+
+  .container.border{
+      height: min-content;
+  }  
+
   .flex-item{
   }
 

@@ -25,9 +25,6 @@
             echo '</div>';
             echo '<div><button id="question-submit" type="button" onclick="submitAnswer()" class="button-positive">submit</btn></div>';
             echo '</form>'; 
-            echo '<div><button id="question-submit" type="button" class="button-positive">submit</btn></div>';
-            echo '</form>';
-
             $i++;
         }
     }
