@@ -1,3 +1,5 @@
+var form_error = "Please fill out all input fields";
+
 window.onload = function() {
    getVideos();
    getPackages();
@@ -41,6 +43,13 @@ function createPackage() {
    const instructorId = ivcInstructorId;
    const videoId = document.getElementById("create-package-select-video").value;
 
+   if(!(title.length > 0) ||
+      !(videoId.length > 0)) 
+   {
+           alert(form_error);
+           return false;
+   }
+
    let data = {
       "title": title, 
       "instructorId": instructorId, 
@@ -75,6 +84,13 @@ function updatePackage() {
    const instructorId = ivcInstructorId;
    const videoId = document.getElementById("update-package-select-video").value;
    
+   if(!(title.length > 0) ||
+      !(Number.isInteger(videoId)))
+   { 
+           alert(error_message)
+           return false;
+   }
+
    let data = {
       "packageId": packageId,
       "title": title, 
