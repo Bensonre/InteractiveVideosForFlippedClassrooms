@@ -1,3 +1,5 @@
+var form_error = "Please fill out all input fields";
+
 var ivcQuestionComponentQuestions = [];
 
 window.onload = function() {
@@ -22,7 +24,7 @@ function createQuestion() {
        !(a3.length       > 0) ||
        !(a4.length       > 0) ||
        !(correct.length  > 0)) {
-            alert("All fields must be filled out");
+            alert(form_error);
             return false;
     }
 
@@ -49,6 +51,7 @@ function createQuestion() {
 
             if (res.success) {
                 document.getElementById("ivc-create-question-status-message").style.color = "green";
+                document.getElementById("cqform").reset();
                 getQuestions();
             } else {
                 document.getElementById("ivc-create-question-status-message").style.color = "red";
@@ -72,8 +75,10 @@ function updateQuestion() {
     let correct = document.getElementById("ivc-select-answer-update").value;
     let instructorId = ivcInstructorId;
 
+
     //Form Validation for Updatint Questions
-    if(!(question.length > 0) ||
+    if(!(questionIndex.length > 0)  ||     
+       !(question.length > 0) ||
        !(category.length > 0) ||
        !(a1.length       > 0) ||
        !(a2.length       > 0) ||
@@ -107,6 +112,7 @@ function updateQuestion() {
 
             if (res.success) {
                 document.getElementById("ivc-update-question-status-message").style.color = "green";
+                getQuestions();
             } else {
                 document.getElementById("ivc-update-question-status-message").style.color = "red";
             }
@@ -120,6 +126,11 @@ function updateQuestion() {
 function deleteQuestion() {
     let questionIndex = document.getElementById("ivc-question-select-delete").value;
     let questionId = ivcQuestionComponentQuestions[questionIndex].questionId;
+
+    if(!(questionIndex.length > 0)) {
+            alert(form_error);
+            return false;
+    }
 
     let data = {
         "questionId":questionId,

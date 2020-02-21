@@ -8,7 +8,7 @@
     <div class="tab-content">
         <div id="ivc-create-video-form" class="tab-pane container active">
             <h2 class="text-center">Upload Videos</h2>
-            <form>
+            <form id="uvideoform">
                 <div class="form-group">
                     <label>Video</label>
                     <input id="ivc-video-select-create" type="file" class="form-control-file" name="local-video-file" accept="video/*">
@@ -26,7 +26,7 @@
 
         <div id="ivc-update-video-form" class="tab-pane container fade">
             <h2 class="text-center">Update Videos</h2>
-            <form> 
+            <form id="upvideoform"> 
                 <div class="form-group">
                     <label>Video</label>
                     <select id="ivc-video-select-update" class="form-control"></select>

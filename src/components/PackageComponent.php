@@ -10,7 +10,7 @@
             <h2 class="text-center">Create Packages</h2>
             <div class="row">
                 <div class="col">
-                    <form>
+                    <form id="cpackageform">
                         <div class="form-group">
                             <label>Select a video</label>
                             <select id="create-package-select-video" Name="VideoId" onchange="updateCreatePackageVideoFilePath()" class="form-control"></select>
@@ -48,7 +48,7 @@
             <h2 class="text-center">Update Packages</h2>
             <div class="row">
                 <div class="col">
-                    <form> 
+                    <form id="uppackageform"> 
                         <div class="form-group">
                             <label>Select an existing package</label>
                             <select id="update-package-selection" class="form-control" name="ID" onchange="updateUpdatePackageOnNewPackageSelected()"></select>
