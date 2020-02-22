@@ -12,10 +12,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Flipped Classroom: Student</title>
-    <link rel="stylesheet" href="../css/Site-Style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	<link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
     <link href="../dependencies/videojs-overlay/node_modules/videojs-overlay/dist/videojs-overlay.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="../css/student-component.css" rel="stylesheet">
     <script>
         var ivcPackageId = <?php echo "$packageId"; ?>;
     </script>

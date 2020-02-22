@@ -59,21 +59,21 @@ function constructOverlay(question) {
 
 function constructContent(question) {
     let content =  `<div class='container'><form>\
-                        <h4>${question.QuestionText}</h4>\
+                        <h4 class='text-center'>${question.QuestionText}</h4>\
                         <div class='form-check'>\
-                            <input class='form-check-input' type='radio' id='a1'>\
+                            <input class='form-check-input' type='radio' id='a1' name='answerOption'>\
                             <label class='form-check-label' for='a1'>${question.Answer[0].AnswerText}</label>\
                         </div>\
                         <div class='form-check'>\
-                            <input class='form-check-input' type='radio' id='a2'>\
+                            <input class='form-check-input' type='radio' id='a2' name='answerOption'>\
                             <label class='form-check-label' for='a2'>${question.Answer[1].AnswerText}</label>\
                         </div>\
                         <div class='form-check'>\
-                            <input class='form-check-input' type='radio' id='a3'>\
+                            <input class='form-check-input' type='radio' id='a3' name='answerOption'>\
                             <label class='form-check-label' for='a3'>${question.Answer[2].AnswerText}</label>\
                         </div>\
                         <div class='form-check'>\
-                            <input class='form-check-input' type='radio' id='a4'>\
+                            <input class='form-check-input' type='radio' id='a4' name='answerOption'>\
                             <label class='form-check-label' for='a4'>${question.Answer[3].AnswerText}</label>\
                         </div>\
                         <button class='form-control mt-3 btn btn-primary' type='button' onclick='questionAnswered(this)'>Submit</button>\
