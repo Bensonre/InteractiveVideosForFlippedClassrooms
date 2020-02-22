@@ -2,6 +2,8 @@
     background-color: white;
     color: black;
     text-align: left;
+    max-height: 70%;
+    overflow: auto;
 }
 
 .video-js .vjs-overlay .form-check-input {
