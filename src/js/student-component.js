@@ -59,21 +59,21 @@ function constructOverlay(question) {
 
 function constructContent(question) {
     let content =  `<div class='container'><form>\
-                        <h4>${question.QuestionText}</h4>\
+                        <h4 class='text-center'>${question.QuestionText}</h4>\
                         <div class='form-check'>\
-                            <input class='form-check-input' type='radio' id='a1'>\
+                            <input class='form-check-input' type='radio' id='a1' name='answerOption' value='${question.Answer[0].Correct}'>\
                             <label class='form-check-label' for='a1'>${question.Answer[0].AnswerText}</label>\
                         </div>\
                         <div class='form-check'>\
-                            <input class='form-check-input' type='radio' id='a2'>\
+                            <input class='form-check-input' type='radio' id='a2' name='answerOption' value='${question.Answer[1].Correct}'>\
                             <label class='form-check-label' for='a2'>${question.Answer[1].AnswerText}</label>\
                         </div>\
                         <div class='form-check'>\
-                            <input class='form-check-input' type='radio' id='a3'>\
+                            <input class='form-check-input' type='radio' id='a3' name='answerOption' value='${question.Answer[2].Correct}'>\
                             <label class='form-check-label' for='a3'>${question.Answer[2].AnswerText}</label>\
                         </div>\
                         <div class='form-check'>\
-                            <input class='form-check-input' type='radio' id='a4'>\
+                            <input class='form-check-input' type='radio' id='a4' name='answerOption' value='${question.Answer[3].Correct}'>\
                             <label class='form-check-label' for='a4'>${question.Answer[3].AnswerText}</label>\
                         </div>\
                         <button class='form-control mt-3 btn btn-primary' type='button' onclick='questionAnswered(this)'>Submit</button>\
@@ -83,5 +83,23 @@ function constructContent(question) {
 }
 
 function questionAnswered(button) {
-    console.log('Question answered!');
+    button.disabled = true;
+    const form = button.parentNode;
+    const selection = form.querySelector('input[type=radio]:checked');
+    if (selection) {
+        const isCorrect = Number(selection.value);
+        console.log('Question answered!');
+        console.log(`Answer value: ${isCorrect}`);
+        const feedbackNode = document.createElement('div');
+        isCorrect ? feedbackNode.className += 'text-center text-success'
+                  : feedbackNode.className += 'text-center text-danger';
+        const feedbackTextNode = isCorrect ? document.createTextNode('Correct') 
+                                           : document.createTextNode('Wrong');
+        
+        feedbackNode.appendChild(feedbackTextNode);
+        form.removeChild(button);
+        form.appendChild(feedbackNode);
+    } else {
+        button.disabled = false;
+    }
 }
