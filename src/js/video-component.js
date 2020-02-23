@@ -1,3 +1,5 @@
+var form_error = "Please fill out all input fields";
+
 var ivcVideoComponentVideos = [];
 
 window.onload = function() {
@@ -9,6 +11,12 @@ function createVideo() {
     const fileInput = document.getElementById("ivc-video-select-create");
     const title = document.getElementById("ivc-video-title-create").value;
     const instructorId = ivcInstructorId;
+
+    if(!(fileInput.files.length > 0) ||
+       !(title.length > 0)) {
+            alert(form_error);
+            return false;
+    }
 
     if (fileInput.files && fileInput.files.length == 1) {
         var file = fileInput.files[0];
@@ -28,6 +36,7 @@ function createVideo() {
 
             if (res.success) {
                 document.getElementById("ivc-create-video-status-message").style.color = "green";
+                document.getElementById("uvideoform").reset();
             } else {
                 document.getElementById("ivc-create-video-status-message").style.color = "red";
             }
@@ -44,6 +53,12 @@ function updateVideo() {
     const id = ivcVideoComponentVideos[videoIndex].id;
     const title = document.getElementById("ivc-title-update").value;
 
+    if(!(videoIndex.length > 0) ||
+       !(title.length > 0)) {
+            alert(form_error);
+            return false;
+    }
+
     const data = {
         "id": id,
         "title": title
@@ -57,6 +72,8 @@ function updateVideo() {
 
             if (res.success) {
                 document.getElementById("ivc-update-video-status-message").style.color = "green";
+                document.getElementById("upvideoform").reset();
+                getVideos();
             } else {
                 document.getElementById("ivc-update-video-status-message").style.color = "red";
             }
@@ -73,6 +90,11 @@ function deleteVideo() {
     const videoIndex = document.getElementById("ivc-video-select-delete").value;
     const id = ivcVideoComponentVideos[videoIndex].id;
     const filePath = ivcVideoComponentVideos[videoIndex].filePath;
+
+    if (!(videoIndex.length > 0)) {
+            alert(form_error);
+            return false;
+    }
 
     const data = {
         "id": id,

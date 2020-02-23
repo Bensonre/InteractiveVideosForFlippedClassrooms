@@ -8,7 +8,7 @@
     <div class="tab-content">
         <div id="ivc-create-question-form" class="tab-pane container active">
             <h2 class="text-center">Create Questions</h2>
-            <form>
+            <form id="cqform">
                 <div class="form-group">
                     <label>Question</label>
                     <textarea id="ivc-question" class="form-control" rows="3" placeholder="Write your question here..." name="question"></textarea>

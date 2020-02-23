@@ -1,3 +1,5 @@
+var form_error = "Please fill out all input fields";
+
 window.onload = function() {
    getVideos();
    getPackages();
@@ -40,6 +42,14 @@ function createPackage() {
    const title = document.getElementById("create-package-title").value;
    const instructorId = ivcInstructorId;
    const videoId = document.getElementById("create-package-select-video").value;
+   
+   //form validation
+   if(!(title.length > 0) ||
+      !(videoId.length > 0)) 
+   {
+           alert(form_error);
+           return false;
+   }
 
    let data = {
       "title": title, 
@@ -57,6 +67,7 @@ function createPackage() {
 
          if (res.success) {
                document.getElementById("ivc-create-package-status-message").style.color = "green";
+               document.getElementById("cpackageform").reset();
          } else {
                document.getElementById("ivc-create-package-status-message").style.color = "red";
          }
@@ -74,7 +85,16 @@ function updatePackage() {
    const title = document.getElementById("update-package-title").value;
    const instructorId = ivcInstructorId;
    const videoId = document.getElementById("update-package-select-video").value;
-   
+  
+   //form validation
+   if(!(title.length > 0)     ||
+      !(packageId.length > 0) ||
+      !(videoId.length > 0))
+   { 
+           alert(form_error)
+           return false;
+   }
+
    let data = {
       "packageId": packageId,
       "title": title, 
@@ -93,18 +113,27 @@ function updatePackage() {
 
          if (res.success) {
                document.getElementById("ivc-update-package-status-message").style.color = "green";
+               document.getElementById("uppackageform").reset();
+               getPackages();
          } else {
                document.getElementById("ivc-update-package-status-message").style.color = "red";
          }
       }
    };
-   xhttp.open("POST", "../api/Packages/update.php", false);
+   xhttp.open("POST", "../api/Packages/Update.php", false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
 
 function deletePackage() {
    const packageId = document.getElementById("delete-package-selection").value;
+   
+   //form validation
+   if(!(packageId.length > 0))
+   {
+           alert(form_error);
+           return false;
+   }
 
    let data = {
       "packageId": packageId
@@ -130,7 +159,7 @@ function deletePackage() {
          deleteOption.remove();
       }
    };
-   xhttp.open("POST", "../api/Packages/delete.php", false);
+   xhttp.open("POST", "../api/Packages/Delete.php", false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
