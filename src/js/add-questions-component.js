@@ -90,9 +90,6 @@ function sendData() {
     var timestamp = document.getElementById("timestamp").value;
     let instructorID = ivcInstructorId;
 
-    alert(timestamp);
-    alert(typeof(timestamp));
-
     if(!(packageID.length > 0) ||
        !(questionID.length > 0) ||
        !(timestamp.length > 0)) {
