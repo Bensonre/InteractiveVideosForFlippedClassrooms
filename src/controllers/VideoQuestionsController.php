@@ -22,7 +22,7 @@ class VideoQuestionsController {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("iiiii", $videoID, $questionID, $packageID, $instructorID, $timestamp);
+            $stmt->bind_param("iiiid", $videoID, $questionID, $packageID, $instructorID, $timestamp);
             return $stmt->execute();
         }
         return false;
@@ -51,7 +51,7 @@ class VideoQuestionsController {
         if ($stmt == false) {
             return false;
         } else {
-            $stmt->bind_param("ii", $timestamp, $id);
+            $stmt->bind_param("di", $timestamp, $id);
             return $stmt->execute();
         }
         return false;
