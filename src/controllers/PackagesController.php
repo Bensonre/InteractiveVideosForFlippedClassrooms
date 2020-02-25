@@ -93,7 +93,24 @@ class PackageController {
             return $stmt;
         }
     }
+    public function readPackagesIdsbyNewestFromData($title ,$instructorId, $videoId) {
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
+        $title = htmlspecialchars(strip_tags($title));
+        $videoId = htmlspecialchars(strip_tags($videoId));
 
+        $query = "Select ID from $this->PackageTable where Title = ?
+        && InstructorID=? && VideoID=?
+        order by DateModified desc;";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("sii",$title ,$instructorId, $videoId);
+            $stmt->execute();
+            return $stmt;
+        }
+    }
     public function getVideoIdOfPackage($id) {
         $query = "SELECT `VideoID` FROM $this->PackageTable WHERE `ID` = $id";
         $stmt = $this->conn->prepare($query);

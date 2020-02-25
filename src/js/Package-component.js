@@ -98,12 +98,40 @@ function updatePackage() {
          }
       }
    };
-   xhttp.open("POST", "../api/Packages/update.php", false);
+   xhttp.open("POST", "../api/Packages/Update.php", false);
+   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xhttp.send("data=" + JSON.stringify(data));
+}
+
+function dupliactePackage(){
+   const oldId = document.getElementById('duplicate-package-selection');
+   const newTitle = document.getElementById('duplicate-package-title');
+   const instructorId = ivcInstructorId;
+   let data = {
+      "oldPackageId": packageId,
+      "newTitle": title, 
+      "instructorId": instructorId, 
+   };
+   let xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         console.log(this.responseText);
+         var res = JSON.parse(this.responseText);
+         document.getElementById("ivc-duplicate-package-status-message").innerText = res.message;
+         if (res.success) {
+               document.getElementById("ivc-duplicate-package-status-message").style.color = "green";
+         } else {
+               document.getElementById("ivc-duplicate-package-status-message").style.color = "red";
+         }
+      }
+   };
+   xhttp.open("POST", "../api/Packages/Duplicate.php", false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
 
 function deletePackage() {
+   
    const packageId = document.getElementById("delete-package-selection").value;
 
    let data = {
@@ -200,3 +228,5 @@ function updateUpdatePackageOnNewPackageSelected(){
     player.load();
     player.play();
  }
+
+
