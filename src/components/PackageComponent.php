@@ -66,17 +66,6 @@
                         <div id="ivc-duplicate-package-status-message" class="text-center"></div>
                     </form>
                 </div>
-
-                <div class="col">
-                    <label>Selected video</label>
-                    <video-js
-                        id="Update-Package-video"
-                        class="vjs-16-9"
-                        controls 
-                        data-setup="{}">
-                        <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
-                    </video-js>
-                </div>
             </div>
         </div>
         <div id="ivc-update-package-form" class="tab-pane container fade">

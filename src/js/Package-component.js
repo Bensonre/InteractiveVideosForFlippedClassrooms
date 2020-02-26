@@ -125,13 +125,13 @@ function updatePackage() {
    xhttp.send("data=" + JSON.stringify(data));
 }
 
-function dupliactePackage(){
-   const oldId = document.getElementById('duplicate-package-selection');
-   const newTitle = document.getElementById('duplicate-package-title');
+function duplicatePackage(){
+   const oldId = document.getElementById('duplicate-package-selection').value;
+   const newTitle = document.getElementById('duplicate-package-title').value;
    const instructorId = ivcInstructorId;
    let data = {
-      "oldPackageId": packageId,
-      "newTitle": title, 
+      "oldPackageId": oldId,
+      "newTitle": newTitle, 
       "instructorId": instructorId, 
    };
    let xhttp = new XMLHttpRequest();
@@ -213,8 +213,10 @@ function fillPackages(packages) {
 
    let element = document.getElementById("update-package-selection");
    let element2 = document.getElementById("delete-package-selection");
+   let element3 = document.getElementById("duplicate-package-selection");
    element.innerHTML = "";
    element2.innerHTML = "";
+   element3.innerHTML ="";
    for (let i = 0; i < packages.length; i++) {
       console.log(packages[i]);
       let option = document.createElement("option");
@@ -224,8 +226,10 @@ function fillPackages(packages) {
       let text = document.createTextNode(packages[i].title);
       option.appendChild(text);
       let option2 = option.cloneNode(true);
+      let option3 = option.cloneNode(true);
       element.appendChild(option);
       element2.appendChild(option2);
+      element3.appendChild(option3);
    }
 }
 

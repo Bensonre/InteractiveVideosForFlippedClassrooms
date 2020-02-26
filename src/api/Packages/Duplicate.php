@@ -8,7 +8,8 @@
     header("Access-Control-Allow-Methods: POST");
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+    
+    
     $data = json_decode($_POST["data"]);
     $oldPackageId = $data->oldPackageId;
     $newTitle = $data->newTitle;
@@ -18,6 +19,7 @@
     $databaseQuestionEntryCreated = false;
     $GotOldPackage = false;
     
+
     if($oldPackageId == NULL || $newTitle == NULL || $instructorId== NULL){
         echo json_encode(array("success" => 0, "message" => "Missing required Data"));
     }
