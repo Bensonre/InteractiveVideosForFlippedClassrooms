@@ -125,7 +125,35 @@ function updatePackage() {
    xhttp.send("data=" + JSON.stringify(data));
 }
 
+function duplicatePackage(){
+   const oldId = document.getElementById('duplicate-package-selection').value;
+   const newTitle = document.getElementById('duplicate-package-title').value;
+   const instructorId = ivcInstructorId;
+   let data = {
+      "oldPackageId": oldId,
+      "newTitle": newTitle, 
+      "instructorId": instructorId, 
+   };
+   let xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         console.log(this.responseText);
+         var res = JSON.parse(this.responseText);
+         document.getElementById("ivc-duplicate-package-status-message").innerText = res.message;
+         if (res.success) {
+               document.getElementById("ivc-duplicate-package-status-message").style.color = "green";
+         } else {
+               document.getElementById("ivc-duplicate-package-status-message").style.color = "red";
+         }
+      }
+   };
+   xhttp.open("POST", "../api/Packages/Duplicate.php", false);
+   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xhttp.send("data=" + JSON.stringify(data));
+}
+
 function deletePackage() {
+   
    const packageId = document.getElementById("delete-package-selection").value;
    
    //form validation
@@ -185,8 +213,10 @@ function fillPackages(packages) {
 
    let element = document.getElementById("update-package-selection");
    let element2 = document.getElementById("delete-package-selection");
+   let element3 = document.getElementById("duplicate-package-selection");
    element.innerHTML = "";
    element2.innerHTML = "";
+   element3.innerHTML ="";
    for (let i = 0; i < packages.length; i++) {
       console.log(packages[i]);
       let option = document.createElement("option");
@@ -196,8 +226,10 @@ function fillPackages(packages) {
       let text = document.createTextNode(packages[i].title);
       option.appendChild(text);
       let option2 = option.cloneNode(true);
+      let option3 = option.cloneNode(true);
       element.appendChild(option);
       element2.appendChild(option2);
+      element3.appendChild(option3);
    }
 }
 
@@ -229,3 +261,5 @@ function updateUpdatePackageOnNewPackageSelected(){
     player.load();
     player.play();
  }
+
+
