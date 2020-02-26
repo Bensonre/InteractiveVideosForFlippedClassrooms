@@ -21,7 +21,7 @@
    $VideoResult = $stmt->get_result();
    $num = mysqli_num_rows($VideoResult);
    if ($num > 0){
-        $row = mysqli_fetch_assoc($VideoResult);
+        //$row = mysqli_fetch_assoc($VideoResult);
         while($row = mysqli_fetch_assoc($VideoResult)) {
           $result = array(
             "Title" => $row['Title'],
@@ -50,7 +50,7 @@
                 
                 array_push($QuestionObj['Answer'], $AnswerObj);
       
-              } while( $row["ChoiceOrder"] < 4 && $package == $row['PackageID'] &&$row =  mysqli_fetch_assoc($VideoResult));
+              } while( $row["ChoiceOrder"] < 4 && $package == $row['PackageID'] && $row =  mysqli_fetch_assoc($VideoResult));
               
               array_push($result["Questions"], $QuestionObj);
             } while( $package == $row['PackageID'] && $row =  mysqli_fetch_assoc($VideoResult));
