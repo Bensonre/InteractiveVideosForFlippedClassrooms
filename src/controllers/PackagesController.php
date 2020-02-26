@@ -93,14 +93,14 @@ class PackageController {
             return $stmt;
         }
     }
-    public function readPackagesIdsbyNewestFromData($title ,$instructorId, $videoId) {
+    public function readPackageIdsbyNewestFromData($title ,$instructorId, $videoId) {
         $instructorId = htmlspecialchars(strip_tags($instructorId));
         $title = htmlspecialchars(strip_tags($title));
         $videoId = htmlspecialchars(strip_tags($videoId));
 
-        $query = "Select ID from $this->PackageTable where Title = ?
-        && InstructorID=? && VideoID=?
-        order by DateModified desc;";
+        $query = "SELECT `ID` from $this->PackageTable where `Title` = ?
+        && `InstructorID`=? && `VideoID`=?
+        order by `DateModified` desc;";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
