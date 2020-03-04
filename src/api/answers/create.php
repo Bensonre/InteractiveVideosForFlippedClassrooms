@@ -10,6 +10,7 @@
 
     $data = json_decode($_POST['data']);
     $studentId = $data->studentId;
+    $packageId = $data->packageId;
     $questionId = $data->questionId;
     $answerId = $data->answerId;
 
@@ -20,7 +21,7 @@
 
     $res = array("success" => false);
     if(isset($_POST['data'])) {
-        $result = $controller->create($studentId, $questionId, $answerId);
+        $result = $controller->create($studentId, $questionId, $answerId, $packageId);
         if ($result) {
             $res['success'] = true;
         }

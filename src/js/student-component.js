@@ -45,15 +45,18 @@ function questionAnswered(button) {
         const questionId = form.querySelector('#questionId').getAttribute('data-value');
         const answerId = Number(selection.value);
         const studentId = ivcStudentId;
+        const packageId = ivcPackageId;
         console.log('Question answered!');
         console.log(`Question id: ${questionId}`);
         console.log(`Answer id: ${answerId}`);
         console.log(`Student id: ${studentId}`);
+        console.log(`Package id: ${packageId}`);
 
         const data = {
             studentId,
             questionId,
-            answerId
+            answerId,
+            packageId
         };
 
         var xhttp = new XMLHttpRequest();

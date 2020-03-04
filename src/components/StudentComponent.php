@@ -28,7 +28,8 @@
 <script>
     var ivcPackageInfo = <?php echo json_encode($packageInfo); ?>;
     var ivcOverlays = <?php echo json_encode($overlays); ?>;
-    var ivcStudentId = <?php echo $_SESSION['studentId'] ?>;
+    var ivcStudentId = <?php echo $_SESSION['studentId']; ?>;
+    var ivcPackageId = <?php echo json_encode($packageId); ?>;
 </script>
 
 <div class="container border border-dark">

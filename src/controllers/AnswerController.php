@@ -8,18 +8,19 @@ class AnswerController {
         $this->conn = $db;
     }
 
-    public function create($studentID, $questionID, $choiceID) {
+    public function create($studentID, $questionID, $choiceID, $packageID) {
         $questionID = htmlspecialchars(strip_tags($questionID));
         $choiceID = htmlspecialchars(strip_tags($choiceID));
         $studentID = htmlspecialchars(strip_tags($studentID));
+        $packageID = htmlspecialchars(strip_tags($packageID));
 
-        $query = "INSERT INTO $this->table (`QuestionID`, `ChoiceID`, `StudentID`, `AnswerDate`) VALUES (?,?,?,CURDATE())";
+        $query = "INSERT INTO $this->table (`QuestionID`, `ChoiceID`, `StudentID`, `PackageID`, `AnswerDate`) VALUES (?,?,?,?,CURDATE())";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("iii", $questionID, $choiceID, $studentID);
+            $stmt->bind_param("iiii", $questionID, $choiceID, $studentID, $packageID);
             return $stmt->execute();
         }
         return false;
