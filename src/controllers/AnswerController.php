@@ -43,6 +43,44 @@ class AnswerController {
         return null;
     }
 
+    public function readAnsweredQuestions($packageID, $studentID) {
+        $packageID = htmlspecialchars(strip_tags($packageID));
+        $studentID = htmlspecialchars(strip_tags($studentID));
+
+        $query = "SELECT `QuestionID`, `ChoiceID` FROM $this->table WHERE `PackageID` = ? AND `StudentID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("ii", $packageID, $studentID);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            $num = mysqli_num_rows($res);
+            if ($num > 0) {
+                while($row = mysqli_fetch_assoc($res)) {
+                    $result = array(
+                        "Questions" => $questions = [] 
+                    );
+
+                    do {
+                        $QuestionObj = [
+                        "QuestionID" => $row["QuestionID"],
+                        "ChoiceID" => $row["ChoiceID"]
+                        ];
+                
+                        array_push($result["Questions"], $QuestionObj);
+                    } while($row =  mysqli_fetch_assoc($res));
+                }
+                http_response_code(200);
+            } else {
+                http_response_code(404);
+            }
+            return $result;
+        }
+        return null;
+    }
+
     public function update($questionID, $choiceID, $studentID) {
         $questionID = htmlspecialchars(strip_tags($questionID));
         $choiceID = htmlspecialchars(strip_tags($choiceID));
