@@ -8,12 +8,12 @@ class AnswerController {
         $this->conn = $db;
     }
 
-    public function create($questionID, $choiceID, $studentID) {
+    public function create($studentID, $questionID, $choiceID) {
         $questionID = htmlspecialchars(strip_tags($questionID));
         $choiceID = htmlspecialchars(strip_tags($choiceID));
         $studentID = htmlspecialchars(strip_tags($studentID));
 
-        $query = "INSERT INTO $this->table (`QuestionID`, `ChoiceID`, `SudentID`, `AnswerDate`) VALUES (?,?,?,CURDATE())";
+        $query = "INSERT INTO $this->table (`QuestionID`, `ChoiceID`, `StudentID`, `AnswerDate`) VALUES (?,?,?,CURDATE())";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;

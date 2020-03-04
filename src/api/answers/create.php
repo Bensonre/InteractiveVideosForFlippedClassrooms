@@ -8,17 +8,22 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+    $data = json_decode($_POST['data']);
+    $studentId = $data->studentId;
+    $questionId = $data->questionId;
+    $answerId = $data->answerId;
+
     $database = new Database();
     $db = $database->connect();
 
     $controller = new AnswerController($db);
 
-    $success = false;
-    if(isset($_POST['questionID']) && isset($_POST['choiceID']) && isset($_POST['studentID']) ) {
-        $result = $controller->create($_POST['questionID'], $_POST['choiceID'], $_POST['studentID']);
+    $res = array("success" => false);
+    if(isset($_POST['data'])) {
+        $result = $controller->create($studentId, $questionId, $answerId);
         if ($result) {
-            $success = true;
+            $res['success'] = true;
         }
      }
-    echo json_encode($success);
+    echo json_encode($res);
 ?>

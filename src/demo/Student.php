@@ -1,10 +1,7 @@
 <?php
+    session_start();
     $currentpage = "Student";
-    if(!isset($_GET['id'])){
-        $packageId = 1;
-    } else {
-        $packageId = intval($_GET['id']);
-    }    
+    $_SESSION['studentId'] = 1;
 ?>
 <!DOCTYPE html>
 <html>
