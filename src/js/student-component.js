@@ -2,19 +2,13 @@ var ivcCurrentQuestion = 0;
 var ivcQuestionPositions = [];
 
 window.onload = () => {
-    console.log(ivcAlreadyAnswered);
-    console.log(ivcPackageInfo);
     ivcOverlays.sort((a, b) => {return a.start <= b.start ? -1 : 1});
-    console.log(ivcOverlays);
 
     for (let i = 0; i < ivcOverlays.length; i++) {
         if (!ivcOverlays[i].answered) {
             ivcQuestionPositions.push(ivcOverlays[i].start);
         }
     }
-
-    console.log(`Current question: ${ivcCurrentQuestion}`);
-    console.log(`Question positions: ${ivcQuestionPositions}`);
 
     initializeStudentPlayer(ivcPackageInfo, ivcOverlays);
 };
@@ -49,11 +43,6 @@ function questionAnswered(button) {
         const answerId = Number(selection.value);
         const studentId = ivcStudentId;
         const packageId = ivcPackageId;
-        console.log('Question answered!');
-        console.log(`Question id: ${questionId}`);
-        console.log(`Answer id: ${answerId}`);
-        console.log(`Student id: ${studentId}`);
-        console.log(`Package id: ${packageId}`);
 
         const data = {
             studentId,
