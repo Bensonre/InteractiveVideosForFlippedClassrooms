@@ -15,7 +15,7 @@ window.onload = () => {
 
 videojs('ivcStudentPlayer').on('timeupdate', () => {
         const player = videojs('ivcStudentPlayer');
-        if (player.currentTime() >= ivcQuestionPositions[ivcCurrentQuestion]) {
+        if (player.currentTime() > ivcQuestionPositions[ivcCurrentQuestion]) {
             player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
             if (!player.paused()) {
                 player.pause();
