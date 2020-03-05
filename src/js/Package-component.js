@@ -1,3 +1,5 @@
+var form_error = "Please fill out all input fields";
+
 window.onload = function() {
    getVideos();
    getPackages();
@@ -40,6 +42,14 @@ function createPackage() {
    const title = document.getElementById("create-package-title").value;
    const instructorId = ivcInstructorId;
    const videoId = document.getElementById("create-package-select-video").value;
+   
+   //form validation
+   if(!(title.length > 0) ||
+      !(videoId.length > 0)) 
+   {
+           alert(form_error);
+           return false;
+   }
 
    let data = {
       "title": title, 
@@ -57,6 +67,7 @@ function createPackage() {
 
          if (res.success) {
                document.getElementById("ivc-create-package-status-message").style.color = "green";
+               document.getElementById("cpackageform").reset();
          } else {
                document.getElementById("ivc-create-package-status-message").style.color = "red";
          }
@@ -74,7 +85,16 @@ function updatePackage() {
    const title = document.getElementById("update-package-title").value;
    const instructorId = ivcInstructorId;
    const videoId = document.getElementById("update-package-select-video").value;
-   
+  
+   //form validation
+   if(!(title.length > 0)     ||
+      !(packageId.length > 0) ||
+      !(videoId.length > 0))
+   { 
+           alert(form_error)
+           return false;
+   }
+
    let data = {
       "packageId": packageId,
       "title": title, 
@@ -93,18 +113,55 @@ function updatePackage() {
 
          if (res.success) {
                document.getElementById("ivc-update-package-status-message").style.color = "green";
+               document.getElementById("uppackageform").reset();
+               getPackages();
          } else {
                document.getElementById("ivc-update-package-status-message").style.color = "red";
          }
       }
    };
-   xhttp.open("POST", "../api/Packages/update.php", false);
+   xhttp.open("POST", "../api/Packages/Update.php", false);
+   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xhttp.send("data=" + JSON.stringify(data));
+}
+
+function duplicatePackage(){
+   const oldId = document.getElementById('duplicate-package-selection').value;
+   const newTitle = document.getElementById('duplicate-package-title').value;
+   const instructorId = ivcInstructorId;
+   let data = {
+      "oldPackageId": oldId,
+      "newTitle": newTitle, 
+      "instructorId": instructorId, 
+   };
+   let xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         console.log(this.responseText);
+         var res = JSON.parse(this.responseText);
+         document.getElementById("ivc-duplicate-package-status-message").innerText = res.message;
+         if (res.success) {
+               document.getElementById("ivc-duplicate-package-status-message").style.color = "green";
+         } else {
+               document.getElementById("ivc-duplicate-package-status-message").style.color = "red";
+         }
+      }
+   };
+   xhttp.open("POST", "../api/Packages/Duplicate.php", false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
 
 function deletePackage() {
+   
    const packageId = document.getElementById("delete-package-selection").value;
+   
+   //form validation
+   if(!(packageId.length > 0))
+   {
+           alert(form_error);
+           return false;
+   }
 
    let data = {
       "packageId": packageId
@@ -130,7 +187,7 @@ function deletePackage() {
          deleteOption.remove();
       }
    };
-   xhttp.open("POST", "../api/Packages/delete.php", false);
+   xhttp.open("POST", "../api/Packages/Delete.php", false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
@@ -156,8 +213,10 @@ function fillPackages(packages) {
 
    let element = document.getElementById("update-package-selection");
    let element2 = document.getElementById("delete-package-selection");
+   let element3 = document.getElementById("duplicate-package-selection");
    element.innerHTML = "";
    element2.innerHTML = "";
+   element3.innerHTML ="";
    for (let i = 0; i < packages.length; i++) {
       console.log(packages[i]);
       let option = document.createElement("option");
@@ -167,8 +226,10 @@ function fillPackages(packages) {
       let text = document.createTextNode(packages[i].title);
       option.appendChild(text);
       let option2 = option.cloneNode(true);
+      let option3 = option.cloneNode(true);
       element.appendChild(option);
       element2.appendChild(option2);
+      element3.appendChild(option3);
    }
 }
 
@@ -200,3 +261,5 @@ function updateUpdatePackageOnNewPackageSelected(){
     player.load();
     player.play();
  }
+
+

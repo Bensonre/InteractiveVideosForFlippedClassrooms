@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col">
-            <form>
+            <form id="addqtpform">
                 <div class="form-group">
                     <div class="label" for="select-package">Select a Package</div>
                     <select class="form-control" name="select-package" id="select-package" onchange="packageChanged()"></select>
@@ -15,7 +15,7 @@
                 </div>
                 <div class="form-group">
                     <div class="label" for="timestamp">Timestamp</div>
-                    <input class="form-control" name="timestamp" id="timestamp" onkeyup="updateVideoTime()" type="string" /> 
+                    <input class="form-control" name="timestamp" id="timestamp" onfocusout="updateVideoTime()" type="string" /> 
                 </div>
                 <div class="form-group">
                     <button class="form-control mb-3 btn btn-primary" onclick="sendData()" type="button" class="">Add to Package</button>

@@ -1,3 +1,5 @@
+var form_error = "Please fill out all input fields";
+
 window.onload = function() {
     console.log("Getting packages and questions...");
     initializeMarkerPlugin();
@@ -88,6 +90,13 @@ function sendData() {
     var timestamp = document.getElementById("timestamp").value;
     let instructorID = ivcInstructorId;
 
+    if(!(packageID.length > 0) ||
+       !(questionID.length > 0) ||
+       !(timestamp.length > 0)) {
+            alert(form_error);
+            return false;
+    }
+
     var info = {"packageID":packageID, "questionID":questionID, "instructorID":instructorID, "timestamp":timestamp};
     console.log(JSON.stringify(info));
     document.getElementById("ivc-add-questions-status-message").innerText = "Processing...";
@@ -100,6 +109,7 @@ function sendData() {
 
             if (res.success) {
                 document.getElementById("ivc-add-questions-status-message").style.color = "green";
+                document.getElementById("addqtpform").reset();
             } else {
                 document.getElementById("ivc-add-questions-status-message").style.color = "red";
             }
@@ -214,6 +224,11 @@ function tableRowUpdate(button) {
     var oldTimestamp = timestampNode.innerText;
     var newTimestamp = row.childNodes[2].childNodes[0].value;
     let id = row.getAttribute("data-value");
+
+    if(!(newTimestamp.length > 0)) {
+            alert("You must specify a new time");
+            return false;
+    }
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

@@ -1,3 +1,5 @@
+var form_error = "Please fill out all input fields";
+
 var ivcQuestionComponentQuestions = [];
 
 window.onload = function() {
@@ -13,6 +15,18 @@ function createQuestion() {
     let a4 = document.getElementById("ivc-a4").value;
     let correct = document.getElementById("ivc-select-answer").value;
     let instructorId = ivcInstructorId;
+    
+    //Form Validation for Creating Questions
+    if(!(question.length > 0) ||
+       !(category.length > 0) ||
+       !(a1.length       > 0) ||
+       !(a2.length       > 0) ||
+       !(a3.length       > 0) ||
+       !(a4.length       > 0) ||
+       !(correct.length  > 0)) {
+            alert(form_error);
+            return false;
+    }
 
     let data = {
         "question":question, 
@@ -24,6 +38,7 @@ function createQuestion() {
         "correct":correct,
         "instructorId":instructorId
     };
+
     console.log(JSON.stringify(data));
     document.getElementById("ivc-create-question-status-message").innerText = "Processing...";
 
@@ -36,6 +51,7 @@ function createQuestion() {
 
             if (res.success) {
                 document.getElementById("ivc-create-question-status-message").style.color = "green";
+                document.getElementById("cqform").reset();
                 getQuestions();
             } else {
                 document.getElementById("ivc-create-question-status-message").style.color = "red";
@@ -58,6 +74,20 @@ function updateQuestion() {
     let a4 = document.getElementById("ivc-a4-update").value;
     let correct = document.getElementById("ivc-select-answer-update").value;
     let instructorId = ivcInstructorId;
+
+
+    //Form Validation for Updatint Questions
+    if(!(questionIndex.length > 0)  ||     
+       !(question.length > 0) ||
+       !(category.length > 0) ||
+       !(a1.length       > 0) ||
+       !(a2.length       > 0) ||
+       !(a3.length       > 0) ||
+       !(a4.length       > 0) ||
+       !(correct.length  > 0)) {
+            alert("All fields must be filled out");
+            return false;
+    }
 
     let data = {
         "questionId":questionId,
@@ -82,6 +112,7 @@ function updateQuestion() {
 
             if (res.success) {
                 document.getElementById("ivc-update-question-status-message").style.color = "green";
+                getQuestions();
             } else {
                 document.getElementById("ivc-update-question-status-message").style.color = "red";
             }
@@ -95,6 +126,11 @@ function updateQuestion() {
 function deleteQuestion() {
     let questionIndex = document.getElementById("ivc-question-select-delete").value;
     let questionId = ivcQuestionComponentQuestions[questionIndex].questionId;
+
+    if(!(questionIndex.length > 0)) {
+            alert(form_error);
+            return false;
+    }
 
     let data = {
         "questionId":questionId,
