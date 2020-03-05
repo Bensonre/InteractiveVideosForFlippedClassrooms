@@ -57,7 +57,7 @@
     var ivcAlreadyAnswered = <?php echo json_encode($alreadyAnsweredQuestions); ?>;
 </script>
 
-<div class="container border border-dark">
+<div class="container">
     <h1 id="packageTitle" class="text-center"></h1>
 	<div>
         <video-js
