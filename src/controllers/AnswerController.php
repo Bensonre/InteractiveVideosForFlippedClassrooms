@@ -57,12 +57,11 @@ class AnswerController {
             $stmt->execute();
             $res = $stmt->get_result();
             $num = mysqli_num_rows($res);
+            $result = array(
+                "Questions" => $questions = [] 
+            );
             if ($num > 0) {
                 while($row = mysqli_fetch_assoc($res)) {
-                    $result = array(
-                        "Questions" => $questions = [] 
-                    );
-
                     do {
                         $QuestionObj = [
                         "QuestionID" => $row["QuestionID"],

@@ -172,7 +172,7 @@ class PackageController {
             } else {
                 http_response_code(404);
             
-                return array("message" => "No Package found for given ID: $packageId.");
+                return array();
             }
         }   
     }

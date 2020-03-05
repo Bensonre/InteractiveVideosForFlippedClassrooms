@@ -17,7 +17,9 @@ videojs('ivcStudentPlayer').on('timeupdate', () => {
         const player = videojs('ivcStudentPlayer');
         if (player.currentTime() >= ivcQuestionPositions[ivcCurrentQuestion]) {
             player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
-            player.pause();
+            if (!player.paused()) {
+                player.pause();
+            }
         }
 });
 
