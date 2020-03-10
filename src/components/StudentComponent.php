@@ -83,19 +83,19 @@
                             <div id='questionId' data-value='". $question['QuestionID'] ."' hidden></div>
                             <h4 class='text-center'>". $question['QuestionText'] . "</h4>
                             <div class='form-check'>
-                                <input class='form-check-input' type='radio' id='a1' name='answerOption' value='". $question['Answer'][0]['AnswerID'] . "'". ($question['Answer'][0]['AnswerID'] == $question['choice'] ? ' checked' : '') .">
+                                <input class='form-check-input' type='radio' name='answerOption' value='". $question['Answer'][0]['AnswerID'] . "'". ($question['Answer'][0]['AnswerID'] == $question['choice'] ? ' checked' : '') .">
                                 <label class='form-check-label' for='a1'>". $question['Answer'][0]['AnswerText'] . "</label>
                             </div>
                             <div class='form-check'>
-                                <input class='form-check-input' type='radio' id='a2' name='answerOption' value='". $question['Answer'][1]['AnswerID'] . "'". ($question['Answer'][1]['AnswerID'] == $question['choice'] ? ' checked' : '') .">
+                                <input class='form-check-input' type='radio' name='answerOption' value='". $question['Answer'][1]['AnswerID'] . "'". ($question['Answer'][1]['AnswerID'] == $question['choice'] ? ' checked' : '') .">
                                 <label class='form-check-label' for='a2'>". $question['Answer'][1]['AnswerText'] . "</label>
                             </div>
                             <div class='form-check'>
-                                <input class='form-check-input' type='radio' id='a3' name='answerOption' value='". $question['Answer'][2]['AnswerID'] . "'". ($question['Answer'][2]['AnswerID'] == $question['choice'] ? ' checked' : '') .">
+                                <input class='form-check-input' type='radio' name='answerOption' value='". $question['Answer'][2]['AnswerID'] . "'". ($question['Answer'][2]['AnswerID'] == $question['choice'] ? ' checked' : '') .">
                                 <label class='form-check-label' for='a3'>". $question['Answer'][2]['AnswerText'] . "</label>
                             </div>
                             <div class='form-check'>
-                                <input class='form-check-input' type='radio' id='a4' name='answerOption' value='". $question['Answer'][3]['AnswerID'] . "'". ($question['Answer'][3]['AnswerID'] == $question['choice'] ? ' checked' : '') .">
+                                <input class='form-check-input' type='radio' name='answerOption' value='". $question['Answer'][3]['AnswerID'] . "'". ($question['Answer'][3]['AnswerID'] == $question['choice'] ? ' checked' : '') .">
                                 <label class='form-check-label' for='a4'>". $question['Answer'][3]['AnswerText'] . "</label>
                             </div>";
 

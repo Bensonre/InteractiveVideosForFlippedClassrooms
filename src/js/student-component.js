@@ -41,7 +41,7 @@ function questionAnswered(button) {
     const form = button.parentNode;
     const selection = form.querySelector('input[type=radio]:checked');
     if (selection) {
-        const questionId = form.querySelector('#questionId').getAttribute('data-value');
+        const questionId = Number(form.querySelector('#questionId').getAttribute('data-value'));
         const answerId = Number(selection.value);
         const studentId = ivcStudentId;
         const packageId = ivcPackageId;
@@ -53,9 +53,12 @@ function questionAnswered(button) {
             packageId
         };
 
+        console.log(data);
+
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
                 if (JSON.parse(this.responseText).success) {
                     console.log("Answer submitted!");
                     form.removeChild(button);
@@ -67,7 +70,7 @@ function questionAnswered(button) {
                 }
             }
         };
-        xhttp.open("POST", "../api/answers/create.php", false);
+        xhttp.open("POST", "../api/answers/create.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("data=" + JSON.stringify(data));
 

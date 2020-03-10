@@ -14,13 +14,13 @@ class AnswerController {
         $studentID = htmlspecialchars(strip_tags($studentID));
         $packageID = htmlspecialchars(strip_tags($packageID));
 
-        $query = "INSERT INTO $this->table (`QuestionID`, `ChoiceID`, `StudentID`, `PackageID`, `AnswerDate`) VALUES (?,?,?,?,CURDATE())";
+        $query = "INSERT INTO $this->table (`StudentID`, `PackageID`, `QuestionID`, `ChoiceID`, `AnswerDate`) VALUES (?,?,?,?,CURDATE())";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("iiii", $questionID, $choiceID, $studentID, $packageID);
+            $stmt->bind_param("iiii", $studentID, $packageID, $questionID, $choiceID);
             return $stmt->execute();
         }
         return false;
@@ -30,7 +30,7 @@ class AnswerController {
         $questionID = htmlspecialchars(strip_tags($questionID));
         $studentID = htmlspecialchars(strip_tags($studentID));
 
-        $query = "SELECT * FROM $this->table WHERE `QuestionID` = ? AND `SudentID` = ?";
+        $query = "SELECT * FROM $this->table WHERE `QuestionID` = ? AND `StudentID` = ?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
@@ -85,7 +85,7 @@ class AnswerController {
         $choiceID = htmlspecialchars(strip_tags($choiceID));
         $studentID = htmlspecialchars(strip_tags($studentID));
 
-        $query = "UPDATE $this->table SET `ChoiceID` = ?, `AnswerDate` = CURDATE() WHERE `QuestionID` = ? AND `SudentID` = ?";
+        $query = "UPDATE $this->table SET `ChoiceID` = ?, `AnswerDate` = CURDATE() WHERE `QuestionID` = ? AND `StudentID` = ?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
