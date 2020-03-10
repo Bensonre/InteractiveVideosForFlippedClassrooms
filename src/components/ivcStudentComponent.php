@@ -7,7 +7,7 @@
       
     $controller = new PackageController($db);
     if (empty($_GET["id"])){        
-        $res = array("message" => "no id found");
+        echo "No package id was provided.";
     } else {
         $packageId = intval($_GET['id']);
         $res = $controller->getPackageWithVideo($packageId);
@@ -18,7 +18,7 @@
 
         // Get questions already answered in this package by the student
         $answerController = new AnswerController($db);
-        $alreadyAnsweredQuestions = $answerController->readAnsweredQuestions($packageId, $_SESSION['studentId']);
+        $alreadyAnsweredQuestions = $answerController->readAnsweredQuestions($packageId, $ivcStudentId);
 
         $alreadyAnswered = array();
         foreach ($alreadyAnsweredQuestions as $obj) {
@@ -52,7 +52,6 @@
 <script>
     var ivcPackageInfo = <?php echo json_encode($packageInfo); ?>;
     var ivcOverlays = <?php echo json_encode($overlays); ?>;
-    var ivcStudentId = <?php echo $_SESSION['studentId']; ?>;
     var ivcPackageId = <?php echo json_encode($packageId); ?>;
     var ivcAlreadyAnswered = <?php echo json_encode($alreadyAnsweredQuestions); ?>;
 </script>

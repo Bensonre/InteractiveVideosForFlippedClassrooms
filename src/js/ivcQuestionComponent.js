@@ -58,7 +58,8 @@ function createQuestion() {
             }
         }
     };
-    xhttp.open("POST", "../api/questions/create.php", false);
+    const postURL = `${ivcPathToSrc}api/questions/create.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(data));
 }
@@ -118,7 +119,8 @@ function updateQuestion() {
             }
         }
     };
-    xhttp.open("POST", "../api/questions/update.php", false);
+    const postURL = `${ivcPathToSrc}api/questions/update.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(data));
 }
@@ -160,7 +162,8 @@ function deleteQuestion() {
             ivcQuestionComponentQuestions.splice(questionIndex, 1);
         }
     };
-    xhttp.open("POST", "../api/questions/delete.php", false);
+    const postURL = `${ivcPathToSrc}api/questions/delete.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(data));
 }
@@ -179,7 +182,8 @@ function getQuestions() {
             fillUpdateForm();
         }
     };
-    xhttp.open("GET", "../api/questions/read.php?instructorId=" + instructorId, true);
+    const getURL = `${ivcPathToSrc}api/questions/read.php?instructorId=${instructorId}`;
+    xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }

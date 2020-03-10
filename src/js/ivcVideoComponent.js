@@ -44,7 +44,8 @@ function createVideo() {
             getVideos();
         }
     };
-    xhttp.open("POST", "../api/videos/create.php", false);
+    const postURL = `${ivcPathToSrc}api/videos/create.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.send(formData);
 }
 
@@ -81,7 +82,8 @@ function updateVideo() {
             getVideos();
         }
     };
-    xhttp.open("POST", "../api/videos/update.php", false);
+    const postURL = `${ivcPathToSrc}api/videos/update.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send('data=' + JSON.stringify(data));
 }
@@ -123,7 +125,8 @@ function deleteVideo() {
             ivcVideoComponentVideos.splice(videoIndex, 1);
         }
     };
-    xhttp.open("POST", "../api/videos/delete.php", false);
+    const postURL = `${ivcPathToSrc}api/videos/delete.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send('data=' + JSON.stringify(data));
 }
@@ -139,7 +142,8 @@ function getVideos() {
             fillVideoSelectionBoxes();
         }
     };
-    xhttp.open("GET", "../api/videos/read-all-with-instructor-id.php?instructorId=" + instructorId, true);
+    const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+    xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }

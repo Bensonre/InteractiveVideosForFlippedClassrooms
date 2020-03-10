@@ -53,8 +53,6 @@ function questionAnswered(button) {
             packageId
         };
 
-        console.log(data);
-
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -70,7 +68,8 @@ function questionAnswered(button) {
                 }
             }
         };
-        xhttp.open("POST", "../api/answers/create.php", true);
+        const postURL = `${ivcPathToSrc}api/answers/create.php`;
+        xhttp.open("POST", postURL, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("data=" + JSON.stringify(data));
 

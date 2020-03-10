@@ -33,7 +33,8 @@ function getPackages() {
             fillPackages(obj);
         }
     };
-    xhttp.open("GET", "../api/Packages/read-all-with-instructor-id.php?instructorId=" + instructorId, true);
+    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+    xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -55,7 +56,6 @@ function fillPackages(obj) {
 }
 
 function getQuestions() {
-    let instructorID = ivcInstructorId;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -65,7 +65,8 @@ function getQuestions() {
             fillQuestions(obj);
         }
     };
-    xhttp.open("GET", "../api/questions/read.php?instructorId=" + instructorID, true);
+    const getURL = `${ivcPathToSrc}api/questions/read.php?instructorId=${ivcInstructorId}`;
+    xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -117,7 +118,8 @@ function sendData() {
             getQuestionsInSelectedPackage();
         }
     };
-    xhttp.open("POST", "../api/videoquestions/create.php", false);
+    const postURL = `${ivcPathToSrc}api/videoquestions/create.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(info));
 }
@@ -142,7 +144,8 @@ function getVideo() {
             player.load();
         }
     };
-    xhttp.open("GET", "../api/Packages/get-package-video.php?id=" + packageID, false);
+    const getURL = `${ivcPathToSrc}api/Packages/get-package-video.php?id=${packageID}`;
+    xhttp.open("GET", getURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -167,7 +170,8 @@ function getQuestionsInSelectedPackage() {
             placeMarkersOnVideo(res);
         }
     };
-    xhttp.open("GET", "../api/videoquestions/get-questions-in-package.php?packageID=" + packageID + "&instructorID=" + instructorID, true);
+    const getURL = `${ivcPathToSrc}api/videoquestions/get-questions-in-package.php?packageID=${packageID}&instructorID=${instructorID}`;
+    xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
@@ -240,7 +244,8 @@ function tableRowUpdate(button) {
             }
         }
     };
-    xhttp.open("POST", "../api/videoquestions/update.php", false);
+    const postURL = `${ivcPathToSrc}api/videoquestions/update.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("id=" + id + "&timestamp=" + newTimestamp);
 }
@@ -273,7 +278,8 @@ function tableRowDelete(button) {
             }
         }
     };
-    xhttp.open("POST", "../api/videoquestions/delete.php", false);
+    const postURL = `${ivcPathToSrc}api/videoquestions/delete.php`;
+    xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("id=" + id);
 }
