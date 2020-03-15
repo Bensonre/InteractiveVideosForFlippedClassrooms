@@ -8,18 +8,19 @@ class AnswerController {
         $this->conn = $db;
     }
 
-    public function create($questionID, $choiceID, $studentID) {
+    public function create($studentID, $questionID, $choiceID, $packageID) {
         $questionID = htmlspecialchars(strip_tags($questionID));
         $choiceID = htmlspecialchars(strip_tags($choiceID));
         $studentID = htmlspecialchars(strip_tags($studentID));
+        $packageID = htmlspecialchars(strip_tags($packageID));
 
-        $query = "INSERT INTO $this->table (`QuestionID`, `ChoiceID`, `SudentID`, `AnswerDate`) VALUES (?,?,?,CURDATE())";
+        $query = "INSERT INTO $this->table (`StudentID`, `PackageID`, `QuestionID`, `ChoiceID`, `AnswerDate`) VALUES (?,?,?,?,CURDATE())";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("iii", $questionID, $choiceID, $studentID);
+            $stmt->bind_param("iiii", $studentID, $packageID, $questionID, $choiceID);
             return $stmt->execute();
         }
         return false;
@@ -29,7 +30,7 @@ class AnswerController {
         $questionID = htmlspecialchars(strip_tags($questionID));
         $studentID = htmlspecialchars(strip_tags($studentID));
 
-        $query = "SELECT * FROM $this->table WHERE `QuestionID` = ? AND `SudentID` = ?";
+        $query = "SELECT * FROM $this->table WHERE `QuestionID` = ? AND `StudentID` = ?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
@@ -42,12 +43,49 @@ class AnswerController {
         return null;
     }
 
+    public function readAnsweredQuestions($packageID, $studentID) {
+        $packageID = htmlspecialchars(strip_tags($packageID));
+        $studentID = htmlspecialchars(strip_tags($studentID));
+
+        $query = "SELECT `QuestionID`, `ChoiceID` FROM $this->table WHERE `PackageID` = ? AND `StudentID` = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("ii", $packageID, $studentID);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            $num = mysqli_num_rows($res);
+            $result = array(
+                "Questions" => $questions = [] 
+            );
+            if ($num > 0) {
+                while($row = mysqli_fetch_assoc($res)) {
+                    do {
+                        $QuestionObj = [
+                        "QuestionID" => $row["QuestionID"],
+                        "ChoiceID" => $row["ChoiceID"]
+                        ];
+                
+                        array_push($result["Questions"], $QuestionObj);
+                    } while($row =  mysqli_fetch_assoc($res));
+                }
+                http_response_code(200);
+            } else {
+                http_response_code(404);
+            }
+            return $result;
+        }
+        return null;
+    }
+
     public function update($questionID, $choiceID, $studentID) {
         $questionID = htmlspecialchars(strip_tags($questionID));
         $choiceID = htmlspecialchars(strip_tags($choiceID));
         $studentID = htmlspecialchars(strip_tags($studentID));
 
-        $query = "UPDATE $this->table SET `ChoiceID` = ?, `AnswerDate` = CURDATE() WHERE `QuestionID` = ? AND `SudentID` = ?";
+        $query = "UPDATE $this->table SET `ChoiceID` = ?, `AnswerDate` = CURDATE() WHERE `QuestionID` = ? AND `StudentID` = ?";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;

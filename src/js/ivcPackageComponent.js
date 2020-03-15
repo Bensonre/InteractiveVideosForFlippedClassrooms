@@ -15,7 +15,8 @@ function getVideos() {
          fillVideos(videos);
       }
    };
-   xhttp.open("GET", "../api/videos/read-all-with-instructor-id.php?instructorId=" + instructorId, true);
+   const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+   xhttp.open("GET", getURL, true);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send();
 }
@@ -75,7 +76,8 @@ function createPackage() {
          getPackages();
       }
    };
-   xhttp.open("POST", "../api/Packages/create.php", false);
+   const postURL = `${ivcPathToSrc}api/Packages/create.php`;
+   xhttp.open("POST", postURL, false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
@@ -120,7 +122,8 @@ function updatePackage() {
          }
       }
    };
-   xhttp.open("POST", "../api/Packages/Update.php", false);
+   const postURL = `${ivcPathToSrc}api/Packages/Update.php`;
+   xhttp.open("POST", postURL, false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
@@ -147,7 +150,8 @@ function duplicatePackage(){
          }
       }
    };
-   xhttp.open("POST", "../api/Packages/Duplicate.php", false);
+   const postURL = `${ivcPathToSrc}api/Packages/Duplicate.php`;
+   xhttp.open("POST", postURL, false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
@@ -187,7 +191,8 @@ function deletePackage() {
          deleteOption.remove();
       }
    };
-   xhttp.open("POST", "../api/Packages/Delete.php", false);
+   const postURL = `${ivcPathToSrc}api/Packages/Delete.php`;
+   xhttp.open("POST", postURL, false);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send("data=" + JSON.stringify(data));
 }
@@ -201,7 +206,8 @@ function getPackages() {
          fillPackages(packages);
       }
    };
-   xhttp.open("GET", "../api/Packages/read-all-with-instructor-id.php?instructorId=" + instructorId, true);
+   const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+   xhttp.open("GET", getURL, true);
    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
    xhttp.send();
 }
