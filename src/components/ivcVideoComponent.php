@@ -7,7 +7,7 @@
 
     <div class="tab-content">
         <div id="ivc-create-video-form" class="tab-pane container active">
-            <h2 class="text-center">Upload Videos</h2>
+            <h2 class="text-center">Upload Video</h2>
 
             <form id="uvideoform" method="POST" enctype="multipart/form-data" target="hidden-frame">
                 <input id="ivc-upload-progress" type="hidden" value="uvideoform" name="<?php echo ini_get("session.upload_progress.name"); ?>">
