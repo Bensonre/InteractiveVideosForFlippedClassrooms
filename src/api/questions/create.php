@@ -2,6 +2,7 @@
 
   include_once '../../database/Database.php';
   include_once '../../controllers/QuestionController.php';
+  include_once '../../session_variables/session_variables.php';
 
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
@@ -17,7 +18,6 @@
   $a3 = $data->a3;
   $a4 = $data->a4;
   $correct = $data->correct;
-  $instructorId = $data->instructorId;
 
   $databaseEntryCreated = false;
 
@@ -34,7 +34,7 @@
   $controller->c4       = $a4;
   $controller->correct  = $correct;
   
-  if ($controller->create($question, $category, $a1, $a2, $a3, $a4, $correct, $instructorId)) {
+  if ($controller->create($question, $category, $a1, $a2, $a3, $a4, $correct, $ivcInstructorId)) {
       $databaseEntryCreated = true;
   }
   

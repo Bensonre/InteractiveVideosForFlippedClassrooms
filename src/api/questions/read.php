@@ -2,11 +2,10 @@
 
   include_once '../../database/Database.php';
   include_once '../../controllers/QuestionController.php';
+  include_once '../../session_variables/session_variables.php';
 
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
-
-  $instructorId = $_GET['instructorId'];
 
   $databaseEntryCreated = false;
   $results;
@@ -15,7 +14,7 @@
   $db = $database->connect();
 
   $controller = new QuestionController($db);
-  if ($results = $controller->read($instructorId)) {
+  if ($results = $controller->read($ivcInstructorId)) {
       $databaseRead = true;
   } else {
       echo "\nQuestion Read Failed\n";

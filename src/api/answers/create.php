@@ -1,6 +1,7 @@
 <?php
     include_once '../../database/Database.php';
     include_once '../../controllers/AnswerController.php';
+    include_once '../../session_variables/session_variables.php';
 
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
@@ -9,7 +10,6 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     $data = json_decode($_POST['data']);
-    $studentId = $data->studentId;
     $packageId = $data->packageId;
     $questionId = $data->questionId;
     $answerId = $data->answerId;
@@ -21,7 +21,7 @@
 
     $res = array("success" => false);
     if(isset($_POST['data'])) {
-        $result = $controller->create($studentId, $questionId, $answerId, $packageId);
+        $result = $controller->create($ivcStudentId, $questionId, $answerId, $packageId);
         if ($result) {
             $res['success'] = true;
         }

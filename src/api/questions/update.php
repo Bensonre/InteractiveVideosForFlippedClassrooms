@@ -18,7 +18,6 @@
   $a3 = $data->a3;
   $a4 = $data->a4;
   $correct = $data->correct;
-  $instructorId = $data->instructorId;
 
   $databaseEntryCreated = false;
 
