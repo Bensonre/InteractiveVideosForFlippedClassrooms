@@ -3,38 +3,39 @@
     include_once '../../controllers/VideoController.php';
     include_once '../../session_variables/session_variables.php';
 
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type: multipart/form-data; charset=UTF-8");
-    header("Access-Control-Allow-Methods: POST");
-    header("Access-Control-Max-Age: 3600");
-    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+    /**
+     * This is the default response in the event that the file is not successfully uploaded to the server
+     * or the database entry cannot be created. Upon success of both conditions, this response is updated below.
+     */
     $response = array("success" => 0, "message" => "An error occured during upload. Please try again.");
 
-    // Upload the file to the server.
-    $targetdir = "../../video_files/";
-    $pathdir = "../video_files/";
+    // Create a hash value for the filename and determine the file path.
+    $targetDirectory = "../../video_files/";
+    $pathDirectory = "video_files/";
     $filename = "";
     while (true) {
         $filename = md5(mt_rand());
-        if (!file_exists($targetdir . $filename . ".mp4")) { break; }
+        if (!file_exists($targetDirectory . $filename . ".mp4")) { break; }
     }
-    $targetfile = $targetdir . $filename . ".mp4";
-    $targetpath = $pathdir . $filename . ".mp4";
+    $targetFile = $targetDirectory . $filename . ".mp4";
+    $databasePath = $pathDirectory . $filename . ".mp4";
 
-    $title = $_POST['title'];
-    $instructorId = $_POST['instructorId'];
-
-    if (move_uploaded_file($_FILES['local-video-file']['tmp_name'], $targetfile)) {
-
-        // Create a record within the database for this file.
+    /**
+     * Moves the file into the 'video_files' folder then creates a database entry for the video.
+     */
+    if (move_uploaded_file($_FILES['local-video-file']['tmp_name'], $targetFile)) {
+        // Database and controller setup.
         $database = new Database();
         $db = $database->connect();
         $controller = new VideoController($db);
 
-        if ($controller->create($ivcInstructorId, $_FILES['local-video-file'], $title, $targetpath)) {
+        // Create the database entry.
+        if ($controller->create($ivcInstructorId, $_FILES['local-video-file'], $_POST['title'], $databasePath)) {
             $response["success"] = 1;
             $response["message"] = "Your file was successfully uploaded.";
+        } else {
+            // The database entry could not be created, so the file needs to be deleted from the server.
+            unlink($targetFile);
         }
     }
 
