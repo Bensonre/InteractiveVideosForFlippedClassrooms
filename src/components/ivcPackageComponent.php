@@ -38,7 +38,7 @@
                             class="vjs-16-9"
                             controls 
                             data-setup="{}">
-                            <source id="create-video-source" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+                            <source id="create-video-source" type="video/mp4">
                         </video-js>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                         class="vjs-16-9"
                         controls 
                         data-setup="{}">
-                        <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+                        <source type="video/mp4">
                     </video-js>
                 </div>
             </div>

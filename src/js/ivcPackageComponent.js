@@ -37,6 +37,9 @@ function fillVideos(videos) {
       element.appendChild(option);
       element2.appendChild(option2);
    }
+
+   updateCreatePackageVideoFilePath();
+   updateUpdatePackageVideoFilePath();
 }
 
 function createPackage() {
@@ -243,7 +246,7 @@ function updateCreatePackageVideoFilePath(){
    var selction = document.getElementById("create-package-select-video");
    var player = videojs("Create-Package-video");
    var path = selction.options[selction.selectedIndex].getAttribute("video-path");
-   player.src(path);
+   player.src(`${ivcPathToSrc}/${path}`);
    // set src track corresponding to new movie //
    player.load();
    player.play();
@@ -262,7 +265,7 @@ function updateUpdatePackageOnNewPackageSelected(){
     var videoSelction = document.getElementById("update-package-select-video");
     var player = videojs("Update-Package-video");
     var path = videoSelction.options[videoSelction.selectedIndex].getAttribute("video-path");
-    player.src(path);
+    player.src(`${ivcPathToSrc}/${path}`);
     // set src track corresponding to new movie //
     player.load();
     player.play();
