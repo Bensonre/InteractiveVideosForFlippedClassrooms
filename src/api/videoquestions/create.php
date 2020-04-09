@@ -3,6 +3,7 @@
 include_once '../../database/Database.php';
 include_once '../../controllers/VideoQuestionsController.php';
 include_once '../../controllers/PackagesController.php';
+include_once '../../session_variables/session_variables.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -15,7 +16,6 @@ $databaseEntryCreated = false;
 $data = json_decode($_POST['data']);
 $packageID = $data->packageID;
 $questionID = $data->questionID;
-$instructorID = $data->instructorID;
 $timestamp = $data->timestamp;
 
 $database = new Database();
@@ -26,7 +26,7 @@ $packageController = new PackageController($db);
 
 $videoID = $packageController->getVideoIdOfPackage($packageID);
 
-if ($videoQuestionsController->create($videoID, $questionID, $packageID, $instructorID, $timestamp)) {
+if ($videoQuestionsController->create($videoID, $questionID, $packageID, $ivcInstructorId, $timestamp)) {
     $databaseEntryCreated = true;
 }
 

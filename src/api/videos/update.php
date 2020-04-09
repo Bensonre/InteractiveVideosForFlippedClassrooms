@@ -2,29 +2,24 @@
     include_once '../../database/Database.php';
     include_once '../../controllers/VideoController.php';
 
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/x-www-form-urlencoded; charset=UTF-8");
-    header("Access-Control-Allow-Methods: POST");
-    header("Access-Control-Max-Age: 3600");
-    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    /**
+     * This is the default response in the event that the title of the video is not successfully changed. 
+     * Upon success of this condition, this response is updated below.
+     */
+    $response = array("success" => 0, "message" => "Your title was not successfully uploaded.");
 
-    $databaseEntryCreated = false;
-
+    // Decode posted values.
     $data = json_decode($_POST['data']);
     $id = $data->id;
     $title = $data->title;
 
+    // Database and controller setup.
     $database = new Database();
     $db = $database->connect();
-
     $controller = new VideoController($db);
+
+    // Update the title of the video.
     if ($controller->update($id, $title)) {
-        $databaseEntryCreated = true;
-    }
-
-    $response = array("success" => 0, "message" => "Your title was not successfully uploaded.");
-
-    if ($databaseEntryCreated) {
         $response["success"] = 1;
         $response["message"] = "Your title was successfully updated.";
     }

@@ -1,0 +1,18 @@
+#ivc-progress-bar {
+    border: solid 1px #000;
+    margin: auto;
+    margin-top: 1em;
+    height: 2em;
+    width: 30em;
+    display: none;
+}
+  
+#ivc-progress-bar-color {
+    background-color: #00e30b;
+    height: 97%;
+    width: 0em;
+}
+  
+#ivc-progress-bar-status {
+    display: none;
+}

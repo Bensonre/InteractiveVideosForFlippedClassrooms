@@ -140,7 +140,7 @@ function getVideo() {
             console.log("filePath: " + res.filePath);
             var player = videojs('ivc-add-questions-player');
             player.reset();
-            player.src(res.filePath);
+            player.src(`${ivcPathToSrc}/${res.filePath}`);
             player.load();
         }
     };

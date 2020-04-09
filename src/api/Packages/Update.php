@@ -1,6 +1,7 @@
 <?php
     include_once '../../database/Database.php';
     include_once '../../controllers/PackagesController.php';
+    include_once '../../session_variables/session_variables.php';
 
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
@@ -11,7 +12,6 @@
     $data = json_decode($_POST['data']);
     $packageId = $data->packageId;
     $title = $data->title;
-    $instructorId = $data->instructorId;
     $videoId = $data->videoId;
 
     $databaseEntryCreated = false;
@@ -21,7 +21,7 @@
 
     $controller = new PackageController($db);
 
-    if ($controller->update($packageId, $title, $instructorId, $videoId)) {
+    if ($controller->update($packageId, $title, $ivcInstructorId, $videoId)) {
         $databaseEntryCreated = true;
     }
 

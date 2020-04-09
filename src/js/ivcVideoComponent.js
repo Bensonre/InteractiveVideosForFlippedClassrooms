@@ -7,7 +7,10 @@ window.onload = function() {
 }
 
 function createVideo() {
+    document.getElementById("ivc-create-video-status-message").innerText = "";
+
     let formData = new FormData();
+    const ivcUploadProgress = document.getElementById("ivc-upload-progress");
     const fileInput = document.getElementById("ivc-video-select-create");
     const title = document.getElementById("ivc-video-title-create").value;
     const instructorId = ivcInstructorId;
@@ -25,28 +28,29 @@ function createVideo() {
     formData.append("title", title);
     formData.append("instructorId", instructorId);
 
-    document.getElementById("ivc-create-video-status-message").innerText = "Processing...";
+    formData.append(ivcUploadProgress.getAttribute("name"), ivcUploadProgress.getAttribute("value"));
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
-            document.getElementById("ivc-create-video-status-message").innerText = res.message;
 
             if (res.success) {
-                document.getElementById("ivc-create-video-status-message").style.color = "green";
                 document.getElementById("uvideoform").reset();
             } else {
+                toggleBarVisibility();
                 document.getElementById("ivc-create-video-status-message").style.color = "red";
+                document.getElementById("ivc-create-video-status-message").innerText = res.message;
             }
 
             getVideos();
         }
     };
     const postURL = `${ivcPathToSrc}api/videos/create.php`;
-    xhttp.open("POST", postURL, false);
+    xhttp.open("POST", postURL, true);
     xhttp.send(formData);
+
+    startProgress();
 }
 
 function updateVideo() {
@@ -173,3 +177,57 @@ function fillVideoSelectionBoxes() {
         deleteSelectionBox.appendChild(option2);
     }
 }
+
+function toggleBarVisibility() {
+    var e = document.getElementById("ivc-progress-bar");
+    let status = document.getElementById("ivc-progress-bar-status");
+    e.style.display = (e.style.display == "block") ? "none" : "block";
+    status.style.display = (status.style.display == "block") ? "none" : "block";
+    document.getElementById("ivc-progress-bar-color").style.width = 0 + "%";
+    document.getElementById("ivc-progress-bar-status").innerHTML = 0 + "%";
+}
+
+function createRequestObject() {
+    var http;
+    if (navigator.appName == "Microsoft Internet Explorer") {
+        http = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    else {
+        http = new XMLHttpRequest();
+    }
+    return http;
+}
+
+function sendRequest() {
+    var http = createRequestObject();
+    const getURL = `${ivcPathToSrc}api/videos/progress.php`;
+    http.open("GET", getURL, true);
+    http.onreadystatechange = function () { handleResponse(http); };
+    http.send(null);
+}
+
+function handleResponse(http) {
+    var response;
+    if (http.readyState == 4) {
+        response = http.responseText;
+        document.getElementById("ivc-progress-bar-color").style.width = response + "%";
+        document.getElementById("ivc-progress-bar-status").innerHTML = response + "%";
+
+        if (response < 100) {
+            setTimeout("sendRequest()", 1000);
+        }
+        else {
+            //toggleBarVisibility();
+            document.getElementById("ivc-progress-bar-status").innerHTML = "Complete";
+        }
+    }
+}
+
+function startProgress() {
+    toggleBarVisibility();
+    setTimeout("sendRequest()", 1000);
+}
+
+(function () {
+    //document.getElementById("uvideoform").onsubmit = createVideo;
+})();

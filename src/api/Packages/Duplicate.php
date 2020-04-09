@@ -2,6 +2,7 @@
     include_once '../../database/Database.php';
     include_once '../../controllers/PackagesController.php';
     include_once '../../controllers/VideoQuestionsController.php';
+    include_once '../../session_variables/session_variables.php';
 
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
@@ -13,14 +14,13 @@
     $data = json_decode($_POST["data"]);
     $oldPackageId = $data->oldPackageId;
     $newTitle = $data->newTitle;
-    $instructorId = $data->instructorId;
     $response = (array("success" => 0, "message" => "Server Error"));
     $databasePackageEntryCreated = false;
     $databaseQuestionEntryCreated = false;
     $GotOldPackage = false;
     
 
-    if($oldPackageId == NULL || $newTitle == NULL || $instructorId== NULL){
+    if($oldPackageId == NULL || $newTitle == NULL || $ivcInstructorId== NULL){
         echo json_encode(array("success" => 0, "message" => "Missing required Data"));
     }
     else{
@@ -37,11 +37,11 @@
         }
         
         else{ //onsucess create the new package
-            if ($controller->create($newTitle, $instructorId, $videoID)) {
+            if ($controller->create($newTitle, $ivcInstructorId, $videoID)) {
                 $databasePackageEntryCreated = true;
             }
 
-            $stmt =  $controller->readPackageIdsbyNewestFromData($newTitle,$instructorId,$videoID);
+            $stmt =  $controller->readPackageIdsbyNewestFromData($newTitle,$ivcInstructorId,$videoID);
             $newPackageId = $stmt->get_result();
             $num = mysqli_num_rows($newPackageId);
             if($num > 0){
@@ -49,7 +49,7 @@
                 $newPackageId = $row['ID'];
            
                 $VQcontroller = new VideoQuestionsController($db);
-                $QuestionResult = $VQcontroller->getQuestionsInPackage($oldPackageId, $instructorId);
+                $QuestionResult = $VQcontroller->getQuestionsInPackage($oldPackageId, $ivcInstructorId);
                 $QuestionResult->bind_result($questionID, $text, $timestamp);
                 $list = array();
                 while($QuestionResult->fetch()) {
@@ -57,7 +57,7 @@
                     array_push($list, $obj);   
                 }
                 foreach($list as $value){
-                    if ($VQcontroller->create($videoID, $value["ID"], $newPackageId, $instructorId, $value["timestamp"])) {
+                    if ($VQcontroller->create($videoID, $value["ID"], $newPackageId, $ivcInstructorId, $value["timestamp"])) {
                         $databaseQuestionEntryCreated = true;
                     }
                     else{

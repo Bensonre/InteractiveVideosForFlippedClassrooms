@@ -1,6 +1,7 @@
 <?php
     include_once '../../database/Database.php';
     include_once '../../controllers/VideoQuestionsController.php';
+    include_once '../../session_variables/session_variables.php';
 
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
@@ -9,13 +10,12 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     $packageID = $_GET['packageID'];
-    $instructorID = $_GET['instructorID'];
 
     $database = new Database();
     $db = $database->connect();
 
     $controller = new VideoQuestionsController($db);
-    $result = $controller->getQuestionsInPackage($packageID, $instructorID);
+    $result = $controller->getQuestionsInPackage($packageID, $ivcInstructorId);
 
     $list = array();
     $result->bind_result($id, $text, $timestamp);

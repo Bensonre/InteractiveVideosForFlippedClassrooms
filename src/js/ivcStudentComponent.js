@@ -26,7 +26,7 @@ videojs('ivcStudentPlayer').on('timeupdate', () => {
 function initializeStudentPlayer(packageInfo, overlays) {
     let player = videojs('ivcStudentPlayer');
     player.reset();
-    player.src(packageInfo.path);
+    player.src(`${ivcPathToSrc}/${packageInfo.path}`);
     player.load();
 
     document.getElementById('packageTitle').innerText = packageInfo.title;
