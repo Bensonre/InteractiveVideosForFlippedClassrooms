@@ -16,11 +16,11 @@
     $result = $controller->getInstructorVideos($ivcInstructorId);
 
     $list = array();
-    $result->bind_result($id, $title, $instructorId, $filePath, $dateModified);
+    $result->bind_result($id, $title, $instructorId, $filePath, $isYouTube, $dateModified);
 
     while($result->fetch()) {
         $obj = array('id' => $id, 'title' => $title, 'instructorId' => $instructorId, 
-                     'filePath' => $filePath, 'dateModified' => $dateModified);
+                     'filePath' => $filePath, 'isYouTube' => $isYouTube, 'dateModified' => $dateModified);
         array_push($list, $obj);
     }
 

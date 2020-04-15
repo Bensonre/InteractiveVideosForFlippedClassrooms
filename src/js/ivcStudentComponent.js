@@ -25,9 +25,15 @@ videojs('ivcStudentPlayer').on('timeupdate', () => {
 
 function initializeStudentPlayer(packageInfo, overlays) {
     let player = videojs('ivcStudentPlayer');
-    player.reset();
-    player.src(`${ivcPathToSrc}/${packageInfo.path}`);
+    
+    if (Number(packageInfo.isYouTube)) {
+        player.src({src: `${packageInfo.path}`, type: 'video/youtube'});
+    } else {
+        player.src({src: `${ivcPathToSrc}/${packageInfo.path}`, type: 'video/mp4'});
+    }
+
     player.load();
+    player.play();
 
     document.getElementById('packageTitle').innerText = packageInfo.title;
 

@@ -11,8 +11,14 @@
 
             <form id="uvideoform" method="POST" enctype="multipart/form-data" target="hidden-frame">
                 <input id="ivc-upload-progress" type="hidden" value="uvideoform" name="<?php echo ini_get("session.upload_progress.name"); ?>">
+
                 <div class="form-group">
-                    <label>Video</label>
+                    <label>Provide a link to an unlisted YouTube video</label>
+                    <input id="ivc-video-link-create" type="text" class="form-control" placeholder="Unlisted YouTube URL..."></input>
+                </div>
+
+                <div class="form-group">
+                    <label>Or select a video file from your computer</label>
                     <input id="ivc-video-select-create" type="file" class="form-control-file" name="local-video-file" accept="video/*">
                 </div>
 

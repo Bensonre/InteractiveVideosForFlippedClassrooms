@@ -14,11 +14,11 @@
     $controller = new VideoController($db);
     $result = $controller->read($_POST['id']);
 
-    $result->bind_result($id, $title, $instructorId, $filePath, $dateModified);
+    $result->bind_result($id, $title, $instructorId, $filePath, $isYouTube, $dateModified);
 
     $result->fetch();
     $obj = array('id' => $id, 'title' => $title, 'instructorId' => $instructorId, 
-                 'filePath' => $filePath, 'dateModified' => $dateModified);
+                 'filePath' => $filePath, 'isYouTube' => $isYouTube, 'dateModified' => $dateModified);
  
     echo json_encode($obj);
 ?>

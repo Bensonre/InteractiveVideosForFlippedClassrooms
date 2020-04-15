@@ -13,9 +13,10 @@ function createVideo() {
     const ivcUploadProgress = document.getElementById("ivc-upload-progress");
     const fileInput = document.getElementById("ivc-video-select-create");
     const title = document.getElementById("ivc-video-title-create").value;
+    const url = document.getElementById("ivc-video-link-create").value;
     const instructorId = ivcInstructorId;
 
-    if(!(fileInput.files.length > 0) ||
+    if((!(fileInput.files.length > 0) && (url.length == 0)) ||
        !(title.length > 0)) {
             alert(form_error);
             return false;
@@ -24,6 +25,8 @@ function createVideo() {
     if (fileInput.files && fileInput.files.length == 1) {
         var file = fileInput.files[0];
         formData.set("local-video-file", file, file.name);
+    } else {
+        formData.append("link", url);
     }
     formData.append("title", title);
     formData.append("instructorId", instructorId);

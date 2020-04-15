@@ -119,7 +119,7 @@ function sendData() {
         }
     };
     const postURL = `${ivcPathToSrc}api/videoquestions/create.php`;
-    xhttp.open("POST", postURL, false);
+    xhttp.open("POST", postURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(info));
 }
@@ -137,15 +137,19 @@ function getVideo() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var res = JSON.parse(this.responseText);
-            console.log("filePath: " + res.filePath);
             var player = videojs('ivc-add-questions-player');
-            player.reset();
-            player.src(`${ivcPathToSrc}/${res.filePath}`);
+
+            if (Number(res.isYouTube)) {
+                player.src({src: `${res.filePath}`, type: 'video/youtube'});
+            } else {
+                player.src({src: `${ivcPathToSrc}/${res.filePath}`, type: 'video/mp4'});
+            }
             player.load();
+            player.play();
         }
     };
     const getURL = `${ivcPathToSrc}api/Packages/get-package-video.php?id=${packageID}`;
-    xhttp.open("GET", getURL, false);
+    xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }

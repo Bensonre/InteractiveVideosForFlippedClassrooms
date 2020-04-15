@@ -31,6 +31,7 @@ function fillVideos(videos) {
       let option = document.createElement("option");
       option.value = videos[i].id;
       option.setAttribute('video-path', videos[i].filePath);
+      option.setAttribute('isYouTube', videos[i].isYouTube);
       let text = document.createTextNode(videos[i].title);
       option.appendChild(text);
       let option2 = option.cloneNode(true);
@@ -243,10 +244,16 @@ function fillPackages(packages) {
 }
 
 function updateCreatePackageVideoFilePath(){
-   var selction = document.getElementById("create-package-select-video");
-   var player = videojs("Create-Package-video");
-   var path = selction.options[selction.selectedIndex].getAttribute("video-path");
-   player.src(`${ivcPathToSrc}/${path}`);
+   const selection = document.getElementById("create-package-select-video");
+   const player = videojs("Create-Package-video");
+   const path = selection.options[selection.selectedIndex].getAttribute("video-path");
+   const isYouTube = selection.options[selection.selectedIndex].getAttribute("isYouTube");
+
+   if (Number(isYouTube)) {
+      player.src({src: `${path}`, type: 'video/youtube'});
+   } else {
+      player.src({src: `${ivcPathToSrc}/${path}`, type: 'video/mp4'});
+   }
    // set src track corresponding to new movie //
    player.load();
    player.play();
