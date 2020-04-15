@@ -12,39 +12,41 @@
         $packageId = intval($_GET['id']);
         $res = $controller->getPackageWithVideo($packageId);
 
-        // Create package info
+        if (empty($res['Path'])) { 
+            echo "INVALID PACKAGE ID"; 
+        } else {
+            // Create package info
+            $packageInfo = array("path" => $res['Path'], "isYouTube" => $res['IsYouTube'], "title" => $res['Title']);
 
-        $packageInfo = array("path" => $res['Path'], "isYouTube" => $res['IsYouTube'], "title" => $res['Title']);
+            // Get questions already answered in this package by the student
+            $answerController = new AnswerController($db);
+            $alreadyAnsweredQuestions = $answerController->readAnsweredQuestions($packageId, $ivcStudentId);
 
-        // Get questions already answered in this package by the student
-        $answerController = new AnswerController($db);
-        $alreadyAnsweredQuestions = $answerController->readAnsweredQuestions($packageId, $ivcStudentId);
+            $alreadyAnswered = array();
+            foreach ($alreadyAnsweredQuestions as $obj) {
+                array_push($alreadyAnswered, $obj);
+            }
 
-        $alreadyAnswered = array();
-        foreach ($alreadyAnsweredQuestions as $obj) {
-            array_push($alreadyAnswered, $obj);
-        }
+            foreach ($res['Questions'] as &$question) {
+                $question['answered'] = false;
+                $question['choice'] = null;
+            }
 
-        foreach ($res['Questions'] as &$question) {
-            $question['answered'] = false;
-            $question['choice'] = null;
-        }
-
-        foreach ($alreadyAnsweredQuestions['Questions'] as &$alreadyAnsweredQuestion) {
-            foreach($res['Questions'] as &$question) {
-                if ($question['QuestionID'] == $alreadyAnsweredQuestion['QuestionID']) {
-                    $question['answered'] = true;
-                    $question['choice'] = $alreadyAnsweredQuestion['ChoiceID'];
+            foreach ($alreadyAnsweredQuestions['Questions'] as &$alreadyAnsweredQuestion) {
+                foreach($res['Questions'] as &$question) {
+                    if ($question['QuestionID'] == $alreadyAnsweredQuestion['QuestionID']) {
+                        $question['answered'] = true;
+                        $question['choice'] = $alreadyAnsweredQuestion['ChoiceID'];
+                    }
                 }
             }
-        }
 
-        // Create the overlays
-        
-        $overlays = array();
+            // Create the overlays
+            $overlays = array();
 
-        for ($i = 0; $i < count($res['Questions']); $i++) {
-            array_push($overlays, constructOverlay($res['Questions'][$i]));
+            for ($i = 0; $i < count($res['Questions']); $i++) {
+                array_push($overlays, constructOverlay($res['Questions'][$i]));
+            }
         }
     }
 ?>
