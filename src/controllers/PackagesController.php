@@ -131,7 +131,7 @@ class PackageController {
 
     public function getPackageWithVideo($id)
     {
-        $query = "Select FilePath, p.Title, PackageID, video_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from video_questions 
+        $query = "Select FilePath, IsYouTube, p.Title, PackageID, video_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from video_questions 
 		Join videos on video_questions.VideoID = videos.ID
         Join packages As p on video_questions.PackageID = p.ID
         Join questions on video_questions.QuestionID = Questions.ID
@@ -154,6 +154,7 @@ class PackageController {
                     $result = array(
                         "Title" => $row['Title'],
                         "Path" => $row['FilePath'],
+                        "IsYouTube" => $row['IsYouTube'],
                         "Package"=>$row['PackageID'],
                         "Questions" => $questions = [],
                             

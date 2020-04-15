@@ -16,13 +16,31 @@ class VideoController {
         $filePath = htmlspecialchars(strip_tags($filePath));
         $fileName = htmlspecialchars(strip_tags($fileName));
 
-        $query = "INSERT INTO $this->table (`InstructorID`, `FilePath`, `Title`, `DateModified`) VALUES (?,?,?, CURDATE())";
+        $query = "INSERT INTO $this->table (`InstructorID`, `FilePath`, `Title`, `IsYouTube`, `DateModified`) VALUES (?,?,?,0,CURDATE())";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
             $stmt->bind_param("iss", $instructorId, $filePath, $fileName);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
+    public function createURL($instructorId, $fileName, $url)
+    {
+        $instructorId = htmlspecialchars(strip_tags($instructorId));
+        $fileName = htmlspecialchars(strip_tags($fileName));
+        $url = htmlspecialchars(strip_tags($url));
+
+        $query = "INSERT INTO $this->table (`InstructorID`, `FilePath`, `Title`, `IsYouTube`, `DateModified`) VALUES (?,?,?,1,CURDATE())";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt == false) {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error;
+        } else {
+            $stmt->bind_param("iss", $instructorId, $url, $fileName);
             return $stmt->execute();
         }
         return false;

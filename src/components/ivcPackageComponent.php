@@ -33,13 +33,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label>Selected video</label>
-                        <video-js
+                        <video
                             id="Create-Package-video"
-                            class="vjs-16-9"
+                            class="video-js vjs-default-skin vjs-16-9"
                             controls 
-                            data-setup="{}">
+                            data-setup='{ "techOrder": ["youtube", "html5"] }'>
                             <source id="create-video-source" type="video/mp4">
-                        </video-js>
+                        </video>
                     </div>
                 </div>
             </div>

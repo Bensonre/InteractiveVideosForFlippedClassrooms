@@ -14,7 +14,7 @@
 
         // Create package info
 
-        $packageInfo = array("path" => $res['Path'], "title" => $res['Title']);
+        $packageInfo = array("path" => $res['Path'], "isYouTube" => $res['IsYouTube'], "title" => $res['Title']);
 
         // Get questions already answered in this package by the student
         $answerController = new AnswerController($db);
@@ -59,12 +59,13 @@
 <div class="container">
     <h1 id="packageTitle" class="text-center"></h1>
 	<div>
-        <video-js
+        <video
         id="ivcStudentPlayer"
-        class="vjs-16-9"
+        class="video-js vjs-default-skin vjs-16-9"
         controls 
-        data-setup="{}">
-        </video-js>
+        data-setup='{ "techOrder": ["youtube", "html5"] }'>
+        <source id="student-video-source" type="video/mp4">
+        </video>
     </div>
 </div>
 

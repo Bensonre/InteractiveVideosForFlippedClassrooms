@@ -28,6 +28,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
     <script src="../dependencies/videojs-overlay/node_modules/videojs-overlay/dist/videojs-overlay.min.js"></script>
+    <script src="../dependencies/videojs-youtube/Youtube.min.js"></script>
 
     <script onload="ivcStudentIdInitializer(<?php echo $ivcStudentId; ?>);" src="../js/ivcIdInitializer.js"></script>
     <script onload="ivcPathToSrcInitializer('../../');" src="../js/ivcPathToSrcInitializer.js"></script>

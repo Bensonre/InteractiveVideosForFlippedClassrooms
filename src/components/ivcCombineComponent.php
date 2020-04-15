@@ -26,14 +26,13 @@
 
         <div class="col align-self-center">
             <div class="form-group">
-                <video-js
+                <video
                     id="ivc-add-questions-player"
-                    class="video-js vjs-16-9"
+                    class="video-js vjs-default-skin vjs-16-9"
                     controls 
-                    autoplay
-                    data-setup="{}"
-                >
-                </video-js>
+                    data-setup='{ "techOrder": ["youtube", "html5"] }'>
+                <source type="video/mp4">
+                </video>
             </div>
         </div>
     </div>
