@@ -2,6 +2,7 @@
     include_once '../database/Database.php';
     include_once '../controllers/PackagesController.php';
     include_once '../controllers/AnswerController.php';
+    include_once '../session_variables/session_variables.php';
     $database = new Database();
     $db = $database->connect();
       
@@ -66,7 +67,7 @@
         class="video-js vjs-default-skin vjs-16-9"
         controls 
         data-setup='{ "techOrder": ["youtube", "html5"] }'>
-        <source id="student-video-source" type="video/mp4">
+        <source id="student-video-source" src="?" type="video/mp4">
         </video>
     </div>
 </div>

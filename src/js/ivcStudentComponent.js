@@ -13,33 +13,71 @@ window.onload = () => {
     initializeStudentPlayer(ivcPackageInfo, ivcOverlays);
 };
 
-videojs('ivcStudentPlayer').on('timeupdate', () => {
-        const player = videojs('ivcStudentPlayer');
+function stickPlayer(player, currentQuestion) {
+    if (currentQuestion > ivcCurrentQuestion) {
+        registerTimeListener(player);
+        return;
+    }
+
+    if (player.currentTime() > ivcQuestionPositions[ivcCurrentQuestion]) {
+        if (!player.paused()) {
+            player.pause();
+        }
+        player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
+    }
+
+    player.setTimeout(() => {stickPlayer(player, ivcCurrentQuestion)}, 100);
+}
+
+function registerTimeListener(player) {
+    player.on('timeupdate', () => {
         if (player.currentTime() > ivcQuestionPositions[ivcCurrentQuestion]) {
-            player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
+            player.off('timeupdate');
+
             if (!player.paused()) {
                 player.pause();
             }
+            player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
+
+            player.setTimeout(() => {stickPlayer(player, ivcCurrentQuestion)}, 100);
         }
-});
+    });
+}
+
+/* Old method of locking the player for questions. This method no longer worked when the YouTube plugin was
+   utilized. */
+/* function registerTimeListenerOld(player) {
+    player.on('timeupdate', () => {
+        console.log(`Current time ${player.currentTime()}; Qtime: ${ivcQuestionPositions[ivcCurrentQuestion]}`);
+            if (player.currentTime() > ivcQuestionPositions[ivcCurrentQuestion]) {
+                if (!player.paused()) {
+                    player.pause();
+                }
+                player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
+            }
+    });
+} */
 
 function initializeStudentPlayer(packageInfo, overlays) {
-    let player = videojs('ivcStudentPlayer');
-    
+    const player = videojs('ivcStudentPlayer');
+
     if (Number(packageInfo.isYouTube)) {
         player.src({src: `${packageInfo.path}`, type: 'video/youtube'});
     } else {
         player.src({src: `${ivcPathToSrc}/${packageInfo.path}`, type: 'video/mp4'});
     }
 
-    player.load();
-    player.play();
+    player.ready( () => {
+        registerTimeListener(player);
+    }, true);
 
     document.getElementById('packageTitle').innerText = packageInfo.title;
 
     player.overlay({
         overlays: overlays
     });
+
+    player.play();
 }
 
 function questionAnswered(button) {
