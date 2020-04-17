@@ -1,4 +1,5 @@
 var ivcCurrentQuestion = 0;
+var ivcCurrentOverallQuestion = 0;
 var ivcQuestionPositions = [];
 
 window.onload = () => {
@@ -7,6 +8,8 @@ window.onload = () => {
     for (let i = 0; i < ivcOverlays.length; i++) {
         if (!ivcOverlays[i].answered) {
             ivcQuestionPositions.push(ivcOverlays[i].start);
+        } else {
+            ivcCurrentOverallQuestion++;
         }
     }
 
@@ -83,6 +86,7 @@ function initializeStudentPlayer(packageInfo, overlays) {
 function questionAnswered(button) {
     button.disabled = true;
     const form = button.parentNode;
+    form.querySelector('input[type=radio]:checked').setAttribute('checked', true);
     const selection = form.querySelector('input[type=radio]:checked');
     if (selection) {
         const questionId = Number(form.querySelector('#questionId').getAttribute('data-value'));
@@ -100,14 +104,17 @@ function questionAnswered(button) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
                 if (JSON.parse(this.responseText).success) {
-                    console.log("Answer submitted!");
                     form.removeChild(button);
+
+                    ivcOverlays[ivcCurrentOverallQuestion].content = `${form.parentNode.parentNode.innerHTML}`;
+                    videojs("ivcStudentPlayer").overlay({
+                        overlays: ivcOverlays
+                    });
                     ivcCurrentQuestion++;
+                    ivcCurrentOverallQuestion++;
                     videojs("ivcStudentPlayer").play();
                 } else {
-                    console.log("Answer not submitted!");
                     button.disabled = false;
                 }
             }
