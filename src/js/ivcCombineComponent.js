@@ -1,7 +1,6 @@
 var form_error = "Please fill out all input fields";
 
 window.onload = function() {
-    console.log("Getting packages and questions...");
     initializeMarkerPlugin();
     getPackages();
     getQuestions();
@@ -27,9 +26,7 @@ function getPackages() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var obj = JSON.parse(this.responseText);
-            console.log("Packages received...");
             fillPackages(obj);
         }
     };
@@ -40,10 +37,8 @@ function getPackages() {
 }
 
 function fillPackages(obj) {
-    console.log("Filling packages...");
     var i;
     for (i = 0; i < obj.length; i++) {
-        console.log(obj[i]);
         let option = document.createElement("option");
         option.value = obj[i].id;
         let text = document.createTextNode(obj[i].title);
@@ -51,17 +46,14 @@ function fillPackages(obj) {
         let element = document.getElementById("select-package");
         element.appendChild(option);
     }
-    getVideo();
-    getQuestionsInSelectedPackage();
+    packageChanged();
 }
 
 function getQuestions() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var obj = JSON.parse(this.responseText);
-            console.log("Questions received...");
             fillQuestions(obj);
         }
     };
@@ -72,10 +64,8 @@ function getQuestions() {
 }
 
 function fillQuestions(obj) {
-    console.log("Filling questions...");
     var i;
     for (i = 0; i < obj.length; i++) {
-        console.log(obj[i]);
         let option = document.createElement("option");
         option.value = obj[i].questionId;
         let text = document.createTextNode(obj[i].questionText);
@@ -99,7 +89,6 @@ function sendData() {
     }
 
     var info = {"packageID":packageID, "questionID":questionID, "instructorID":instructorID, "timestamp":timestamp};
-    console.log(JSON.stringify(info));
     document.getElementById("ivc-add-questions-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
@@ -131,7 +120,6 @@ function packageChanged() {
 
 function getVideo() {
     var packageID = document.getElementById("select-package").value;
-    console.log("Getting video associated with the selected package.");
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -144,7 +132,6 @@ function getVideo() {
             } else {
                 player.src({src: `${ivcPathToSrc}/${res.filePath}`, type: 'video/mp4'});
             }
-            player.load();
             player.play();
         }
     };
@@ -157,12 +144,10 @@ function getVideo() {
 function getQuestionsInSelectedPackage() {
     var packageID = document.getElementById("select-package").value;
     var instructorID = ivcInstructorId;                                         
-    console.log("Getting all questions currently within the selected package.");
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             res.sort(function (a, b) {
                     if (a.timestamp > b.timestamp) return 1;
@@ -181,14 +166,11 @@ function getQuestionsInSelectedPackage() {
 }
 
 function fillQuestionTable(questions) {
-    console.log(questions);
-    console.log("Clearing question table...");
     var table = document.getElementById("ivc-add-questions-added-table");
     table.innerHTML = "<thead class='text-center'>";
     table.innerHTML = "<tr><th class='text-center' colspan='3'>Questions in the Package</th></tr>";
     table.innerHTML += "<tr><th>Question</th><th>Timestamp</th><th>Options</th></tr>";
     table.innerHTML += "</thead>";
-    console.log("Filling question table...");
     for (i = 0; i < questions.length; i++) {
         let tr = document.createElement("tr");
         tr.setAttribute("data-value", questions[i].ID);
@@ -310,7 +292,6 @@ function placeMarkersOnVideo(questions) {
         newMarker.time = timestamp;
         newMarker.text = questionText;
         options.markers.push(newMarker);
-        console.log(options);
     }
     player.markers.removeAll();
     player.markers.add(options.markers);

@@ -255,7 +255,7 @@ function updateCreatePackageVideoFilePath(){
       player.src({src: `${ivcPathToSrc}/${path}`, type: 'video/mp4'});
    }
    // set src track corresponding to new movie //
-   player.load();
+   //player.load();
    player.play();
 }
 

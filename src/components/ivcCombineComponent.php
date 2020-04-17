@@ -31,7 +31,7 @@
                     class="video-js vjs-default-skin vjs-16-9"
                     controls 
                     data-setup='{ "techOrder": ["youtube", "html5"] }'>
-                <source type="video/mp4">
+                <source src="?"type="video/mp4">
                 </video>
             </div>
         </div>
