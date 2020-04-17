@@ -14,7 +14,7 @@ window.onload = () => {
 };
 
 function stickPlayer(player, currentQuestion) {
-    if (currentQuestion > ivcCurrentQuestion) {
+    if (currentQuestion < ivcCurrentQuestion) {
         registerTimeListener(player);
         return;
     }
@@ -26,7 +26,7 @@ function stickPlayer(player, currentQuestion) {
         player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
     }
 
-    player.setTimeout(() => {stickPlayer(player, ivcCurrentQuestion)}, 100);
+    player.setTimeout(() => {stickPlayer(player, currentQuestion)}, 100);
 }
 
 function registerTimeListener(player) {
