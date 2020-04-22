@@ -10,5 +10,24 @@ Our goal is to create an Interactive platform for students to be able to answer 
  
 ## Scope
 Due to the fact we are simply a proof of concept our scope is more limited than it may appear our task in only the creation of questions, the insertion of said questions into videos, the upload of videos, and the ability for students to answer questions.
+
+## How to Run
+
+### Option 1) Live demo
+navigate to http://web.engr.oregonstate.edu/~bensonre/Capstone/src/demo/UploadVideo.php to see a live update version of the code.
+
+### Option 2) Clone repository and run php project in xampp.
+Here is a link to an article showing how to download and run a project in xampp: https://timetoprogram.com/run-php-project-xampp/
+
+Clone the repsitory into C:\xampp\htdocs\InteractiveVideosForFlippedClassrooms.
+
+Start Xampp Control Panel
+
+In the apache row click start.
+
+Navigate to Localhost/InteractiveVideosForFlippedClassrooms/src/demo
+
+          
+          
  
 
