@@ -19,7 +19,7 @@
 
                 <div class="form-group">
                     <label>Or select a video file from your computer</label>
-                    <input id="ivc-video-select-create" type="file" class="form-control-file" name="local-video-file" accept="video/*">
+                    <input id="ivc-video-select-create" type="file" accept="video/*" class="form-control-file" name="local-video-file" accept="video/*">
                 </div>
 
                 <div class="form-group">

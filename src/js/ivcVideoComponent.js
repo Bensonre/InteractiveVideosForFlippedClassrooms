@@ -24,7 +24,16 @@ function createVideo() {
 
     if (fileInput.files && fileInput.files.length == 1) {
         var file = fileInput.files[0];
+        var ext = file.value.match(/\.([^\.]+)$/)[1];
+        switch (ext) {
+        case 'mp4':
+            break;
+        default:
+            alert('File type not allowed');
+            return false;
+        }    
         formData.set("local-video-file", file, file.name);
+
     } else {
         formData.append("link", url);
     }
