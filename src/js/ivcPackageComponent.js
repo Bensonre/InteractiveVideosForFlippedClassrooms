@@ -275,8 +275,9 @@ function updatePackage() {
 
             if (res.success) {
                 document.getElementById("ivc-update-package-status-message").style.color = "green";
-                document.getElementById("uppackageform").reset();
-                getPackages();
+                let packageSelection = document.getElementById("update-package-selection");
+                packageSelection.options[packageSelection.selectedIndex].setAttribute("video-id", videoId);
+                packageSelection.options[packageSelection.selectedIndex].innerText = title;
             } else {
                 document.getElementById("ivc-update-package-status-message").style.color = "red";
             }
