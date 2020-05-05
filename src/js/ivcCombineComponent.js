@@ -99,7 +99,6 @@ function sendData() {
 
             if (res.success) {
                 document.getElementById("ivc-add-questions-status-message").style.color = "green";
-                document.getElementById("addqtpform").reset();
             } else {
                 document.getElementById("ivc-add-questions-status-message").style.color = "red";
             }
