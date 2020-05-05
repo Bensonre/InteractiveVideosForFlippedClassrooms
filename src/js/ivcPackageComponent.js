@@ -254,8 +254,7 @@ function updateCreatePackageVideoFilePath(){
    } else {
       player.src({src: `${ivcPathToSrc}/${path}`, type: 'video/mp4'});
    }
-   // set src track corresponding to new movie //
-   //player.load();
+
    player.play();
 }
 
@@ -269,13 +268,26 @@ function updateUpdatePackageOnNewPackageSelected(){
  }
 
  function updateUpdatePackageVideoFilePath(){
-    var videoSelction = document.getElementById("update-package-select-video");
+    /* var videoSelction = document.getElementById("update-package-select-video");
     var player = videojs("Update-Package-video");
     var path = videoSelction.options[videoSelction.selectedIndex].getAttribute("video-path");
     player.src(`${ivcPathToSrc}/${path}`);
     // set src track corresponding to new movie //
     player.load();
-    player.play();
+    player.play(); */
+
+   const selection = document.getElementById("update-package-select-video");
+   const player = videojs("Update-Package-video");
+   const path = selection.options[selection.selectedIndex].getAttribute("video-path");
+   const isYouTube = selection.options[selection.selectedIndex].getAttribute("isYouTube");
+
+   if (Number(isYouTube)) {
+      player.src({src: `${path}`, type: 'video/youtube'});
+   } else {
+      player.src({src: `${ivcPathToSrc}/${path}`, type: 'video/mp4'});
+   }
+
+   player.play();
  }
 
 

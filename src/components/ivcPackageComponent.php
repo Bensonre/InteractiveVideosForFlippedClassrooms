@@ -97,15 +97,18 @@
                 </div>
 
                 <div class="col">
-                    <label>Selected video</label>
-                    <video-js
-                        id="Update-Package-video"
-                        class="vjs-16-9"
-                        controls 
-                        data-setup="{}">
-                        <source src="?" type="video/mp4">
-                    </video-js>
+                    <div class="form-group">
+                        <label>Selected video</label>
+                        <video
+                            id="Update-Package-video"
+                            class="video-js vjs-default-skin vjs-16-9"
+                            controls 
+                            data-setup='{ "techOrder": ["youtube", "html5"] }'>
+                            <source id="create-video-source" src="?" type="video/mp4">
+                        </video>
+                    </div>
                 </div>
+
             </div>
         </div>
 
