@@ -1,6 +1,7 @@
-var ivcCurrentPackageComponentTab;
+var ivcCurrentPackageComponentTab;                      /* Used to keep track of the tab that the user is on. */
 var form_error = "Please fill out all input fields";
 
+/* An enumeration for the existing tabs within the component. */
 const ivcPackageComponentTabs = {
     CREATE: 'create',
     UPDATE: 'update',
@@ -8,12 +9,22 @@ const ivcPackageComponentTabs = {
     DUPLICATE: 'duplicate'
 }
 
+/**
+ * When the window loads, fetch the packages and videos required for this component. Also, 
+ * set the current tab of the component to 'CREATE'.
+ */
 window.onload = function() {
     getVideos();
     getPackages();
     setCurrentPackageComponentTab(ivcPackageComponentTabs.CREATE);
 }
 
+/**
+ * Retrieves the current instructor's videos from the server.
+ * 
+ * Once the videos are received from the server, this function passes them into the function
+ * 'fillVideos()' to insert them into the page. 
+ */
 function getVideos() {
     const instructorId = ivcInstructorId;
     let xhttp = new XMLHttpRequest();
@@ -29,6 +40,12 @@ function getVideos() {
     xhttp.send();
 }
 
+/**
+ * Retrieves the current instructor's packages from the server.
+ * 
+ * Once the packages are received from the server, this function passes them into the function
+ * 'fillPackages()' to insert them into the page. 
+ */
 function getPackages() {
     const instructorId = ivcInstructorId;
     let xhttp = new XMLHttpRequest();
@@ -44,6 +61,16 @@ function getPackages() {
     xhttp.send();
 }
 
+/**
+ * This function inserts the given videos into the selection elements on the create and update
+ * tabs of the component.
+ * 
+ * Afterwards, the create tab is initialized and the update tab is asked to be initialized as well. 
+ * The update tab may not be initialized on this call because it requires that both videos and packages
+ * have been inserted into the page.
+ * 
+ * @param videos An array of videos retrieved from the server.
+ */
 function fillVideos(videos) {
     let element = document.getElementById("create-package-select-video");
     let element2 = document.getElementById("update-package-select-video");
@@ -66,6 +93,16 @@ function fillVideos(videos) {
     initializeUpdateTab();
 }
 
+/**
+ * This function inserts the given packages into the selection element on the update
+ * tab of the component.
+ * 
+ * Afterwards, the update tab is asked to be initialized. 
+ * The update tab may not be initialized on this call because it requires that both videos and packages
+ * have been inserted into the page.
+ * 
+ * @param packages An array of packages retrieved from the server.
+ */
 function fillPackages(packages) {
     packages.sort( (a, b) => {
         if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1;} else { return 0; }
@@ -94,13 +131,28 @@ function fillPackages(packages) {
     initializeUpdateTab();
 }
 
+/**
+ * Initializes the create tab.
+ * 
+ * An onchange listener is placed on the create tab's select element to handle when a new
+ * video is selected by the user. The video player on this tab will then be loaded with the 
+ * correct source and played. 
+ */
 function initializeCreateTab() {
     const selection = document.getElementById("create-package-select-video");
-    selection.setAttribute("onchange", "createPackageSelectChanged()");
+    selection.setAttribute("onchange", "createVideoSelectChanged()");
     updateCreateTabVideo();
     playCreateTabVideo();
 }
 
+/**
+ * Initializes the update tab.
+ * 
+ * The following events only occur if both videos and packages have been inserted into the page already.
+ * This function is called twice from functions 'fillVideos()' and 'fillPackages()'. An onchange listener 
+ * is placed on the update tab's select elements to handle when a new package or new video is selected by the user. 
+ * The video player on this tab will then be loaded with the correct source and played. 
+ */
 function initializeUpdateTab() {
     let packageSelection = document.getElementById("update-package-selection");
     let videoSelection = document.getElementById("update-package-select-video");
@@ -111,9 +163,14 @@ function initializeUpdateTab() {
     }
 }
 
+/**
+ * Creates a new package.
+ * 
+ * This function grabs the title and video id from the page and sends them to the server to create a new
+ * package within the database.
+ */
 function createPackage() {
     const title = document.getElementById("create-package-title").value;
-    const instructorId = ivcInstructorId;
     const videoId = document.getElementById("create-package-select-video").value;
 
     //form validation
@@ -126,7 +183,6 @@ function createPackage() {
 
     let data = {
         "title": title, 
-        "instructorId": instructorId, 
         "videoId": videoId
     };
 
@@ -154,10 +210,15 @@ function createPackage() {
     xhttp.send("data=" + JSON.stringify(data));
 }
 
+/**
+ * Updates an existing package.
+ * 
+ * This function grabs the title, video id, and package id from the page and sends them to the server to update
+ * an existing package within the database.
+ */
 function updatePackage() {
     const packageId = document.getElementById("update-package-selection").value;
     const title = document.getElementById("update-package-title").value;
-    const instructorId = ivcInstructorId;
     const videoId = document.getElementById("update-package-select-video").value;
 
     //form validation
@@ -172,7 +233,6 @@ function updatePackage() {
     let data = {
         "packageId": packageId,
         "title": title, 
-        "instructorId": instructorId, 
         "videoId": videoId 
     };
 
@@ -181,7 +241,6 @@ function updatePackage() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-update-package-status-message").innerText = res.message;
 
@@ -200,19 +259,24 @@ function updatePackage() {
     xhttp.send("data=" + JSON.stringify(data));
 }
 
+/**
+ * Duplicates an existing package.
+ * 
+ * This function grabs the title and video id from the page and sends them to the server to duplicate
+ * an existing package within the database.
+ */
 function duplicatePackage(){
     const oldId = document.getElementById('duplicate-package-selection').value;
     const newTitle = document.getElementById('duplicate-package-title').value;
-    const instructorId = ivcInstructorId;
+
     let data = {
         "oldPackageId": oldId,
         "newTitle": newTitle, 
-        "instructorId": instructorId, 
     };
+
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-duplicate-package-status-message").innerText = res.message;
             if (res.success) {
@@ -228,6 +292,12 @@ function duplicatePackage(){
     xhttp.send("data=" + JSON.stringify(data));
 }
 
+/**
+ * Deletes an existing package.
+ * 
+ * This function grabs the package id from the page and send it to the server to delete the package
+ * within the database.
+ */
 function deletePackage() {
 
     const packageId = document.getElementById("delete-package-selection").value;
@@ -269,16 +339,25 @@ function deletePackage() {
     xhttp.send("data=" + JSON.stringify(data));
 }
 
-function createPackageSelectChanged() {
+/**
+ * Is triggered when the video select element on the create tab is changed.
+ */
+function createVideoSelectChanged() {
     updateCreateTabVideo();
     playCreateTabVideo();
 }
 
+/**
+ * Is triggered when the package select element on the update tab is changed.
+ */
 function updatePackageSelectChanged() {
     updateUpdateTabPackage();
     playUpdateTabVideo();
 }
 
+/**
+ * Updates the source of the video player on the create tab with the currently selected video.
+ */
 function updateCreateTabVideo(){
     const selection = document.getElementById("create-package-select-video");
     const player = videojs("Create-Package-video");
@@ -291,8 +370,17 @@ function updateCreateTabVideo(){
         player.src({src: `${ivcPathToSrc}/${path}`, type: 'video/mp4'});
     }
 
+    // This prevents the player from starting if the user isn't on this tab on initial load.
+    player.on("loadedmetadata", () => {
+        if (ivcCurrentPackageComponentTab != ivcPackageComponentTabs.CREATE) {
+            player.pause();
+        }
+    });
 }
 
+/**
+ * Updates the title and video fields on the update tab with the attributes of the currently selected package.
+ */
 function updateUpdateTabPackage(){
     let packageTitle = document.getElementById("update-package-title");
     let packageSelection = document.getElementById("update-package-selection");
@@ -302,6 +390,9 @@ function updateUpdateTabPackage(){
     updateUpdateTabVideo();
 }
 
+/**
+ * Updates the source of the video player on the update tab with the currently selected video.
+ */
 function updateUpdateTabVideo(){
     const selection = document.getElementById("update-package-select-video");
     const player = videojs("Update-Package-video");
@@ -314,8 +405,19 @@ function updateUpdateTabVideo(){
         player.src({src: `${ivcPathToSrc}/${path}`, type: 'video/mp4'});
     }
 
+    // This prevents the player from starting if the user isn't on this tab on initial load.
+    player.on("loadedmetadata", () => {
+        if (ivcCurrentPackageComponentTab != ivcPackageComponentTabs.UPDATE) {
+            player.pause();
+        }
+    });
 }
 
+/**
+ * Sets the current tab and decides whether to play the video player on the create tab or update tab.
+ * 
+ * @param tab The tab to set as the current tab.
+ */
 function setCurrentPackageComponentTab(tab) {
     ivcCurrentPackageComponentTab = tab;
 
@@ -331,6 +433,9 @@ function setCurrentPackageComponentTab(tab) {
     }
 }
 
+/**
+ * Plays the video player on the create tab.
+ */
 function playCreateTabVideo() {
     const player = videojs("Create-Package-video");
 
@@ -339,6 +444,9 @@ function playCreateTabVideo() {
     }
 }
 
+/**
+ * Pauses the video player on the create tab.
+ */
 function pauseCreateTabVideo() {
     const player = videojs("Create-Package-video");
 
@@ -347,6 +455,9 @@ function pauseCreateTabVideo() {
     }
 }
 
+/**
+ * Plays the video player on the update tab.
+ */
 function playUpdateTabVideo() {
     const player = videojs("Update-Package-video");
 
@@ -355,6 +466,9 @@ function playUpdateTabVideo() {
     }
 }
 
+/**
+ * Pauses the video player on the update tab.
+ */
 function pauseUpdateTabVideo() {
     const player = videojs("Update-Package-video");
 
