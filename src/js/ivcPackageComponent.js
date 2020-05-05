@@ -14,53 +14,6 @@ window.onload = function() {
     setCurrentPackageComponentTab(ivcPackageComponentTabs.CREATE);
 }
 
-function setCurrentPackageComponentTab(tab) {
-    ivcCurrentPackageComponentTab = tab;
-
-    if (ivcCurrentPackageComponentTab == ivcPackageComponentTabs.CREATE) {
-        pauseUpdateTabVideo();
-        playCreateTabVideo();
-    } else if (ivcCurrentPackageComponentTab == ivcPackageComponentTabs.UPDATE) {
-        pauseCreateTabVideo();
-        playUpdateTabVideo();
-    } else {
-        pauseCreateTabVideo();
-        pauseUpdateTabVideo();
-    }
-}
-
-function playCreateTabVideo() {
-    const player = videojs("Create-Package-video");
-
-    if (player.paused()) {
-        player.play();
-    }
-}
-
-function pauseCreateTabVideo() {
-    const player = videojs("Create-Package-video");
-
-    if (!player.paused()) {
-        player.pause();
-    }
-}
-
-function playUpdateTabVideo() {
-    const player = videojs("Update-Package-video");
-
-    if (player.paused()) {
-        player.play();
-    }
-}
-
-function pauseUpdateTabVideo() {
-    const player = videojs("Update-Package-video");
-
-    if (!player.paused()) {
-        player.pause();
-    }
-}
-
 function getVideos() {
     const instructorId = ivcInstructorId;
     let xhttp = new XMLHttpRequest();
@@ -71,6 +24,21 @@ function getVideos() {
         }
     };
     const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+    xhttp.open("GET", getURL, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+}
+
+function getPackages() {
+    const instructorId = ivcInstructorId;
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var packages = JSON.parse(this.responseText);
+            fillPackages(packages);
+        }
+    };
+    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php?instructorId=${instructorId}`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -95,6 +63,52 @@ function fillVideos(videos) {
     }
 
     initializeCreateTab();
+    initializeUpdateTab();
+}
+
+function fillPackages(packages) {
+    packages.sort( (a, b) => {
+        if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1;} else { return 0; }
+    } );
+
+    let element = document.getElementById("update-package-selection");
+    let element2 = document.getElementById("delete-package-selection");
+    let element3 = document.getElementById("duplicate-package-selection");
+    element.innerHTML = "";
+    element2.innerHTML = "";
+    element3.innerHTML ="";
+    for (let i = 0; i < packages.length; i++) {
+        let option = document.createElement("option");
+        option.S
+        option.setAttribute('video-id', packages[i].videoId);
+        option.value = packages[i].id;
+        let text = document.createTextNode(packages[i].title);
+        option.appendChild(text);
+        let option2 = option.cloneNode(true);
+        let option3 = option.cloneNode(true);
+        element.appendChild(option);
+        element2.appendChild(option2);
+        element3.appendChild(option3);
+    }
+
+    initializeUpdateTab();
+}
+
+function initializeCreateTab() {
+    const selection = document.getElementById("create-package-select-video");
+    selection.setAttribute("onchange", "createPackageSelectChanged()");
+    updateCreateTabVideo();
+    playCreateTabVideo();
+}
+
+function initializeUpdateTab() {
+    let packageSelection = document.getElementById("update-package-selection");
+    let videoSelection = document.getElementById("update-package-select-video");
+    if (packageSelection.length > 0 && videoSelection.length > 0) {
+        packageSelection.setAttribute("onchange", "updatePackageSelectChanged()");
+        videoSelection.setAttribute("onchange", "updateUpdateTabVideo()");
+        updateUpdateTabPackage();
+    }
 }
 
 function createPackage() {
@@ -255,62 +269,14 @@ function deletePackage() {
     xhttp.send("data=" + JSON.stringify(data));
 }
 
-function getPackages() {
-    const instructorId = ivcInstructorId;
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var packages = JSON.parse(this.responseText);
-            fillPackages(packages);
-        }
-    };
-    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php?instructorId=${instructorId}`;
-    xhttp.open("GET", getURL, true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send();
-}
-
-function fillPackages(packages) {
-    packages.sort( (a, b) => {
-        if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1;} else { return 0; }
-    } );
-
-    let element = document.getElementById("update-package-selection");
-    let element2 = document.getElementById("delete-package-selection");
-    let element3 = document.getElementById("duplicate-package-selection");
-    element.innerHTML = "";
-    element2.innerHTML = "";
-    element3.innerHTML ="";
-    for (let i = 0; i < packages.length; i++) {
-        let option = document.createElement("option");
-        option.S
-        option.setAttribute('video-id', packages[i].videoId);
-        option.value = packages[i].id;
-        let text = document.createTextNode(packages[i].title);
-        option.appendChild(text);
-        let option2 = option.cloneNode(true);
-        let option3 = option.cloneNode(true);
-        element.appendChild(option);
-        element2.appendChild(option2);
-        element3.appendChild(option3);
-    }
-
-    initializeUpdateTab();
-}
-
-function initializeCreateTab() {
-    const selection = document.getElementById("create-package-select-video");
-    selection.setAttribute("onchange", "createPackageSelectChanged()");
+function createPackageSelectChanged() {
     updateCreateTabVideo();
     playCreateTabVideo();
 }
 
-function initializeUpdateTab() {
-    let packageSelection = document.getElementById("update-package-selection");
-    let videoSelection = document.getElementById("update-package-select-video");
-    packageSelection.setAttribute("onchange", "updatePackageSelectChanged()");
-    videoSelection.setAttribute("onchange", "updateUpdateTabVideo()");
+function updatePackageSelectChanged() {
     updateUpdateTabPackage();
+    playUpdateTabVideo();
 }
 
 function updateCreateTabVideo(){
@@ -350,12 +316,49 @@ function updateUpdateTabVideo(){
 
 }
 
-function createPackageSelectChanged() {
-    updateCreateTabVideo();
-    playCreateTabVideo();
+function setCurrentPackageComponentTab(tab) {
+    ivcCurrentPackageComponentTab = tab;
+
+    if (ivcCurrentPackageComponentTab == ivcPackageComponentTabs.CREATE) {
+        pauseUpdateTabVideo();
+        playCreateTabVideo();
+    } else if (ivcCurrentPackageComponentTab == ivcPackageComponentTabs.UPDATE) {
+        pauseCreateTabVideo();
+        playUpdateTabVideo();
+    } else {
+        pauseCreateTabVideo();
+        pauseUpdateTabVideo();
+    }
 }
 
-function updatePackageSelectChanged() {
-    updateUpdateTabPackage();
-    playUpdateTabVideo();
+function playCreateTabVideo() {
+    const player = videojs("Create-Package-video");
+
+    if (player.paused()) {
+        player.play();
+    }
+}
+
+function pauseCreateTabVideo() {
+    const player = videojs("Create-Package-video");
+
+    if (!player.paused()) {
+        player.pause();
+    }
+}
+
+function playUpdateTabVideo() {
+    const player = videojs("Update-Package-video");
+
+    if (player.paused()) {
+        player.play();
+    }
+}
+
+function pauseUpdateTabVideo() {
+    const player = videojs("Update-Package-video");
+
+    if (!player.paused()) {
+        player.pause();
+    }
 }
