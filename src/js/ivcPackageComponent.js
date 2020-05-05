@@ -1,4 +1,6 @@
 var ivcCurrentPackageComponentTab;                      /* Used to keep track of the tab that the user is on. */
+var ivcCreateTabInitialized = false;
+var ivcUpdateTabInitialized = false;
 var form_error = "Please fill out all input fields";
 
 /* An enumeration for the existing tabs within the component. */
@@ -89,8 +91,13 @@ function fillVideos(videos) {
         element2.appendChild(option2);
     }
 
-    initializeCreateTab();
-    initializeUpdateTab();
+    if (!ivcCreateTabInitialized) {
+        initializeCreateTab();
+    }
+
+    if (!ivcUpdateTabInitialized) {
+        initializeUpdateTab();
+    }
 }
 
 /**
@@ -128,7 +135,9 @@ function fillPackages(packages) {
         element3.appendChild(option3);
     }
 
-    initializeUpdateTab();
+    if (!ivcUpdateTabInitialized) {
+        initializeUpdateTab();
+    }
 }
 
 /**
@@ -141,8 +150,18 @@ function fillPackages(packages) {
 function initializeCreateTab() {
     const selection = document.getElementById("create-package-select-video");
     selection.setAttribute("onchange", "createVideoSelectChanged()");
+
+    // This prevents the player from starting if the user isn't on this tab on initial load.
+    const player = videojs("Create-Package-video");
+    player.on("loadedmetadata", () => {
+        if (ivcCurrentPackageComponentTab != ivcPackageComponentTabs.CREATE) {
+            player.pause();
+        }
+    });
+
     updateCreateTabVideo();
     playCreateTabVideo();
+    ivcCreateTabInitialized = true;
 }
 
 /**
@@ -159,7 +178,17 @@ function initializeUpdateTab() {
     if (packageSelection.length > 0 && videoSelection.length > 0) {
         packageSelection.setAttribute("onchange", "updatePackageSelectChanged()");
         videoSelection.setAttribute("onchange", "updateUpdateTabVideo()");
+
+        // This prevents the player from starting if the user isn't on this tab on initial load.
+        const player = videojs("Update-Package-video");
+        player.on("loadedmetadata", () => {
+            if (ivcCurrentPackageComponentTab != ivcPackageComponentTabs.UPDATE) {
+                player.pause();
+            }
+        });
+
         updateUpdateTabPackage();
+        ivcUpdateTabInitialized = true;
     }
 }
 
@@ -369,13 +398,6 @@ function updateCreateTabVideo(){
     } else {
         player.src({src: `${ivcPathToSrc}/${path}`, type: 'video/mp4'});
     }
-
-    // This prevents the player from starting if the user isn't on this tab on initial load.
-    player.on("loadedmetadata", () => {
-        if (ivcCurrentPackageComponentTab != ivcPackageComponentTabs.CREATE) {
-            player.pause();
-        }
-    });
 }
 
 /**
@@ -404,13 +426,6 @@ function updateUpdateTabVideo(){
     } else {
         player.src({src: `${ivcPathToSrc}/${path}`, type: 'video/mp4'});
     }
-
-    // This prevents the player from starting if the user isn't on this tab on initial load.
-    player.on("loadedmetadata", () => {
-        if (ivcCurrentPackageComponentTab != ivcPackageComponentTabs.UPDATE) {
-            player.pause();
-        }
-    });
 }
 
 /**
