@@ -12,7 +12,8 @@
                     "Create Package" => ("../demo/Package.php"),
                     "Add Questions to Package" => ("../demo/AddQuestions.php")
                 ),
-                "Student" => "../demo/Student.php?id=1"
+                "Student" => "../demo/Student.php?id=1",
+                "Browse Packages" => "../demo/BrowsePackages.php"
             );
 
 
