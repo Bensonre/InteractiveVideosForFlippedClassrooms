@@ -1,9 +1,13 @@
 <div class="container border border-dark p-4">
     <ul class="nav nav-pills">
-        <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#ivc-create-package-form">Create</a></li>
-        <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ivc-update-package-form">Update</a></li>
-        <li class="nav-item"><a class="nav-link"data-toggle="pill" href="#ivc-delete-package-form">Delete</a></li>
-        <li class="nav-item"><a class="nav-link"data-toggle="pill" href="#ivc-duplicate-package-form">Duplicate</a></li>   
+        <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#ivc-create-package-form"
+            onclick="setCurrentPackageComponentTab(ivcPackageComponentTabs.CREATE);">Create</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ivc-update-package-form"
+            onclick="setCurrentPackageComponentTab(ivcPackageComponentTabs.UPDATE);">Update</a></li>
+        <li class="nav-item"><a class="nav-link"data-toggle="pill" href="#ivc-delete-package-form"
+            onclick="setCurrentPackageComponentTab(ivcPackageComponentTabs.DELETE);">Delete</a></li>
+        <li class="nav-item"><a class="nav-link"data-toggle="pill" href="#ivc-duplicate-package-form"
+            onclick="setCurrentPackageComponentTab(ivcPackageComponentTabs.DUPLICATE);">Duplicate</a></li>   
     </ul>
 
     <div class="tab-content">
@@ -14,7 +18,7 @@
                     <form id="cpackageform">
                         <div class="form-group">
                             <label>Select a video</label>
-                            <select id="create-package-select-video" Name="VideoId" onchange="updateCreatePackageVideoFilePath()" class="form-control"></select>
+                            <select id="create-package-select-video" Name="VideoId" class="form-control"></select>
                         </div>
 
                         <div class="form-group">
@@ -36,6 +40,7 @@
                         <video
                             id="Create-Package-video"
                             class="video-js vjs-default-skin vjs-16-9"
+                            autoplay
                             controls 
                             data-setup='{ "techOrder": ["youtube", "html5"] }'>
                             <source id="create-video-source" src="?" type="video/mp4">
@@ -75,7 +80,7 @@
                     <form id="uppackageform"> 
                         <div class="form-group">
                             <label>Select an existing package</label>
-                            <select id="update-package-selection" class="form-control" name="ID" onchange="updateUpdatePackageOnNewPackageSelected()"></select>
+                            <select id="update-package-selection" class="form-control" name="ID"></select>
                         </div>
 
                         <div class="form-group">
@@ -85,7 +90,7 @@
 
                         <div class="form-group">
                             <label>Select new video</label>
-                            <select id="update-package-select-video" name="VideoID" class="form-control" onchange="updateUpdatePackageVideoFilePath()"></select>
+                            <select id="update-package-select-video" name="VideoID" class="form-control"></select>
                         </div>
 
                         <input name="InstructorID" Type="hidden" value=<?php echo "\""; echo $instructorID; echo "\""; ?>/>
@@ -97,15 +102,19 @@
                 </div>
 
                 <div class="col">
-                    <label>Selected video</label>
-                    <video-js
-                        id="Update-Package-video"
-                        class="vjs-16-9"
-                        controls 
-                        data-setup="{}">
-                        <source src="?" type="video/mp4">
-                    </video-js>
+                    <div class="form-group">
+                        <label>Selected video</label>
+                        <video
+                            id="Update-Package-video"
+                            class="video-js vjs-default-skin vjs-16-9"
+                            autoplay
+                            controls 
+                            data-setup='{ "techOrder": ["youtube", "html5"] }'>
+                            <source id="create-video-source" src="?" type="video/mp4">
+                        </video>
+                    </div>
                 </div>
+
             </div>
         </div>
 
