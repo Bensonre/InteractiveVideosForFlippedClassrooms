@@ -1,9 +1,16 @@
-var ivcCurrentQuestion = 0;
-var ivcCurrentOverallQuestion = 0;
-var ivcQuestionPositions = [];
+var ivcCurrentQuestion = 0;         /* The index used amongst only the unanswered questions. */
+var ivcCurrentOverallQuestion = 0;  /* Keeps track of the overall position in the list of package questions. */
+var ivcQuestionPositions = [];      /* Stores only the unanswered questions. */
 
-const player = videojs('ivcStudentPlayer');
+const player = videojs('ivcStudentPlayer'); /* Needed by 'playerTimeUpdateFunc'. */
 
+/**
+ * Used to detect when the player has reached the next unanswered question.
+ * 
+ * When it does, it removes the event listener and then sticks the player. 
+ * The function that sticks the player will re-add the removed event listener 
+ * upon the user answering the question.
+ */
 var playerTimeUpdateFunc = () => {
     if (player.currentTime() > ivcQuestionPositions[ivcCurrentQuestion]) {
         player.off('timeupdate', playerTimeUpdateFunc);
@@ -17,6 +24,10 @@ var playerTimeUpdateFunc = () => {
     }
 };
 
+/**
+ * Sorts the overlays by their starting time and determines which have not yet 
+ * been answered. 
+ */
 window.onload = () => {
     ivcOverlays.sort((a, b) => {return a.start <= b.start ? -1 : 1});
 
@@ -31,6 +42,15 @@ window.onload = () => {
     initializeStudentPlayer(ivcPackageInfo, ivcOverlays);
 };
 
+/**
+ * Sticks the player at the location of the unanswered question until it is answered.
+ * 
+ * Once the question is answered, it will re-add the 'timeupdate' event listener used 
+ * to monitor if the player has reached another unanswered question.
+ * 
+ * @param {*} player A reference to the student video player.
+ * @param {*} currentQuestion The index of the current unanswered question.
+ */
 function stickPlayer(player, currentQuestion) {
     if (currentQuestion < ivcCurrentQuestion) {
         registerTimeListener(player);
@@ -47,24 +67,23 @@ function stickPlayer(player, currentQuestion) {
     player.setTimeout(() => {stickPlayer(player, currentQuestion)}, 100);
 }
 
+/**
+ * Sets the the 'timeupdate' event listener used to monitor if the player has reached another unanswered question.
+ * 
+ * @param {*} player The student video player.
+ */
 function registerTimeListener(player) {
     player.on('timeupdate', playerTimeUpdateFunc);
 }
 
-/* Old method of locking the player for questions. This method no longer worked when the YouTube plugin was
-   utilized. */
-/* function registerTimeListenerOld(player) {
-    player.on('timeupdate', () => {
-        console.log(`Current time ${player.currentTime()}; Qtime: ${ivcQuestionPositions[ivcCurrentQuestion]}`);
-            if (player.currentTime() > ivcQuestionPositions[ivcCurrentQuestion]) {
-                if (!player.paused()) {
-                    player.pause();
-                }
-                player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
-            }
-    });
-} */
-
+/**
+ * Initializes the student player.
+ * 
+ * Loads the video source, package title, and overlays.
+ * 
+ * @param {*} packageInfo Object containing the information associated with the package.
+ * @param {*} overlays The overlays constructed by PHP that will be loaded into the VideoJS overlays plugin.
+ */
 function initializeStudentPlayer(packageInfo, overlays) {
     const player = videojs('ivcStudentPlayer');
 
@@ -87,6 +106,15 @@ function initializeStudentPlayer(packageInfo, overlays) {
     player.play();
 }
 
+/**
+ * Fetches the answer provided by the user and sends it to the server.
+ * 
+ * Once the answer submission is successful, this function will increment the proper 
+ * global variables and resume playing the video player. The player will no longer stick
+ * at this location due to the update of the global variables.
+ * 
+ * @param {*} button The button within the form of the question card answered.
+ */
 function questionAnswered(button) {
     button.disabled = true;
     const form = button.parentNode;
