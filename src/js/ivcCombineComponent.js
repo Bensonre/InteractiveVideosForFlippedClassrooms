@@ -1,5 +1,6 @@
 var form_error = "Please fill out all input fields";
 var mainVideo = videojs("ivc-add-questions-player"); 
+var combineComponentAllQuestions = [];
 var timestampInput = document.getElementById("timestamp");
 
 /*
@@ -80,6 +81,9 @@ function getQuestions() {
                 return 0;
             });
 
+            combineComponentAllQuestions = [...obj];
+
+            fillFilterSelectionBox();
             fillQuestions(obj);
         }
     };
@@ -478,4 +482,52 @@ function timeFieldFocusOut() {
 function timeFieldChanged() {
     timestampInput.setAttribute("time-value", timestampInput.value);
     mainVideo.currentTime(formattedToSeconds(timestampInput.value));
+}
+
+function fillFilterSelectionBox() {
+    const questions = combineComponentAllQuestions;
+    const filterSelection = document.getElementById("ivc-combine-question-filter");
+    const filterAllOption = document.createElement("option");
+    filterAllOption.innerText = "All";
+    filterSelection.appendChild(filterAllOption);
+
+    let categoryFilteredQuestions = [...combineComponentAllQuestions];
+    
+    categoryFilteredQuestions.sort((a, b) => {
+        return a.category.localeCompare(b.category);
+    });
+
+    categoryFilteredQuestions = combineComponentAllQuestions.filter((element, index, array) => {
+        return index == array.findIndex((a) => {
+            return a.category == element.category;
+        });
+    });
+
+    for (let i = 0; i < categoryFilteredQuestions.length; i++) {
+        const option = document.createElement("option");
+        option.innerText = categoryFilteredQuestions[i].category;
+        filterSelection.appendChild(option);
+    }
+}
+
+function combineFilterChanged() {
+    fillFilteredQuestions();
+}
+
+function fillFilteredQuestions() {
+    const questionSelectionBox = document.getElementById("select-question");
+    const filterSelection = document.getElementById("ivc-combine-question-filter");
+    const currentFilter = filterSelection.options[filterSelection.selectedIndex].innerText;
+    questionSelectionBox.innerHTML = "";
+
+    let questions = combineComponentAllQuestions;
+    for (let i = 0; i < questions.length; i++) {
+        if (questions[i].category == currentFilter || currentFilter == "All") {
+            let option = document.createElement("option");
+            option.value = i;
+            let text = document.createTextNode(questions[i].questionText);
+            option.appendChild(text);
+            questionSelectionBox.appendChild(option);
+        }
+    }
 }

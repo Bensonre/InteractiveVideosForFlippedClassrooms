@@ -10,6 +10,10 @@
                     <select class="form-control" name="select-package" id="select-package" onchange="packageChanged()"></select>
                 </div>
                 <div class="form-group">
+                <div class="label" for="select-question">Filter Questions by Category</div>
+                    <select id="ivc-combine-question-filter" class="form-control" rows="3" name="question" onchange="combineFilterChanged()"></select>
+                </div>
+                <div class="form-group">
                     <div class="label" for="select-question">Select a Question</div>
                     <select class="form-control" name="select-question" id="select-question"></select>
                 </div>

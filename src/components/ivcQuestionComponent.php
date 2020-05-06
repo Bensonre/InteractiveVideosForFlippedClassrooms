@@ -46,6 +46,11 @@
             <h2 class="text-center">Update Questions</h2>
             <form> 
                 <div class="form-group">
+                    <label>Filter</label>
+                    <select id="ivc-question-update-filter" class="form-control" rows="3" name="question" onchange="updateFilterChanged()"></select>
+                </div>
+
+                <div class="form-group">
                     <label>Question</label>
                     <select id="ivc-question-select-update" class="form-control" rows="3" name="question" onchange="fillUpdateForm()"></select>
                 </div>
@@ -80,6 +85,11 @@
 
         <div id="ivc-delete-question-form" class="tab-pane container fade">
             <h2 class="text-center">Delete Questions</h2>
+                <div class="form-group">
+                    <label>Filter</label>
+                    <select id="ivc-question-delete-filter" class="form-control" rows="3" name="question" onchange="deleteFilterChanged()"></select>
+                </div>
+
                 <div class="form-group">
                     <label>Question</label>
                     <select id="ivc-question-select-delete" class="form-control" rows="3" name="question"></select>

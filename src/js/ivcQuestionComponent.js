@@ -39,13 +39,11 @@ function createQuestion() {
         "instructorId":instructorId
     };
 
-    console.log(JSON.stringify(data));
     document.getElementById("ivc-create-question-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-create-question-status-message").innerText = res.message;
 
@@ -101,13 +99,11 @@ function updateQuestion() {
         "correct":correct,
         "instructorId":instructorId
     };
-    console.log(JSON.stringify(data));
     document.getElementById("ivc-update-question-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-update-question-status-message").innerText = res.message;
 
@@ -137,13 +133,11 @@ function deleteQuestion() {
     let data = {
         "questionId":questionId,
     };
-    console.log(JSON.stringify(data));
     document.getElementById("ivc-delete-question-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-delete-question-status-message").innerText = res.message;
 
@@ -175,6 +169,7 @@ function getQuestions() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             ivcQuestionComponentQuestions = JSON.parse(this.responseText);
+            fillFilterSelectionBoxes();
             clearQuestionSelectionBoxes();
             fillQuestionSelectionBoxes();
             fillUpdateForm();
@@ -228,6 +223,78 @@ function fillUpdateForm() {
     for (let i = 0; i < question.answers.length; i++) {
         if (question.answers[i].correct === 1) {
             document.getElementById("ivc-select-answer-update").value = i + 1;
+        }
+    }
+}
+
+function fillFilterSelectionBoxes() {
+    let questions = [...ivcQuestionComponentQuestions];
+
+    questions.sort((a, b) => {
+        return a.category.localeCompare(b.category);
+    });
+
+    questions = questions.filter((element, index, array) => {
+        return index == array.findIndex((a) => {
+            return a.category == element.category;
+        });
+    });
+
+    const filterUpdateSelection = document.getElementById("ivc-question-update-filter");
+    const filterDeleteSelection = document.getElementById("ivc-question-delete-filter");
+    const filterAllOption = document.createElement("option");
+    filterAllOption.innerText = "All";
+    filterUpdateSelection.appendChild(filterAllOption);
+    filterDeleteSelection.appendChild(filterAllOption.cloneNode(true));
+    for (let i = 0; i < questions.length; i++) {
+        const option = document.createElement("option");
+        option.innerText = questions[i].category;
+        filterUpdateSelection.appendChild(option);
+        filterDeleteSelection.appendChild(option.cloneNode(true));
+    }
+}
+
+function updateFilterChanged() {
+    fillUpdateQuestions();
+    fillUpdateForm();
+}
+
+function deleteFilterChanged() {
+    fillDeleteQuestions();
+}
+
+function fillUpdateQuestions() {
+    const updateSelectionBox = document.getElementById("ivc-question-select-update");
+    const filterUpdateSelection = document.getElementById("ivc-question-update-filter");
+    const currentFilter = filterUpdateSelection.options[filterUpdateSelection.selectedIndex].innerText;
+    updateSelectionBox.innerHTML = "";
+
+    let questions = ivcQuestionComponentQuestions;
+    for (let i = 0; i < questions.length; i++) {
+        if (questions[i].category == currentFilter || currentFilter == "All") {
+            let option = document.createElement("option");
+            option.value = i;
+            let text = document.createTextNode(questions[i].questionText);
+            option.appendChild(text);
+            updateSelectionBox.appendChild(option);
+        }
+    }
+}
+
+function fillDeleteQuestions() {
+    const deleteSelectionBox = document.getElementById("ivc-question-select-delete");
+    const filterDeleteSelection = document.getElementById("ivc-question-delete-filter");
+    const currentFilter = filterDeleteSelection.options[filterDeleteSelection.selectedIndex].innerText;
+    deleteSelectionBox.innerHTML = "";
+
+    let questions = ivcQuestionComponentQuestions;
+    for (let i = 0; i < questions.length; i++) {
+        if (questions[i].category == currentFilter || currentFilter == "All") {
+            let option = document.createElement("option");
+            option.value = i;
+            let text = document.createTextNode(questions[i].questionText);
+            option.appendChild(text);
+            deleteSelectionBox.appendChild(option);
         }
     }
 }
