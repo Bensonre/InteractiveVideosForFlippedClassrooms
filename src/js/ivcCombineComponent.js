@@ -1,4 +1,15 @@
 var form_error = "Please fill out all input fields";
+var mainVideo = videojs("ivc-add-questions-player"); 
+var timestampInput = document.getElementById("timestamp");
+
+//listener on ready state
+mainVideo.ready(function () {
+        this.on('timeupdate', function() {
+                var time = parseFloat(mainVideo.currentTime()).toFixed(1);
+                timestampInput.value = formatTimestamp(time);
+                timestampInput.setAttribute('time-value', time);
+        })
+});
 
 window.onload = function() {
     initializeMarkerPlugin();
@@ -78,12 +89,12 @@ function fillQuestions(obj) {
 function sendData() {
     var packageID = document.getElementById("select-package").value;
     var questionID = document.getElementById("select-question").value;
-    var timestamp = document.getElementById("timestamp").value;
+    var timestamp = formattedToSeconds(timestampInput.getAttribute("time-value"));
     let instructorID = ivcInstructorId;
 
     if(!(packageID.length > 0) ||
        !(questionID.length > 0) ||
-       !(timestamp.length > 0)) {
+       !(timestamp.toString().length > 0)) {
             alert(form_error);
             return false;
     }
@@ -147,7 +158,7 @@ function getQuestionsInSelectedPackage() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var res = JSON.parse(this.responseText);
-            
+
             res.sort(function (a, b) {
                     return a.timestamp - b.timestamp;
                 }
@@ -192,6 +203,7 @@ function fillQuestionTable(questions) {
         let stampNode = document.createTextNode(formatTimestamp(questions[i].timestamp));
         let stampDiv = document.createElement("div");
         stampDiv.appendChild(stampNode);
+        stampDiv.setAttribute("time-value", questions[i].timestamp);
 
         let updateButton = document.createElement("button");
         let deleteButton = document.createElement("button");
@@ -240,6 +252,7 @@ function tableRowUpdate(button) {
         let newNode = document.createElement("input");
         newNode.value = timestampElement.innerText;
         newNode.setAttribute("old-value", newNode.value);
+        newNode.setAttribute("time-value", timestampElement.getAttribute("time-value"));
         button.parentNode.replaceChild(newNode, timestampElement);
         button.classList.remove("btn-warning");
         button.classList.add("btn-primary");
@@ -249,6 +262,7 @@ function tableRowUpdate(button) {
         const row = button.parentNode.parentNode;
         let newNode = document.createElement("div");
         let newTimestamp = formattedToSeconds(timestampElement.value);
+        newNode.setAttribute("time-value", newTimestamp);
         let id = row.getAttribute("data-value");
 
         var xhttp = new XMLHttpRequest();
@@ -306,7 +320,13 @@ function updateMarkerAtTimestamp(oldTimestamp, newTimestamp) {
 function tableRowDelete(button) {
     var row = button.parentNode.parentNode;
     var table = row.parentNode;
-    var timestamp = row.childNodes[1].innerText;
+    var timestamp = row.childNodes[1].childNodes[0];
+    if (timestamp.tagName == "DIV") {
+        timestamp = formattedToSeconds(timestamp.getAttribute("time-value"));
+    } else {
+        timestamp = formattedToSeconds(timestamp.getAttribute("time-value"));
+    }
+    console.log(`timestamp: ${timestamp}`);
     let id = row.getAttribute("data-value");
 
     var xhttp = new XMLHttpRequest();
@@ -350,4 +370,24 @@ function placeMarkersOnVideo(questions) {
     }
     player.markers.removeAll();
     player.markers.add(options.markers);
+}
+
+function timeFieldOnFocus() {
+    mainVideo.off('timeupdate');
+    mainVideo.pause();
+}
+
+function timeFieldFocusOut() {
+    mainVideo.currentTime(formattedToSeconds(timestampInput.value));
+
+    mainVideo.on('timeupdate', function() {
+        var time = parseFloat(mainVideo.currentTime()).toFixed(1);
+        timestampInput.value = formatTimestamp(time);
+        timestampInput.setAttribute('time-value', time);
+    });
+}
+
+function timeFieldChanged() {
+    timestampInput.setAttribute("time-value", timestampInput.value);
+    mainVideo.currentTime(formattedToSeconds(timestampInput.value));
 }

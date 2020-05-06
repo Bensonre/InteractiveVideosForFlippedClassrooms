@@ -15,7 +15,8 @@
                 </div>
                 <div class="form-group">
                     <div class="label" for="timestamp">Timestamp</div>
-                    <input class="form-control" name="timestamp" id="timestamp" onfocusout="updateVideoTime()" type="string" /> 
+                    <input class="form-control" name="timestamp" id="timestamp" onchange="timeFieldChanged()" oninput="timeFieldChanged()"
+                        onkeypress="timeFieldChanged()" onfocus="timeFieldOnFocus()" onfocusout="timeFieldFocusOut()" type="string" /> 
                 </div>
                 <div class="form-group">
                     <button class="form-control mb-3 btn btn-primary" onclick="sendData()" type="button" class="">Add to Package</button>

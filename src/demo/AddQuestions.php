@@ -33,6 +33,5 @@
     <script onload="ivcInstructorIdInitializer(<?php echo $ivcInstuctorId; ?>);" src="../js/ivcIdInitializer.js"></script>
     <script onload="ivcPathToSrcInitializer('../../');" src="../js/ivcPathToSrcInitializer.js"></script>
     <script src="../js/ivcCombineComponent.js"></script>
-    <script src="../js/ivcUpdateVideoTime.js"></script>
 </body>
 </html>
