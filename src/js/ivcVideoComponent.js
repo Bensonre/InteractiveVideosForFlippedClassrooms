@@ -6,6 +6,9 @@ window.onload = function() {
     getVideos();
 }
 
+/**
+ * Creates a new video in the database using the information provided by the user.
+ */
 function createVideo() {
     document.getElementById("ivc-create-video-status-message").innerText = "";
 
@@ -65,6 +68,9 @@ function createVideo() {
     startProgress();
 }
 
+/**
+ * Updates the selected video using the information provided by the user.
+ */
 function updateVideo() {
     const videoIndex = document.getElementById("ivc-video-select-update").value;
     const id = ivcVideoComponentVideos[videoIndex].id;
@@ -104,6 +110,9 @@ function updateVideo() {
     xhttp.send('data=' + JSON.stringify(data));
 }
 
+/**
+ * Deletes the selected video using the information provided by the user.
+ */
 function deleteVideo() {
     const videoIndex = document.getElementById("ivc-video-select-delete").value;
     const id = ivcVideoComponentVideos[videoIndex].id;
@@ -147,6 +156,9 @@ function deleteVideo() {
     xhttp.send('data=' + JSON.stringify(data));
 }
 
+/**
+ * Retrieves all videos uploaded by this user.
+ */
 function getVideos() {
     const instructorId = ivcInstructorId;
 
@@ -164,6 +176,9 @@ function getVideos() {
     xhttp.send();
 }
 
+/**
+ * Clears the video selection boxes.
+ */
 function clearVideoSelectionBoxes() {
     let updateSelectionBox = document.getElementById("ivc-video-select-update");
     let deleteSelectionBox = document.getElementById("ivc-video-select-delete");
@@ -172,6 +187,9 @@ function clearVideoSelectionBoxes() {
     deleteSelectionBox.innerHTML = "";
 }
 
+/**
+ * Fills the video selection boxes with the videos.
+ */
 function fillVideoSelectionBoxes() {
     ivcVideoComponentVideos.sort( (a, b) => {
         if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; } else { return 0; }
@@ -190,6 +208,9 @@ function fillVideoSelectionBoxes() {
     }
 }
 
+/**
+ * Toggles visibility of the upload progress bar.
+ */
 function toggleBarVisibility() {
     var e = document.getElementById("ivc-progress-bar");
     let status = document.getElementById("ivc-progress-bar-status");
@@ -210,6 +231,9 @@ function createRequestObject() {
     return http;
 }
 
+/**
+ * Requests the progress of the video upload from the server.
+ */
 function sendRequest() {
     var http = createRequestObject();
     const getURL = `${ivcPathToSrc}api/videos/progress.php`;
@@ -218,6 +242,11 @@ function sendRequest() {
     http.send(null);
 }
 
+/**
+ * Handles updating the progress bar.
+ * 
+ * @param {*} http Response from 'progress.php'.
+ */
 function handleResponse(http) {
     var response;
     if (http.readyState == 4) {
@@ -235,11 +264,10 @@ function handleResponse(http) {
     }
 }
 
+/**
+ * Starts a loop that will query the server for progress on the current upload.
+ */
 function startProgress() {
     toggleBarVisibility();
     setTimeout("sendRequest()", 1000);
 }
-
-(function () {
-    //document.getElementById("uvideoform").onsubmit = createVideo;
-})();
