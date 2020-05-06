@@ -1,8 +1,6 @@
 <?php
     session_start();
     $currentpage = "Instructor";
-    $_SESSION['instructorId'] = 99;
-    $ivcInstuctorId = $_SESSION['instructorId'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,7 +28,6 @@
     <script src="../dependencies/videojs-youtube/Youtube.min.js"></script>
     <script src='../dependencies/dist/videojs-markers.js'></script>
 
-    <script onload="ivcInstructorIdInitializer(<?php echo $ivcInstuctorId; ?>);" src="../js/ivcIdInitializer.js"></script>
     <script onload="ivcPathToSrcInitializer('../../');" src="../js/ivcPathToSrcInitializer.js"></script>
     <script src="../js/ivcCombineComponent.js"></script>
 </body>

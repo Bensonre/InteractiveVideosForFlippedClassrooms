@@ -28,7 +28,6 @@ window.onload = function() {
  * 'fillVideos()' to insert them into the page. 
  */
 function getVideos() {
-    const instructorId = ivcInstructorId;
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -43,7 +42,7 @@ function getVideos() {
             fillVideos(videos);
         }
     };
-    const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+    const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -56,7 +55,6 @@ function getVideos() {
  * 'fillPackages()' to insert them into the page. 
  */
 function getPackages() {
-    const instructorId = ivcInstructorId;
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -64,7 +62,7 @@ function getPackages() {
             fillPackages(packages);
         }
     };
-    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();

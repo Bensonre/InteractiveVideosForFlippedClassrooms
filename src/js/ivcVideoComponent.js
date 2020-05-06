@@ -6,6 +6,9 @@ window.onload = function() {
     getVideos();
 }
 
+/**
+ * Creates a new video in the database using the information provided by the user.
+ */
 function createVideo() {
     document.getElementById("ivc-create-video-status-message").innerText = "";
 
@@ -14,7 +17,6 @@ function createVideo() {
     const fileInput = document.getElementById("ivc-video-select-create");
     const title = document.getElementById("ivc-video-title-create").value;
     const url = document.getElementById("ivc-video-link-create").value;
-    const instructorId = ivcInstructorId;
 
     if((!(fileInput.files.length > 0) && (url.length == 0)) ||
        !(title.length > 0)) {
@@ -38,7 +40,6 @@ function createVideo() {
         formData.append("link", url);
     }
     formData.append("title", title);
-    formData.append("instructorId", instructorId);
 
     formData.append(ivcUploadProgress.getAttribute("name"), ivcUploadProgress.getAttribute("value"));
 
@@ -65,6 +66,9 @@ function createVideo() {
     startProgress();
 }
 
+/**
+ * Updates the selected video using the information provided by the user.
+ */
 function updateVideo() {
     const videoIndex = document.getElementById("ivc-video-select-update").value;
     const id = ivcVideoComponentVideos[videoIndex].id;
@@ -104,6 +108,9 @@ function updateVideo() {
     xhttp.send('data=' + JSON.stringify(data));
 }
 
+/**
+ * Deletes the selected video using the information provided by the user.
+ */
 function deleteVideo() {
     const videoIndex = document.getElementById("ivc-video-select-delete").value;
     const id = ivcVideoComponentVideos[videoIndex].id;
@@ -147,9 +154,10 @@ function deleteVideo() {
     xhttp.send('data=' + JSON.stringify(data));
 }
 
+/**
+ * Retrieves all videos uploaded by this user.
+ */
 function getVideos() {
-    const instructorId = ivcInstructorId;
-
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -158,12 +166,15 @@ function getVideos() {
             fillVideoSelectionBoxes();
         }
     };
-    const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+    const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
 }
 
+/**
+ * Clears the video selection boxes.
+ */
 function clearVideoSelectionBoxes() {
     let updateSelectionBox = document.getElementById("ivc-video-select-update");
     let deleteSelectionBox = document.getElementById("ivc-video-select-delete");
@@ -172,6 +183,9 @@ function clearVideoSelectionBoxes() {
     deleteSelectionBox.innerHTML = "";
 }
 
+/**
+ * Fills the video selection boxes with the videos.
+ */
 function fillVideoSelectionBoxes() {
     ivcVideoComponentVideos.sort( (a, b) => {
         if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; } else { return 0; }
@@ -190,6 +204,9 @@ function fillVideoSelectionBoxes() {
     }
 }
 
+/**
+ * Toggles visibility of the upload progress bar.
+ */
 function toggleBarVisibility() {
     var e = document.getElementById("ivc-progress-bar");
     let status = document.getElementById("ivc-progress-bar-status");
@@ -210,6 +227,9 @@ function createRequestObject() {
     return http;
 }
 
+/**
+ * Requests the progress of the video upload from the server.
+ */
 function sendRequest() {
     var http = createRequestObject();
     const getURL = `${ivcPathToSrc}api/videos/progress.php`;
@@ -218,6 +238,11 @@ function sendRequest() {
     http.send(null);
 }
 
+/**
+ * Handles updating the progress bar.
+ * 
+ * @param {*} http Response from 'progress.php'.
+ */
 function handleResponse(http) {
     var response;
     if (http.readyState == 4) {
@@ -235,11 +260,10 @@ function handleResponse(http) {
     }
 }
 
+/**
+ * Starts a loop that will query the server for progress on the current upload.
+ */
 function startProgress() {
     toggleBarVisibility();
     setTimeout("sendRequest()", 1000);
 }
-
-(function () {
-    //document.getElementById("uvideoform").onsubmit = createVideo;
-})();
