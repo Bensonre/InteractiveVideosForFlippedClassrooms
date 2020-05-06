@@ -1,5 +1,5 @@
 # Senior Capstone Interactive Video For Flipped Classroom
-### By Reese Benson, Devin Sather, and Timothy O'Roucke
+### By Reese Benson, Devin Sather, and Timothy O'Rourke
  
 ## Overview
 Our goal is to create an Interactive platform for students to be able to answer questions during lecture or supplemental video content that is released by their professor. The Professors conversely should be able to upload videos, create questions and assign those questions to time stamps within the video. This Repository and project is simply a demo or Code Spike in that process. This is the proof of concept that will later be implemented in the pre-existing System Concept Warehouse. Concept Warehouse is an online tool designed to:
