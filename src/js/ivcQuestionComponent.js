@@ -1,11 +1,15 @@
 var form_error = "Please fill out all input fields";
 
-var ivcQuestionComponentQuestions = [];
+var ivcQuestionComponentQuestions = [];     /* Stores all of the questions retrieved from the server. */
 
+/* On window load, retrieves the questions from the server. */
 window.onload = function() {
     getQuestions();
 }
 
+/**
+ * Creates a new question in the database using the form information given by the user.
+ */
 function createQuestion() {
     let question = document.getElementById("ivc-question").value;
     let category = document.getElementById("ivc-category").value;
@@ -39,13 +43,11 @@ function createQuestion() {
         "instructorId":instructorId
     };
 
-    console.log(JSON.stringify(data));
     document.getElementById("ivc-create-question-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-create-question-status-message").innerText = res.message;
 
@@ -64,6 +66,9 @@ function createQuestion() {
     xhttp.send("data=" + JSON.stringify(data));
 }
 
+/**
+ * Updates the curretnly selected question in the database using the form information given by the user.
+ */
 function updateQuestion() {
     let questionIndex = document.getElementById("ivc-question-select-update").value;
     let questionId = ivcQuestionComponentQuestions[questionIndex].questionId;
@@ -101,13 +106,11 @@ function updateQuestion() {
         "correct":correct,
         "instructorId":instructorId
     };
-    console.log(JSON.stringify(data));
     document.getElementById("ivc-update-question-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-update-question-status-message").innerText = res.message;
 
@@ -125,6 +128,9 @@ function updateQuestion() {
     xhttp.send("data=" + JSON.stringify(data));
 }
 
+/**
+ * Deletes the currently selected question from the database.
+ */
 function deleteQuestion() {
     let questionIndex = document.getElementById("ivc-question-select-delete").value;
     let questionId = ivcQuestionComponentQuestions[questionIndex].questionId;
@@ -137,13 +143,11 @@ function deleteQuestion() {
     let data = {
         "questionId":questionId,
     };
-    console.log(JSON.stringify(data));
     document.getElementById("ivc-delete-question-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             var res = JSON.parse(this.responseText);
             document.getElementById("ivc-delete-question-status-message").innerText = res.message;
 
@@ -168,6 +172,9 @@ function deleteQuestion() {
     xhttp.send("data=" + JSON.stringify(data));
 }
 
+/**
+ * Retrieves all of the questions that this user has created from the server.
+ */
 function getQuestions() {
     let instructorId = ivcInstructorId;
 
@@ -175,6 +182,7 @@ function getQuestions() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             ivcQuestionComponentQuestions = JSON.parse(this.responseText);
+            fillFilterSelectionBoxes();
             clearQuestionSelectionBoxes();
             fillQuestionSelectionBoxes();
             fillUpdateForm();
@@ -186,6 +194,9 @@ function getQuestions() {
     xhttp.send();
 }
 
+/**
+ * Clears the question selection boxes on the update and delete tabs.
+ */
 function clearQuestionSelectionBoxes() {
     let updateSelectionBox = document.getElementById("ivc-question-select-update");
     let deleteSelectionBox = document.getElementById("ivc-question-select-delete");
@@ -194,6 +205,9 @@ function clearQuestionSelectionBoxes() {
     deleteSelectionBox.innerHTML = "";
 }
 
+/**
+ * Fills the question selection boxes on the update and delete tabs.
+ */
 function fillQuestionSelectionBoxes() {
     ivcQuestionComponentQuestions.sort((a, b) => {
         if (a.questionText.toLowerCase() < b.questionText.toLowerCase()) { return -1; }
@@ -215,6 +229,9 @@ function fillQuestionSelectionBoxes() {
     }
 }
 
+/**
+ * Fills the update form with the associated information from the currently selected question.
+ */
 function fillUpdateForm() {
     let questionIndex = document.getElementById("ivc-question-select-update").value;
     let question = ivcQuestionComponentQuestions[questionIndex];
@@ -228,6 +245,95 @@ function fillUpdateForm() {
     for (let i = 0; i < question.answers.length; i++) {
         if (question.answers[i].correct === 1) {
             document.getElementById("ivc-select-answer-update").value = i + 1;
+        }
+    }
+}
+
+/**
+ * Fills the filter selection boxes with all possible filters.
+ */
+function fillFilterSelectionBoxes() {
+    let questions = [...ivcQuestionComponentQuestions];
+
+    questions.sort((a, b) => {
+        return a.category.localeCompare(b.category);
+    });
+
+    questions = questions.filter((element, index, array) => {
+        return index == array.findIndex((a) => {
+            return a.category == element.category;
+        });
+    });
+
+    const filterUpdateSelection = document.getElementById("ivc-question-update-filter");
+    const filterDeleteSelection = document.getElementById("ivc-question-delete-filter");
+    filterUpdateSelection.innerHTML = "";
+    filterDeleteSelection.innerHTML = "";
+    const filterAllOption = document.createElement("option");
+    filterAllOption.innerText = "All";
+    filterUpdateSelection.appendChild(filterAllOption);
+    filterDeleteSelection.appendChild(filterAllOption.cloneNode(true));
+    for (let i = 0; i < questions.length; i++) {
+        const option = document.createElement("option");
+        option.innerText = questions[i].category;
+        filterUpdateSelection.appendChild(option);
+        filterDeleteSelection.appendChild(option.cloneNode(true));
+    }
+}
+
+/**
+ * Triggered when a new filter is selected on the update tab by the user.
+ */
+function updateFilterChanged() {
+    fillUpdateQuestions();
+    fillUpdateForm();
+}
+
+/**
+ * Triggered when a new filter is selected on the delete tab by the user.
+ */
+function deleteFilterChanged() {
+    fillDeleteQuestions();
+}
+
+/**
+ * Fills the question selection box on the update tab using the currently selected filter.
+ */
+function fillUpdateQuestions() {
+    const updateSelectionBox = document.getElementById("ivc-question-select-update");
+    const filterUpdateSelection = document.getElementById("ivc-question-update-filter");
+    const currentFilter = filterUpdateSelection.options[filterUpdateSelection.selectedIndex].innerText;
+    updateSelectionBox.innerHTML = "";
+
+    let questions = ivcQuestionComponentQuestions;
+    for (let i = 0; i < questions.length; i++) {
+        if (questions[i].category == currentFilter || currentFilter == "All") {
+            let option = document.createElement("option");
+            option.value = i;
+            let text = document.createTextNode(questions[i].questionText);
+            option.appendChild(text);
+            updateSelectionBox.appendChild(option);
+        }
+    }
+}
+
+/**
+ * Fills the question selection box on the delete tab using the currently selected filter.
+ */
+function fillDeleteQuestions() {
+    const deleteSelectionBox = document.getElementById("ivc-question-select-delete");
+    const filterDeleteSelection = document.getElementById("ivc-question-delete-filter");
+    const currentFilter = filterDeleteSelection.options[filterDeleteSelection.selectedIndex].innerText;
+    deleteSelectionBox.innerHTML = "";
+
+    let questions = ivcQuestionComponentQuestions;
+    for (let i = 0; i < questions.length; i++) {
+        if (questions[i].category == currentFilter || currentFilter == "All") {
+            let option = document.createElement("option");
+            option.value = i;
+            let text = document.createTextNode(questions[i].questionText);
+            option.appendChild(text);
+            deleteSelectionBox.appendChild(option);
         }
     }
 }

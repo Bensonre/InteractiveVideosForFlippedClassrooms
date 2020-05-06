@@ -1,5 +1,6 @@
 var form_error = "Please fill out all input fields";
 var mainVideo = videojs("ivc-add-questions-player"); 
+var combineComponentAllQuestions = [];                      /* Stores all questions retrieved from the server. */
 var timestampInput = document.getElementById("timestamp");
 
 /*
@@ -74,12 +75,16 @@ function getQuestions() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(this.responseText);
 
+            // Alphabetically sort the questions by the question text.
             obj.sort((a, b) => {
                 if (a.questionText.toLowerCase() < b.questionText.toLowerCase()) { return -1; }
                 if (a.questionText.toLowerCase() > b.questionText.toLowerCase()) { return 1; }
                 return 0;
             });
 
+            combineComponentAllQuestions = [...obj];
+
+            fillFilterSelectionBox();
             fillQuestions(obj);
         }
     };
@@ -478,4 +483,63 @@ function timeFieldFocusOut() {
 function timeFieldChanged() {
     timestampInput.setAttribute("time-value", timestampInput.value);
     mainVideo.currentTime(formattedToSeconds(timestampInput.value));
+}
+
+/**
+ * Fills the filter selection box with all possible filters. 
+ * 
+ * The default filter is 'All' and the following filters are sorted alphabetically.
+ */
+function fillFilterSelectionBox() {
+    const filterSelection = document.getElementById("ivc-combine-question-filter");
+    const filterAllOption = document.createElement("option");
+    filterAllOption.innerText = "All";
+    filterSelection.appendChild(filterAllOption);
+
+    let categoryFilteredQuestions = [...combineComponentAllQuestions];
+
+    categoryFilteredQuestions.sort((a, b) => {
+        return a.category.localeCompare(b.category);
+    });
+
+    categoryFilteredQuestions = combineComponentAllQuestions.filter((element, index, array) => {
+        return index == array.findIndex((a) => {
+            return a.category == element.category;
+        });
+    });
+
+    for (let i = 0; i < categoryFilteredQuestions.length; i++) {
+        const option = document.createElement("option");
+        option.innerText = categoryFilteredQuestions[i].category;
+        filterSelection.appendChild(option);
+    }
+}
+
+/**
+ * Triggered when the user selects a new filter.
+ */
+function combineFilterChanged() {
+    fillFilteredQuestions();
+}
+
+/**
+ * Fills the question selection box only with questions that match the currently selected filter.
+ * If the filter is 'All', all questions are displayed.
+ */
+function fillFilteredQuestions() {
+    const questionSelectionBox = document.getElementById("select-question");
+    const filterSelection = document.getElementById("ivc-combine-question-filter");
+    const currentFilter = filterSelection.options[filterSelection.selectedIndex].innerText;
+    questionSelectionBox.innerHTML = "";
+
+    let questions = combineComponentAllQuestions;
+    for (let i = 0; i < questions.length; i++) {
+        if (questions[i].category == currentFilter || currentFilter == "All") {
+            let option = document.createElement("option");
+            option.value = i;
+            let text = document.createTextNode(questions[i].questionText);
+            option.appendChild(text);
+            questionSelectionBox.appendChild(option);
+        }
+    }
 }

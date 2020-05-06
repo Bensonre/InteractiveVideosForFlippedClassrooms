@@ -130,7 +130,6 @@ function fillPackages(packages) {
     element3.innerHTML ="";
     for (let i = 0; i < packages.length; i++) {
         let option = document.createElement("option");
-        option.S
         option.setAttribute('video-id', packages[i].videoId);
         option.value = packages[i].id;
         let text = document.createTextNode(packages[i].title);
@@ -232,7 +231,7 @@ function createPackage() {
 
             if (res.success) {
                 document.getElementById("ivc-create-package-status-message").style.color = "green";
-                document.getElementById("cpackageform").reset();
+                document.getElementById("create-package-title").value = "";
             } else {
                 document.getElementById("ivc-create-package-status-message").style.color = "red";
             }
