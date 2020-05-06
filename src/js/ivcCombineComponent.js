@@ -45,7 +45,6 @@ function initializeMarkerPlugin() {
  * Retrieves all of the packages for this instuctor and passes them to the 'fillPackages()' function.
  */
 function getPackages() {
-    let instructorId = ivcInstructorId;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -60,7 +59,7 @@ function getPackages() {
             fillPackages(obj);
         }
     };
-    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -88,7 +87,7 @@ function getQuestions() {
             fillQuestions(obj);
         }
     };
-    const getURL = `${ivcPathToSrc}api/questions/read.php?instructorId=${ivcInstructorId}`;
+    const getURL = `${ivcPathToSrc}api/questions/read.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -136,7 +135,6 @@ function sendData() {
     var packageID = document.getElementById("select-package").value;
     var questionID = document.getElementById("select-question").value;
     var timestamp = formattedToSeconds(timestampInput.getAttribute("time-value"));
-    let instructorID = ivcInstructorId;
 
     if(!(packageID.length > 0) ||
        !(questionID.length > 0) ||
@@ -145,7 +143,7 @@ function sendData() {
             return false;
     }
 
-    var info = {"packageID":packageID, "questionID":questionID, "instructorID":instructorID, "timestamp":timestamp};
+    var info = {"packageID":packageID, "questionID":questionID, "timestamp":timestamp};
     document.getElementById("ivc-add-questions-status-message").innerText = "Processing...";
 
     var xhttp = new XMLHttpRequest();
@@ -212,7 +210,6 @@ function getVideo() {
  */
 function getQuestionsInSelectedPackage() {
     var packageID = document.getElementById("select-package").value;
-    var instructorID = ivcInstructorId;                                         
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -228,7 +225,7 @@ function getQuestionsInSelectedPackage() {
             placeMarkersOnVideo(res);
         }
     };
-    const getURL = `${ivcPathToSrc}api/videoquestions/get-questions-in-package.php?packageID=${packageID}&instructorID=${instructorID}`;
+    const getURL = `${ivcPathToSrc}api/videoquestions/get-questions-in-package.php?packageID=${packageID}`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();

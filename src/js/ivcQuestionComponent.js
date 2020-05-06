@@ -18,7 +18,6 @@ function createQuestion() {
     let a3 = document.getElementById("ivc-a3").value;
     let a4 = document.getElementById("ivc-a4").value;
     let correct = document.getElementById("ivc-select-answer").value;
-    let instructorId = ivcInstructorId;
     
     //Form Validation for Creating Questions
     if(!(question.length > 0) ||
@@ -39,8 +38,7 @@ function createQuestion() {
         "a2":a2,
         "a3":a3,
         "a4":a4,
-        "correct":correct,
-        "instructorId":instructorId
+        "correct":correct
     };
 
     document.getElementById("ivc-create-question-status-message").innerText = "Processing...";
@@ -79,8 +77,6 @@ function updateQuestion() {
     let a3 = document.getElementById("ivc-a3-update").value;
     let a4 = document.getElementById("ivc-a4-update").value;
     let correct = document.getElementById("ivc-select-answer-update").value;
-    let instructorId = ivcInstructorId;
-
 
     //Form Validation for Updatint Questions
     if(!(questionIndex.length > 0)  ||     
@@ -103,8 +99,7 @@ function updateQuestion() {
         "a2":a2,
         "a3":a3,
         "a4":a4,
-        "correct":correct,
-        "instructorId":instructorId
+        "correct":correct
     };
     document.getElementById("ivc-update-question-status-message").innerText = "Processing...";
 
@@ -176,8 +171,6 @@ function deleteQuestion() {
  * Retrieves all of the questions that this user has created from the server.
  */
 function getQuestions() {
-    let instructorId = ivcInstructorId;
-
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -188,7 +181,7 @@ function getQuestions() {
             fillUpdateForm();
         }
     };
-    const getURL = `${ivcPathToSrc}api/questions/read.php?instructorId=${instructorId}`;
+    const getURL = `${ivcPathToSrc}api/questions/read.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();

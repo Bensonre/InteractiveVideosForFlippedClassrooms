@@ -123,11 +123,9 @@ function questionAnswered(button) {
     if (selection) {
         const questionId = Number(form.querySelector('#questionId').getAttribute('data-value'));
         const answerId = Number(selection.value);
-        const studentId = ivcStudentId;
         const packageId = ivcPackageId;
 
         const data = {
-            studentId,
             questionId,
             answerId,
             packageId

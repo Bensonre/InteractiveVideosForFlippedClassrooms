@@ -17,7 +17,6 @@ function createVideo() {
     const fileInput = document.getElementById("ivc-video-select-create");
     const title = document.getElementById("ivc-video-title-create").value;
     const url = document.getElementById("ivc-video-link-create").value;
-    const instructorId = ivcInstructorId;
 
     if((!(fileInput.files.length > 0) && (url.length == 0)) ||
        !(title.length > 0)) {
@@ -41,7 +40,6 @@ function createVideo() {
         formData.append("link", url);
     }
     formData.append("title", title);
-    formData.append("instructorId", instructorId);
 
     formData.append(ivcUploadProgress.getAttribute("name"), ivcUploadProgress.getAttribute("value"));
 
@@ -160,8 +158,6 @@ function deleteVideo() {
  * Retrieves all videos uploaded by this user.
  */
 function getVideos() {
-    const instructorId = ivcInstructorId;
-
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -170,7 +166,7 @@ function getVideos() {
             fillVideoSelectionBoxes();
         }
     };
-    const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php?instructorId=${instructorId}`;
+    const getURL = `${ivcPathToSrc}api/videos/read-all-with-instructor-id.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
