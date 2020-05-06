@@ -2,7 +2,7 @@
 class VideoQuestionsController {
 
     private $conn;
-    private $table = 'video_questions';
+    private $table = 'package_questions';
     private $questionTable = 'questions';
 
     public function __construct($db) {

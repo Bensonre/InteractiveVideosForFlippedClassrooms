@@ -3,7 +3,7 @@
 class PackageController {
 
     private $conn;
-    private $PrimaryTable = 'video_questions';
+    private $PrimaryTable = 'package_questions';
     private $QuestionsTable = 'questions';
     private $PackageTable = 'packages';
     private $VideoTable = 'videos';
@@ -131,20 +131,20 @@ class PackageController {
 
     public function getPackageWithVideo($id)
     {
-        /* $query = "Select FilePath, IsYouTube, p.Title, PackageID, video_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from video_questions 
-		Join videos on video_questions.VideoID = videos.ID
-        Join packages As p on video_questions.PackageID = p.ID
-        Join questions on video_questions.QuestionID = Questions.ID
-        inner join choices As c on video_questions.QuestionID = c.QuestionID
+        /* $query = "Select FilePath, IsYouTube, p.Title, PackageID, package_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from package_questions 
+		Join videos on package_questions.VideoID = videos.ID
+        Join packages As p on package_questions.PackageID = p.ID
+        Join questions on package_questions.QuestionID = Questions.ID
+        inner join choices As c on package_questions.QuestionID = c.QuestionID
         where PackageID = ?
-        ORDER BY video_questions.QuestionID, ChoiceOrder ASC;"; */
-        $query = "Select FilePath, IsYouTube, p.Title, PackageID, video_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from video_questions 
-        Join packages As p on video_questions.PackageID = p.ID
+        ORDER BY package_questions.QuestionID, ChoiceOrder ASC;"; */
+        $query = "Select FilePath, IsYouTube, p.Title, PackageID, package_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from package_questions 
+        Join packages As p on package_questions.PackageID = p.ID
         Join videos on p.VideoID = videos.ID
-        Join questions on video_questions.QuestionID = Questions.ID
-        inner join choices As c on video_questions.QuestionID = c.QuestionID
+        Join questions on package_questions.QuestionID = Questions.ID
+        inner join choices As c on package_questions.QuestionID = c.QuestionID
         where PackageID = ?
-        ORDER BY video_questions.QuestionID, ChoiceOrder ASC;";
+        ORDER BY package_questions.QuestionID, ChoiceOrder ASC;";
         $stmt = $this->conn->prepare($query);
         if($stmt == false){
             $error = $this->conn->errno . ' ' . $this->conn->error;
@@ -204,12 +204,12 @@ class PackageController {
 
     public function getPackages()
     {
-        $query = "Select FilePath, p.Title, PackageID, video_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from video_questions 
-		Join videos on video_questions.VideoID = videos.ID
-        Join packages As p on video_questions.PackageID = p.ID
-        Join questions on video_questions.QuestionID = Questions.ID
-        inner join choices As c on video_questions.QuestionID = c.QuestionID
-        ORDER BY PackageID,video_questions.QuestionID, ChoiceOrder ASC;";
+        $query = "Select FilePath, p.Title, PackageID, package_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from package_questions 
+		Join videos on package_questions.VideoID = videos.ID
+        Join packages As p on package_questions.PackageID = p.ID
+        Join questions on package_questions.QuestionID = Questions.ID
+        inner join choices As c on package_questions.QuestionID = c.QuestionID
+        ORDER BY PackageID,package_questions.QuestionID, ChoiceOrder ASC;";
         $stmt = $this->conn->prepare($query);
         if($stmt == false){
             $error = $this->conn->errno . ' ' . $this->conn->error;
