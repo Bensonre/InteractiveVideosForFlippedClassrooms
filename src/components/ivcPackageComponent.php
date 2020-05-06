@@ -42,7 +42,8 @@
                             class="video-js vjs-default-skin vjs-16-9"
                             autoplay
                             controls 
-                            data-setup='{ "techOrder": ["youtube", "html5"], "playbackRates": [0.5, 1, 1.5, 2] }'>
+                            preload="none"
+                            data-setup='{ "techOrder": ["youtube", "html5"], "playbackRates": [0.5, 1, 1.5, 2], "errorDisplay": false }'>
                             <source id="create-video-source" src="?" type="video/mp4">
                         </video>
                     </div>
@@ -109,7 +110,8 @@
                             class="video-js vjs-default-skin vjs-16-9"
                             autoplay
                             controls 
-                            data-setup='{ "techOrder": ["youtube", "html5"], "playbackRates": [0.5, 1, 1.5, 2] }'>
+                            preload="none"
+                            data-setup='{ "techOrder": ["youtube", "html5"], "playbackRates": [0.5, 1, 1.5, 2], "errorDisplay": false }'>
                             <source id="create-video-source" src="?" type="video/mp4">
                         </video>
                     </div>
