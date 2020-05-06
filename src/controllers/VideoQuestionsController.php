@@ -2,7 +2,7 @@
 class VideoQuestionsController {
 
     private $conn;
-    private $table = 'video_questions';
+    private $table = 'package_questions';
     private $questionTable = 'questions';
 
     public function __construct($db) {
@@ -16,13 +16,15 @@ class VideoQuestionsController {
         $instructorID = htmlspecialchars(strip_tags($instructorID));
         $timestamp = htmlspecialchars(strip_tags($timestamp));
 
-        $query = "INSERT INTO $this->table (`VideoID`, `QuestionID`, `PackageID`, `InstructorID`, `QuestionTimeStamp`) VALUES (?,?,?,?,?)";
+        //$query = "INSERT INTO $this->table (`VideoID`, `QuestionID`, `PackageID`, `InstructorID`, `QuestionTimeStamp`) VALUES (?,?,?,?,?)";
+        $query = "INSERT INTO $this->table (`QuestionID`, `PackageID`, `InstructorID`, `QuestionTimeStamp`) VALUES (?,?,?,?)";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
             echo $error;
         } else {
-            $stmt->bind_param("iiiid", $videoID, $questionID, $packageID, $instructorID, $timestamp);
+            //$stmt->bind_param("iiiid", $videoID, $questionID, $packageID, $instructorID, $timestamp);
+            $stmt->bind_param("iiid", $questionID, $packageID, $instructorID, $timestamp);
             return $stmt->execute();
         }
         return false;

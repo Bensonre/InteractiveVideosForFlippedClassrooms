@@ -107,11 +107,11 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `capstone`.`video_questions`
+-- Table `capstone`.`package_questions`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `capstone`.`video_questions` ;
+DROP TABLE IF EXISTS `capstone`.`package_questions` ;
 
-CREATE TABLE IF NOT EXISTS `capstone`.`video_questions` (
+CREATE TABLE IF NOT EXISTS `capstone`.`package_questions` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `PackageID` INT(11) NULL DEFAULT NULL,
   `InstructorID` INT(11) NULL DEFAULT NULL,

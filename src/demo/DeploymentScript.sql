@@ -37,14 +37,12 @@ CREATE Table Packages(
     PRIMARY KEY (ID)
 );
 
-Create Table Video_Questions (
+Create Table Package_Questions (
     ID int NOT NULL,
-    VideoID int,
     QuestionID int,
     PackageID int,
     QuestionTimeStamp int,
     PRIMARY KEY (ID),
-    FOREIGN KEY (VideoID) REFERENCES Videos(ID),
     FOREIGN KEY (QuestionID) REFERENCES Questions(ID),
     FOREIGN KEY (PackageID) REFERENCES Packages(ID),
 );
