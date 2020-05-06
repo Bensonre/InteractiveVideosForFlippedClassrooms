@@ -14,7 +14,11 @@ Due to the fact we are simply a proof of concept our scope is more limited than 
 ## How to Run
 
 ### Option 1) Live demo
-navigate to http://web.engr.oregonstate.edu/~bensonre/Capstone/src/demo/UploadVideo.php to see a live update version of the code.
+To see a live demo, visit one of the links below.
+
+http://web.engr.oregonstate.edu/~orourtim/Capstone/src/demo/Student.php?id=1   (most up to date)
+
+http://web.engr.oregonstate.edu/~bensonre/Capstone/src/demo/UploadVideo.php 
 
 ### Option 2) Clone repository and run php project in xampp.
 Here is a link to an article showing how to download and run a project in xampp: https://timetoprogram.com/run-php-project-xampp/
