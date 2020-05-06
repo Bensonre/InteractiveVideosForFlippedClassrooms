@@ -2,7 +2,9 @@ var form_error = "Please fill out all input fields";
 var mainVideo = videojs("ivc-add-questions-player"); 
 var timestampInput = document.getElementById("timestamp");
 
-//listener on ready state
+/*
+ * Adds the 'timeupdate' event listener to the video player as soon as it's ready.
+ */
 mainVideo.ready(function () {
         this.on('timeupdate', function() {
                 var time = parseFloat(mainVideo.currentTime()).toFixed(1);
@@ -11,12 +13,18 @@ mainVideo.ready(function () {
         })
 });
 
+/*
+ * Initialize the marker plugin, get packages, and get questions on window load.
+ */
 window.onload = function() {
     initializeMarkerPlugin();
     getPackages();
     getQuestions();
 }
 
+/**
+ * Initializes the marker plugin used to place markers on the video player.
+ */
 function initializeMarkerPlugin() {
     var player = videojs('ivc-add-questions-player');
     player.markers({
@@ -32,6 +40,9 @@ function initializeMarkerPlugin() {
     });
 }
 
+/**
+ * Retrieves all of the packages for this instuctor and passes them to the 'fillPackages()' function.
+ */
 function getPackages() {
     let instructorId = ivcInstructorId;
     var xhttp = new XMLHttpRequest();
@@ -47,6 +58,9 @@ function getPackages() {
     xhttp.send();
 }
 
+/**
+ * Retrieves all of the questions for this instuctor and passes them to the 'fillQuestions()' function.
+ */
 function getQuestions() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -61,6 +75,11 @@ function getQuestions() {
     xhttp.send();
 }
 
+/**
+ * This function is passed the packages that were received from the server.
+ * 
+ * @param obj The array of packages from the server.
+ */
 function fillPackages(obj) {
     var i;
     for (i = 0; i < obj.length; i++) {
@@ -74,6 +93,11 @@ function fillPackages(obj) {
     packageChanged();
 }
 
+/**
+ * This function is passed the questions that were received from the server.
+ * 
+ * @param obj The array of questions from the server.
+ */
 function fillQuestions(obj) {
     var i;
     for (i = 0; i < obj.length; i++) {
@@ -86,6 +110,9 @@ function fillQuestions(obj) {
     }
 }
 
+/**
+ * Adds the currently selected question into the currently selected package at the current timestamp.
+ */
 function sendData() {
     var packageID = document.getElementById("select-package").value;
     var questionID = document.getElementById("select-question").value;
@@ -122,11 +149,19 @@ function sendData() {
     xhttp.send("data=" + JSON.stringify(info));
 }
 
+/**
+ * This function is called when the user selects a new package. The video for the new package is 
+ * loaded into the player and the questions in the package are retrieved from the server.
+ */
 function packageChanged() {
     getVideo();
     getQuestionsInSelectedPackage();
 }
 
+/**
+ * Retrieves the source of the video for the currently selected package from the server and 
+ * loads it into the video player.
+ */
 function getVideo() {
     var packageID = document.getElementById("select-package").value;
 
@@ -150,6 +185,12 @@ function getVideo() {
     xhttp.send();
 }
 
+/**
+ * Retrieves all of the questions that are in the selected package from the server.
+ * 
+ * This function then passes them to functions 'fillQuestionTable()' and 'placeMarkersOnVideo()' to 
+ * fill the question table and place markers on the video player.
+ */
 function getQuestionsInSelectedPackage() {
     var packageID = document.getElementById("select-package").value;
     var instructorID = ivcInstructorId;                                         
@@ -174,6 +215,11 @@ function getQuestionsInSelectedPackage() {
     xhttp.send();
 }
 
+/**
+ * Fills the question table with the given array of questions.
+ * 
+ * @param questions An array of questions that are within the currently selected package.
+ */
 function fillQuestionTable(questions) {
     const MAX_LENGTH = 400;
     var table = document.getElementById("ivc-add-questions-added-table");
@@ -229,6 +275,11 @@ function fillQuestionTable(questions) {
     table.innerHTML += "</tbody>";
 }
 
+/**
+ * Converts a decimal timestamp into the string time format HH:MM:SS.
+ * 
+ * @param timestamp A timestamp in decimal form.
+ */
 function formatTimestamp(timestamp) {
     timestamp = Number(timestamp);
     const hours = Math.floor(timestamp / 3600);
@@ -243,6 +294,12 @@ function formatTimestamp(timestamp) {
     return formattedTimestamp;
 }
 
+/**
+ * Handles allowing the user to update a timestamp without having to remove the 
+ * question from the package.
+ * 
+ * @param button The update button being pressed.
+ */
 function tableRowUpdate(button) {
     let timestampElement = button.parentNode.childNodes[0];
     const oldTimestamp = timestampElement.getAttribute("old-value");
@@ -289,6 +346,11 @@ function tableRowUpdate(button) {
     }
 }
 
+/**
+ * Converts a timestamp in string format HH:MM:SS into decimal form.
+ * 
+ * @param timestamp A timestamp in string format.
+ */
 function formattedToSeconds(timestamp) {
     const colonCount = (timestamp.match(/\:/g) || []).length;
     const sections = timestamp.split(':');
@@ -305,18 +367,11 @@ function formattedToSeconds(timestamp) {
     return seconds;
 }
 
-function updateMarkerAtTimestamp(oldTimestamp, newTimestamp) {
-    var player = videojs('ivc-add-questions-player');
-    var markers = player.markers.getMarkers();
-    for (let i = 0; i < markers.length; i++) {
-        if (markers[i].time == oldTimestamp) {
-            markers[i].time = newTimestamp;
-            break;
-        }
-    }
-    player.markers.updateTime();
-}
-
+/**
+ * Handles allowing the user to remove a question from the package.
+ * 
+ * @param button The delete button being pressed.
+ */
 function tableRowDelete(button) {
     var row = button.parentNode.parentNode;
     var table = row.parentNode;
@@ -326,7 +381,6 @@ function tableRowDelete(button) {
     } else {
         timestamp = formattedToSeconds(timestamp.getAttribute("time-value"));
     }
-    console.log(`timestamp: ${timestamp}`);
     let id = row.getAttribute("data-value");
 
     var xhttp = new XMLHttpRequest();
@@ -345,6 +399,11 @@ function tableRowDelete(button) {
     xhttp.send("id=" + id);
 }
 
+/**
+ * Removes the marker at the specified timestamp from the video player.
+ * 
+ * @param {*} timestamp The timestamp location of the marker to remove.
+ */
 function removeMarkerAtTimestamp(timestamp) {
     var player = videojs('ivc-add-questions-player');
     var markers = player.markers.getMarkers();
@@ -355,6 +414,11 @@ function removeMarkerAtTimestamp(timestamp) {
     }
 }
 
+/**
+ * Places markers on the video player at the locations of the questions in the package.
+ * 
+ * @param {*} questions The questions in the package retrieved from the server.
+ */
 function placeMarkersOnVideo(questions) {
     var player = videojs('ivc-add-questions-player');
     var options = {};
@@ -372,11 +436,17 @@ function placeMarkersOnVideo(questions) {
     player.markers.add(options.markers);
 }
 
+/**
+ * Removes the 'timeupdate' event listener from the video player and pauses it.
+ */
 function timeFieldOnFocus() {
     mainVideo.off('timeupdate');
     mainVideo.pause();
 }
 
+/**
+ * Adds the 'timeupdate' event listener to the video player.
+ */
 function timeFieldFocusOut() {
     mainVideo.currentTime(formattedToSeconds(timestampInput.value));
 
@@ -387,6 +457,10 @@ function timeFieldFocusOut() {
     });
 }
 
+/**
+ * Sets the timestamp input element attribute value used to store the timestamp 
+ * when the user inputs a value.
+ */
 function timeFieldChanged() {
     timestampInput.setAttribute("time-value", timestampInput.value);
     mainVideo.currentTime(formattedToSeconds(timestampInput.value));
