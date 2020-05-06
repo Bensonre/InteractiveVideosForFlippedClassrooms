@@ -36,19 +36,6 @@ function getPackages() {
     xhttp.send();
 }
 
-function fillPackages(obj) {
-    var i;
-    for (i = 0; i < obj.length; i++) {
-        let option = document.createElement("option");
-        option.value = obj[i].id;
-        let text = document.createTextNode(obj[i].title);
-        option.appendChild(text);
-        let element = document.getElementById("select-package");
-        element.appendChild(option);
-    }
-    packageChanged();
-}
-
 function getQuestions() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -61,6 +48,19 @@ function getQuestions() {
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
+}
+
+function fillPackages(obj) {
+    var i;
+    for (i = 0; i < obj.length; i++) {
+        let option = document.createElement("option");
+        option.value = obj[i].id;
+        let text = document.createTextNode(obj[i].title);
+        option.appendChild(text);
+        let element = document.getElementById("select-package");
+        element.appendChild(option);
+    }
+    packageChanged();
 }
 
 function fillQuestions(obj) {
@@ -99,11 +99,10 @@ function sendData() {
 
             if (res.success) {
                 document.getElementById("ivc-add-questions-status-message").style.color = "green";
+                getQuestionsInSelectedPackage();
             } else {
                 document.getElementById("ivc-add-questions-status-message").style.color = "red";
             }
-
-            getQuestionsInSelectedPackage();
         }
     };
     const postURL = `${ivcPathToSrc}api/videoquestions/create.php`;
@@ -148,12 +147,12 @@ function getQuestionsInSelectedPackage() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var res = JSON.parse(this.responseText);
+            
             res.sort(function (a, b) {
-                    if (a.timestamp > b.timestamp) return 1;
-                    if (b.timestamp > a.timestamp) return -1;
-                    return 0;
+                    return a.timestamp - b.timestamp;
                 }
             );
+
             fillQuestionTable(res);
             placeMarkersOnVideo(res);
         }
@@ -165,26 +164,37 @@ function getQuestionsInSelectedPackage() {
 }
 
 function fillQuestionTable(questions) {
+    const MAX_LENGTH = 400;
     var table = document.getElementById("ivc-add-questions-added-table");
-    table.innerHTML = "<thead class='text-center'>";
-    table.innerHTML = "<tr><th class='text-center' colspan='3'>Questions in the Package</th></tr>";
-    table.innerHTML += "<tr><th>Question</th><th>Timestamp</th><th>Options</th></tr>";
-    table.innerHTML += "</thead>";
+    table.innerHTML = "";
+    table.innerHTML += "<thead><th class='text-center'>Question</th><th class='text-center'>Timestamp</th>\
+                            <th class='text-center'>Remove</th></thead>";
+    
     for (i = 0; i < questions.length; i++) {
         let tr = document.createElement("tr");
         tr.setAttribute("data-value", questions[i].ID);
-        let space = document.createTextNode(" ");
+        let space = document.createTextNode("   ");
         let td1 = document.createElement("td");
         let td2 = document.createElement("td");
         let td3 = document.createElement("td");
-        let questionNode = document.createTextNode(questions[i].QuestionText);
-        let stampNode = document.createTextNode(questions[i].timestamp);
-        let inputNode = document.createElement("input");
-        inputNode.type = "text";
-        inputNode.style = "width: 4vw;";
+
+        td1.style = "word-wrap: break-word;min-width: 52em;max-width: 52em;";
+        td1.classList.add("text-center");
+        td2.classList.add("text-center");
+        td3.classList.add("text-center");
+        td1.classList.add("align-middle");
+        td2.classList.add("align-middle");
+        td3.classList.add("align-middle");
+
+        td1.innerText = questions[i].QuestionText.substring(0, MAX_LENGTH);
+        if (questions[i].QuestionText.length > MAX_LENGTH) { td1.innerText += "..."; }
+
+        let stampNode = document.createTextNode(formatTimestamp(questions[i].timestamp));
+        let stampDiv = document.createElement("div");
+        stampDiv.appendChild(stampNode);
+
         let updateButton = document.createElement("button");
         let deleteButton = document.createElement("button");
-        let orText = document.createTextNode(" or ");
         updateButton.setAttribute("onclick", "tableRowUpdate(this)");
         updateButton.classList.add("btn");
         updateButton.classList.add("btn-warning");
@@ -193,46 +203,92 @@ function fillQuestionTable(questions) {
         deleteButton.classList.add("btn");
         deleteButton.classList.add("btn-danger");
         deleteButton.innerHTML = "Delete";
-        td1.appendChild(questionNode);
-        td2.appendChild(stampNode);
-        td3.appendChild(inputNode);
-        td3.appendChild(space);
-        td3.appendChild(updateButton);
-        td3.appendChild(orText);
+
+        td2.appendChild(stampDiv);
+        td2.appendChild(space);
+        td2.appendChild(updateButton);
         td3.appendChild(deleteButton);
+
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
         table.appendChild(tr);
     }
+    table.innerHTML += "</tbody>";
+}
+
+function formatTimestamp(timestamp) {
+    timestamp = Number(timestamp);
+    const hours = Math.floor(timestamp / 3600);
+    const minutes = Math.floor((timestamp - (hours * 3600)) / 60);
+    const seconds = Math.floor(timestamp - (hours * 3600) - (minutes * 60));
+
+    let formattedTimestamp = "";
+    if (hours > 0) { formattedTimestamp += hours + ":"}
+    formattedTimestamp += minutes+":";
+    formattedTimestamp += (seconds < 10 ? ("0" + seconds) : seconds);
+
+    return formattedTimestamp;
 }
 
 function tableRowUpdate(button) {
-    var row = button.parentNode.parentNode;
-    var timestampNode = row.childNodes[1];
-    var oldTimestamp = timestampNode.innerText;
-    var newTimestamp = row.childNodes[2].childNodes[0].value;
-    let id = row.getAttribute("data-value");
+    let timestampElement = button.parentNode.childNodes[0];
+    const oldTimestamp = timestampElement.getAttribute("old-value");
+    
+    // Toggle the type of the element and button appearance.
+    if (timestampElement.tagName == "DIV") {
+        let newNode = document.createElement("input");
+        newNode.value = timestampElement.innerText;
+        newNode.setAttribute("old-value", newNode.value);
+        button.parentNode.replaceChild(newNode, timestampElement);
+        button.classList.remove("btn-warning");
+        button.classList.add("btn-primary");
+        button.innerText = "Confirm";
+    } else {
+        // Submit the new updated timestamp.
+        const row = button.parentNode.parentNode;
+        let newNode = document.createElement("div");
+        let newTimestamp = formattedToSeconds(timestampElement.value);
+        let id = row.getAttribute("data-value");
 
-    if(!(newTimestamp.length > 0)) {
-            alert("You must specify a new time");
-            return false;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var res = JSON.parse(this.responseText);
+                if (res.success) {
+                    getQuestionsInSelectedPackage();
+                    newNode.innerText = timestampElement.value;
+                } else {
+                    newNode.innerText = oldTimestamp;
+                }
+                
+                button.parentNode.replaceChild(newNode, timestampElement);
+                button.classList.remove("btn-primary");
+                button.classList.add("btn-warning");
+                button.innerText = "Update";
+            }
+        };
+        const postURL = `${ivcPathToSrc}api/videoquestions/update.php`;
+        xhttp.open("POST", postURL, false);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id=" + id + "&timestamp=" + newTimestamp);
+    }
+}
+
+function formattedToSeconds(timestamp) {
+    const colonCount = (timestamp.match(/\:/g) || []).length;
+    const sections = timestamp.split(':');
+    let seconds = 0;
+
+    if (colonCount == 0) {
+        seconds = Number(timestamp);
+    } else if (colonCount == 1) { 
+        seconds = Number(parseInt(sections[0], 10) * 60) + Number(parseFloat(sections[1]));
+    } else if (colonCount == 2) {
+        seconds = Number(parseInt(sections[0], 10) * 3600) + Number(parseInt(sections[1], 10) * 60) + Number(parseFloat(sections[2]));
     }
 
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var res = JSON.parse(this.responseText);
-            if (res.success) {
-                timestampNode.innerText = newTimestamp;
-                updateMarkerAtTimestamp(oldTimestamp, newTimestamp);
-            }
-        }
-    };
-    const postURL = `${ivcPathToSrc}api/videoquestions/update.php`;
-    xhttp.open("POST", postURL, false);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("id=" + id + "&timestamp=" + newTimestamp);
+    return seconds;
 }
 
 function updateMarkerAtTimestamp(oldTimestamp, newTimestamp) {

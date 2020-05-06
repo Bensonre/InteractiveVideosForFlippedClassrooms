@@ -37,7 +37,9 @@
         </div>
     </div>
     
-        <div class="form-group">
-        <table class="table table-dark table-bordered table-sm" id="ivc-add-questions-added-table"></table>
-        </div>
+    <div class="row justify-content-center">
+    <div class="col-auto">
+        <table class="table table-bordered table-responsive table-hover" id="ivc-add-questions-added-table"></table>
+    </div>
+    </div>
 </div>
