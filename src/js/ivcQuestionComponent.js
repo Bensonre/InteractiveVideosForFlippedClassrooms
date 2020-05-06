@@ -174,9 +174,7 @@ function getQuestions() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             ivcQuestionComponentQuestions = JSON.parse(this.responseText);
-            console.log(ivcQuestionComponentQuestions);
             clearQuestionSelectionBoxes();
             fillQuestionSelectionBoxes();
             fillUpdateForm();
@@ -197,10 +195,14 @@ function clearQuestionSelectionBoxes() {
 }
 
 function fillQuestionSelectionBoxes() {
+    ivcQuestionComponentQuestions.sort((a, b) => {
+        if (a.questionText.toLowerCase() < b.questionText.toLowerCase()) { return -1; }
+        if (a.questionText.toLowerCase() > b.questionText.toLowerCase()) { return 1; }
+        return 0;
+    });
+
     let questions = ivcQuestionComponentQuestions;
-    console.log(questions);
     for (let i = 0; i < questions.length; i++) {
-        console.log(questions[i]);
         let option = document.createElement("option");
         option.value = i;
         let text = document.createTextNode(questions[i].questionText);

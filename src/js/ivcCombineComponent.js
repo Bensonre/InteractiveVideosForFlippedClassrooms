@@ -49,6 +49,13 @@ function getPackages() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(this.responseText);
+
+            obj.sort((a, b) => {
+                if (a.title.toLowerCase() < b.title.toLowerCase()) { return -1; }
+                if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; }
+                return 0;
+            });
+
             fillPackages(obj);
         }
     };
@@ -66,6 +73,13 @@ function getQuestions() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(this.responseText);
+
+            obj.sort((a, b) => {
+                if (a.questionText.toLowerCase() < b.questionText.toLowerCase()) { return -1; }
+                if (a.questionText.toLowerCase() > b.questionText.toLowerCase()) { return 1; }
+                return 0;
+            });
+
             fillQuestions(obj);
         }
     };

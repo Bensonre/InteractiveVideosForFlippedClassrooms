@@ -33,6 +33,13 @@ function getVideos() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             const videos = JSON.parse(this.responseText);
+
+            videos.sort((a, b) => {
+                if (a.title.toLowerCase() < b.title.toLowerCase()) { return -1; }
+                if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; }
+                return 0;
+            });
+
             fillVideos(videos);
         }
     };
