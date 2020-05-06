@@ -35,8 +35,10 @@
                     id="ivc-add-questions-player"
                     class="video-js vjs-default-skin vjs-16-9"
                     controls 
-                    data-setup='{ "techOrder": ["youtube", "html5"] }'>
-                <source src="?"type="video/mp4">
+                    autoplay
+                    preload="none"
+                    data-setup='{ "techOrder": ["youtube", "html5"], "playbackRates": [0.5, 1, 1.5, 2], "errorDisplay": false }'>
+                <source src="?" type="video/mp4">
                 </video>
             </div>
         </div>
