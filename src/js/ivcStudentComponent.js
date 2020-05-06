@@ -2,6 +2,21 @@ var ivcCurrentQuestion = 0;
 var ivcCurrentOverallQuestion = 0;
 var ivcQuestionPositions = [];
 
+const player = videojs('ivcStudentPlayer');
+
+var playerTimeUpdateFunc = () => {
+    if (player.currentTime() > ivcQuestionPositions[ivcCurrentQuestion]) {
+        player.off('timeupdate', playerTimeUpdateFunc);
+
+        player.currentTime(ivcQuestionPositions[ivcCurrentQuestion] + 0.1);
+        if (!player.paused()) {
+            player.pause();
+        }
+        
+        player.setTimeout(() => {stickPlayer(player, ivcCurrentQuestion)}, 100);
+    }
+};
+
 window.onload = () => {
     ivcOverlays.sort((a, b) => {return a.start <= b.start ? -1 : 1});
 
@@ -33,18 +48,7 @@ function stickPlayer(player, currentQuestion) {
 }
 
 function registerTimeListener(player) {
-    player.on('timeupdate', () => {
-        if (player.currentTime() > ivcQuestionPositions[ivcCurrentQuestion]) {
-            player.off('timeupdate');
-
-            if (!player.paused()) {
-                player.pause();
-            }
-            player.currentTime(ivcQuestionPositions[ivcCurrentQuestion]);
-
-            player.setTimeout(() => {stickPlayer(player, ivcCurrentQuestion)}, 100);
-        }
-    });
+    player.on('timeupdate', playerTimeUpdateFunc);
 }
 
 /* Old method of locking the player for questions. This method no longer worked when the YouTube plugin was
