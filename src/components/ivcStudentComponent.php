@@ -1,6 +1,6 @@
 <?php
     include_once '../database/Database.php';
-    include_once '../controllers/PackagesController.php';
+    include_once '../controllers/PackageController.php';
     include_once '../controllers/AnswerController.php';
     include_once '../session_variables/session_variables.php';
     $database = new Database();

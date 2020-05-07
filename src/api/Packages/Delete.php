@@ -1,6 +1,6 @@
 <?php
     include_once '../../database/Database.php';
-    include_once '../../controllers/PackagesController.php';
+    include_once '../../controllers/PackageController.php';
 
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");

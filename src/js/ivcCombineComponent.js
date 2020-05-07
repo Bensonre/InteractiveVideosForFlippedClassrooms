@@ -160,7 +160,7 @@ function sendData() {
             }
         }
     };
-    const postURL = `${ivcPathToSrc}api/videoquestions/create.php`;
+    const postURL = `${ivcPathToSrc}api/packagequestions/create.php`;
     xhttp.open("POST", postURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(info));
@@ -225,7 +225,7 @@ function getQuestionsInSelectedPackage() {
             placeMarkersOnVideo(res);
         }
     };
-    const getURL = `${ivcPathToSrc}api/videoquestions/get-questions-in-package.php?packageID=${packageID}`;
+    const getURL = `${ivcPathToSrc}api/packagequestions/get-questions-in-package.php?packageID=${packageID}`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -355,7 +355,7 @@ function tableRowUpdate(button) {
                 button.innerText = "Update";
             }
         };
-        const postURL = `${ivcPathToSrc}api/videoquestions/update.php`;
+        const postURL = `${ivcPathToSrc}api/packagequestions/update.php`;
         xhttp.open("POST", postURL, false);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("id=" + id + "&timestamp=" + newTimestamp);
@@ -409,7 +409,7 @@ function tableRowDelete(button) {
             }
         }
     };
-    const postURL = `${ivcPathToSrc}api/videoquestions/delete.php`;
+    const postURL = `${ivcPathToSrc}api/packagequestions/delete.php`;
     xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("id=" + id);
