@@ -25,8 +25,8 @@ function createVideo() {
     }
 
     if (fileInput.files && fileInput.files.length == 1) {
-        var file = fileInput.files[0];
-        var ext = file.value.match(/\.([^\.]+)$/)[1];
+        const file = fileInput.files[0];
+        const ext = file.name.match(/\.([^\.]+)$/)[1];
         switch (ext) {
         case 'mp4':
             break;

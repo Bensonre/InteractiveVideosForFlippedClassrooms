@@ -33,12 +33,12 @@ class QuestionController {
   //Creates question. All inputs are expected not to be NULL.
   public function create($question, $category, $c1, $c2, $c3, $c4, $correct, $instructorId) 
   {
-    $question = htmlspecialchars(strip_tags($question));
-    $category = htmlspecialchars(strip_tags($category));
-    $c1       = htmlspecialchars(strip_tags($c1));
-    $c2       = htmlspecialchars(strip_tags($c2));
-    $c3       = htmlspecialchars(strip_tags($c3));
-    $c4       = htmlspecialchars(strip_tags($c4));
+    $question = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($question)));
+    $category = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($category)));
+    $c1       = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($c1)));
+    $c2       = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($c2)));
+    $c3       = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($c3)));
+    $c4       = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($c4)));
     $correct = htmlspecialchars(strip_tags($correct));
     $instructorId = htmlspecialchars(strip_tags($instructorId));
 
@@ -50,7 +50,7 @@ class QuestionController {
                 $c3 => 3,
                 $c4 => 4];
 
-    $qquery = "INSERT INTO $this->qtable (QuestionText, Category, DateModified, InstructorID) VALUES ('$this->question', '$this->category', CURDATE(), '$instructorId' )";
+    $qquery = "INSERT INTO $this->qtable (QuestionText, Category, DateModified, InstructorID) VALUES ('$question', '$category', CURDATE(), '$instructorId' )";
 
     $createSuccess = $this->sendQuery($qquery);
 
@@ -99,14 +99,14 @@ class QuestionController {
 
   public function update()
   {
-    $this->id= htmlspecialchars(strip_tags($this->id));
-    $this->question = htmlspecialchars(strip_tags($this->question));
-    $this->category = htmlspecialchars(strip_tags($this->category));
-    $this->c1      = htmlspecialchars(strip_tags($this->c1));
-    $this->c2      = htmlspecialchars(strip_tags($this->c2));
-    $this->c3      = htmlspecialchars(strip_tags($this->c3));
-    $this->c4      = htmlspecialchars(strip_tags($this->c4));
-    $this->correct = htmlspecialchars(strip_tags($this->correct));
+    $this->id= mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($this->id)));
+    $this->question = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($this->question)));
+    $this->category = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($this->category)));
+    $this->c1      = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($this->c1)));
+    $this->c2      = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($this->c2)));
+    $this->c3      = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($this->c3)));
+    $this->c4      = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($this->c4)));
+    $this->correct = mysqli_real_escape_string($this->conn, htmlspecialchars(strip_tags($this->correct)));
 
     $updateSuccess = True;
 
