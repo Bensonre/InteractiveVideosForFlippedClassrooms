@@ -14,7 +14,7 @@
         $res = $controller->getPackageWithVideo($packageId);
 
         if (empty($res['Path'])) { 
-            echo "INVALID PACKAGE ID"; 
+            echo "Invalid package id OR the video associated with this package was deleted."; 
         } else {
             // Create package info
             $packageInfo = array("path" => $res['Path'], "isYouTube" => $res['IsYouTube'], "title" => $res['Title']);
