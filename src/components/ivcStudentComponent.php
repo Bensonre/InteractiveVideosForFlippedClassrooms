@@ -1,6 +1,6 @@
 <?php
     include_once '../database/Database.php';
-    include_once '../controllers/PackagesController.php';
+    include_once '../controllers/PackageController.php';
     include_once '../controllers/AnswerController.php';
     include_once '../session_variables/session_variables.php';
     $database = new Database();
@@ -14,7 +14,7 @@
         $res = $controller->getPackageWithVideo($packageId);
 
         if (empty($res['Path'])) { 
-            echo "INVALID PACKAGE ID"; 
+            echo "Invalid package id or the video associated with this package was deleted."; 
         } else {
             // Create package info
             $packageInfo = array("path" => $res['Path'], "isYouTube" => $res['IsYouTube'], "title" => $res['Title']);

@@ -1,6 +1,6 @@
 <?php
     include_once '../../database/Database.php';
-    include_once '../../controllers/VideoQuestionsController.php';
+    include_once '../../controllers/CombineController.php';
     include_once '../../session_variables/session_variables.php';
 
     header("Access-Control-Allow-Origin: *");
@@ -14,7 +14,7 @@
     $database = new Database();
     $db = $database->connect();
 
-    $controller = new VideoQuestionsController($db);
+    $controller = new CombineController($db);
     $result = $controller->getQuestionsInPackage($packageID, $ivcInstructorId);
 
     $list = array();

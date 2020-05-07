@@ -96,6 +96,14 @@ function fillVideos(videos) {
         element2.appendChild(option2);
     }
 
+    // Create an unset video option on the update tab in case the package has no video.
+    const unsetNode = document.createElement("option");
+    unsetNode.value = -1;
+    unsetNode.innerText = "<unset>";
+    unsetNode.setAttribute("video-path", "");
+    unsetNode.setAttribute("isyoutube", 0);
+    element2.appendChild(unsetNode);
+
     if (!ivcCreateTabInitialized) {
         initializeCreateTab();
     }
@@ -413,7 +421,17 @@ function updateUpdateTabPackage(){
     let packageSelection = document.getElementById("update-package-selection");
     let videoSelection = document.getElementById("update-package-select-video");
     packageTitle.value = packageSelection.options[packageSelection.selectedIndex].text;
-    videoSelection.selectedIndex = Array.from(videoSelection.options).find(x=> x.value == packageSelection.options[packageSelection.selectedIndex].getAttribute('video-id')).index;
+
+    let search = Array.from(videoSelection.options).find(x=> x.value == packageSelection.options[packageSelection.selectedIndex].getAttribute('video-id'));
+
+    // If the video doesn't exist, use the unset video option.
+    let index = -1;
+    if (search != null) {
+        videoSelection.selectedIndex = search.index;
+    } else {
+        videoSelection.selectedIndex = Array.from(videoSelection.options).find(x => x.value == -1).index; // The unset video option.
+    }
+
     updateUpdateTabVideo();
 }
 

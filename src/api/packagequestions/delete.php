@@ -1,7 +1,7 @@
 <?php
 
 include_once '../../database/Database.php';
-include_once '../../controllers/VideoQuestionsController.php';
+include_once '../../controllers/CombineController.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -16,9 +16,9 @@ $id = $_POST['id'];
 $database = new Database();
 $db = $database->connect();
 
-$videoQuestionsController = new VideoQuestionsController($db);
+$CombineController = new CombineController($db);
 
-if ($videoQuestionsController->delete($id)) {
+if ($CombineController->delete($id)) {
     $databaseEntryDeleted = true;
 }
 

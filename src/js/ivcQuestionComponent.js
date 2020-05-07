@@ -156,9 +156,6 @@ function deleteQuestion() {
             let deleteOption = document.querySelector("#ivc-question-select-delete option[value='" + questionIndex + "']");
             updateOption.remove();
             deleteOption.remove();
-
-            // Remove question from global array.
-            ivcQuestionComponentQuestions.splice(questionIndex, 1);
         }
     };
     const postURL = `${ivcPathToSrc}api/questions/delete.php`;

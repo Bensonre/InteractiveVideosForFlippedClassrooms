@@ -143,9 +143,6 @@ function deleteVideo() {
             let deleteOption = document.querySelector("#ivc-video-select-delete option[value='" + videoIndex + "']");
             updateOption.remove();
             deleteOption.remove();
-
-            // Remove video from global array.
-            ivcVideoComponentVideos.splice(videoIndex, 1);
         }
     };
     const postURL = `${ivcPathToSrc}api/videos/delete.php`;

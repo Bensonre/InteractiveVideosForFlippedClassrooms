@@ -1,8 +1,8 @@
 <?php
 
 include_once '../../database/Database.php';
-include_once '../../controllers/VideoQuestionsController.php';
-include_once '../../controllers/PackagesController.php';
+include_once '../../controllers/CombineController.php';
+include_once '../../controllers/PackageController.php';
 include_once '../../session_variables/session_variables.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -21,12 +21,12 @@ $timestamp = $data->timestamp;
 $database = new Database();
 $db = $database->connect();
 
-$videoQuestionsController = new VideoQuestionsController($db);
+$CombineController = new CombineController($db);
 $packageController = new PackageController($db);
 
 $videoID = $packageController->getVideoIdOfPackage($packageID);
 
-if ($videoQuestionsController->create($videoID, $questionID, $packageID, $ivcInstructorId, $timestamp)) {
+if ($CombineController->create($videoID, $questionID, $packageID, $ivcInstructorId, $timestamp)) {
     $databaseEntryCreated = true;
 }
 
