@@ -17,7 +17,7 @@
     /*
      * Determine if a video file or unlisted YouTube link was provided and act accordingly.
      */
-    if ($_POST['link']) {
+    if (!empty($_POST['link'])) {
         // Create the database entry.
         if ($controller->createURL($ivcInstructorId, $_POST['title'], $_POST['link'])) {
             $response["success"] = 1;
