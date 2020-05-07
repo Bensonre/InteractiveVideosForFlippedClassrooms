@@ -1,5 +1,5 @@
 <?php
-class VideoQuestionsController {
+class CombineController {
 
     private $conn;
     private $table = 'package_questions';

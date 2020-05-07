@@ -1,7 +1,7 @@
 <?php
 
 include_once '../../database/Database.php';
-include_once '../../controllers/VideoQuestionsController.php';
+include_once '../../controllers/CombineController.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -17,9 +17,9 @@ $timestamp = $_POST['timestamp'];
 $database = new Database();
 $db = $database->connect();
 
-$videoQuestionsController = new VideoQuestionsController($db);
+$CombineController = new CombineController($db);
 
-if ($videoQuestionsController->update($id, $timestamp)) {
+if ($CombineController->update($id, $timestamp)) {
     $databaseEntryUpdated = true;
 }
 

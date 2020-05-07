@@ -1,7 +1,7 @@
 <?php
     include_once '../../database/Database.php';
     include_once '../../controllers/PackagesController.php';
-    include_once '../../controllers/VideoQuestionsController.php';
+    include_once '../../controllers/CombineController.php';
     include_once '../../session_variables/session_variables.php';
 
     header("Access-Control-Allow-Origin: *");
@@ -48,7 +48,7 @@
                 $row = mysqli_fetch_assoc($newPackageId);
                 $newPackageId = $row['ID'];
            
-                $VQcontroller = new VideoQuestionsController($db);
+                $VQcontroller = new CombineController($db);
                 $QuestionResult = $VQcontroller->getQuestionsInPackage($oldPackageId, $ivcInstructorId);
                 $QuestionResult->bind_result($questionID, $text, $timestamp);
                 $list = array();
