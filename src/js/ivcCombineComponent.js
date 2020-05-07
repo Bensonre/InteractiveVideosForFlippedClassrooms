@@ -59,7 +59,7 @@ function getPackages() {
             fillPackages(obj);
         }
     };
-    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php`;
+    const getURL = `${ivcPathToSrc}api/packages/read-all-with-instructor-id.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -196,7 +196,7 @@ function getVideo() {
             player.play();
         }
     };
-    const getURL = `${ivcPathToSrc}api/Packages/get-package-video.php?id=${packageID}`;
+    const getURL = `${ivcPathToSrc}api/packages/get-package-video.php?id=${packageID}`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();

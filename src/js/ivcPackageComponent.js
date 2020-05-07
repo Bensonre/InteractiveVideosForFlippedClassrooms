@@ -62,7 +62,7 @@ function getPackages() {
             fillPackages(packages);
         }
     };
-    const getURL = `${ivcPathToSrc}api/Packages/read-all-with-instructor-id.php`;
+    const getURL = `${ivcPathToSrc}api/packages/read-all-with-instructor-id.php`;
     xhttp.open("GET", getURL, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send();
@@ -245,7 +245,7 @@ function createPackage() {
             getPackages();
         }
     };
-    const postURL = `${ivcPathToSrc}api/Packages/create.php`;
+    const postURL = `${ivcPathToSrc}api/packages/create.php`;
     xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(data));
@@ -295,7 +295,7 @@ function updatePackage() {
             }
         }
     };
-    const postURL = `${ivcPathToSrc}api/Packages/Update.php`;
+    const postURL = `${ivcPathToSrc}api/packages/Update.php`;
     xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(data));
@@ -328,7 +328,7 @@ function duplicatePackage(){
             }
         }
     };
-    const postURL = `${ivcPathToSrc}api/Packages/Duplicate.php`;
+    const postURL = `${ivcPathToSrc}api/packages/Duplicate.php`;
     xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(data));
@@ -375,7 +375,7 @@ function deletePackage() {
             deleteOption.remove();
         }
     };
-    const postURL = `${ivcPathToSrc}api/Packages/Delete.php`;
+    const postURL = `${ivcPathToSrc}api/packages/Delete.php`;
     xhttp.open("POST", postURL, false);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data=" + JSON.stringify(data));
