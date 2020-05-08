@@ -533,7 +533,7 @@ function fillFilteredQuestions() {
     for (let i = 0; i < questions.length; i++) {
         if (questions[i].category == currentFilter || currentFilter == "All") {
             let option = document.createElement("option");
-            option.value = i;
+            option.value = questions[i].questionId;
             let text = document.createTextNode(questions[i].questionText);
             option.appendChild(text);
             questionSelectionBox.appendChild(option);
