@@ -338,6 +338,21 @@ function tableRowUpdate(button) {
         newNode.setAttribute("time-value", newTimestamp);
         let id = row.getAttribute("data-value");
 
+        if (newTimestamp < 0 || newTimestamp > mainVideo.duration()) {
+            if (newTimestamp < 0) {
+                alert("Invalid timestamp!");
+            } else {
+                alert("The video isn't that long.");
+            }
+            
+            newNode.innerText = oldTimestamp;
+            button.parentNode.replaceChild(newNode, timestampElement);
+            button.classList.remove("btn-primary");
+            button.classList.add("btn-warning");
+            button.innerText = "Update";
+            return;
+        }
+
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -356,7 +371,7 @@ function tableRowUpdate(button) {
             }
         };
         const postURL = `${ivcPathToSrc}api/packagequestions/update.php`;
-        xhttp.open("POST", postURL, false);
+        xhttp.open("POST", postURL, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("id=" + id + "&timestamp=" + newTimestamp);
     }
