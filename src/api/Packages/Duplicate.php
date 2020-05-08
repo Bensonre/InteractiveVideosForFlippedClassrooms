@@ -60,6 +60,7 @@
                     array_push($Questions,array("questionID" => $questionID, "text" => $text ,"timestamp" => $timestamp));
                 }
                 for($i = 0; $i< count($Questions); $i++) {
+                    
                     $value =$PackageQuestionController->create($videoID, $Questions[$i]["questionID"], $newPackageId, $ivcInstructorId, $Questions[$i]["timestamp"]);
                     if(!$value){
                         $success = 0;
