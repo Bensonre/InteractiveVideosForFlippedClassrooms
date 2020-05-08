@@ -14,10 +14,13 @@
     $data = json_decode($_POST["data"]);
     $oldPackageId = $data->oldPackageId;
     $newTitle = $data->newTitle;
-    $response = (array("success" => 0, "message" => "Server Error"));
+    $response = array("success" => 0, "message" => "Server Error");
     $databasePackageEntryCreated = false;
     $databaseQuestionEntryCreated = false;
     $GotOldPackage = false;
+    $numQuestion = 0;
+    $success =0;
+    $message = "Server Error";
     
 
     if($oldPackageId == NULL || $newTitle == NULL || $ivcInstructorId== NULL){
@@ -30,7 +33,6 @@
 
         //get video ID of old package for new package creation
         $videoID = $controller->getVideoIdOfPackage($oldPackageId);
-        //$videoID = $stmt->get_result();
         //if failed report failure
         if($videoID == null){
             echo json_encode(array("success" => 0, "message" => "The package video was not found."));
@@ -48,36 +50,36 @@
                 $row = mysqli_fetch_assoc($newPackageId);
                 $newPackageId = $row['ID'];
            
-                $VQcontroller = new CombineController($db);
-                $QuestionResult = $VQcontroller->getQuestionsInPackage($oldPackageId, $ivcInstructorId);
+                $PackageQuestionController = new CombineController($db);
+                $QuestionResult = $PackageQuestionController->getQuestionsInPackage($oldPackageId, $ivcInstructorId);
                 $QuestionResult->bind_result($questionID, $text, $timestamp);
-                $list = array();
+                $databaseQuestionEntryCreated = true;
+                $Questions = array();
+                //grab each questions
                 while($QuestionResult->fetch()) {
-                    $obj = array("ID" => $questionID, "QuestionText" => $text, "timestamp" => $timestamp);
-                    array_push($list, $obj);   
+                    array_push($Questions,array("questionID" => $questionID, "text" => $text ,"timestamp" => $timestamp));
                 }
-                foreach($list as $value){
-                    if ($VQcontroller->create($videoID, $value["ID"], $newPackageId, $ivcInstructorId, $value["timestamp"])) {
-                        $databaseQuestionEntryCreated = true;
-                    }
-                    else{
+                for($i = 0; $i< count($Questions); $i++) {
+                    $value =$PackageQuestionController->create($videoID, $Questions[$i]["questionID"], $newPackageId, $ivcInstructorId, $Questions[$i]["timestamp"]);
+                    if(!$value){
+                        $success = 0;
+                        $message = "The package was duplicated, but There was an error added 1 more questions. Error occured \n Attmepted to add Question to package $newPackageId, with instructor id $ivcInstructorId.";
                         $databaseQuestionEntryCreated = false;
-                    break;
+                        break;
                     }
                 }
-                    if(!$databaseQuestionEntryCreated){
-                        $response = (array("success" => 0, "message" => "The package was created, but there was an error adding questions to it."));
-                    }
-                }
-                else{
-                    $response = array("success" => 0, "message" => "The package was created, but the questions failed to be added.");
-                }
+                unset($Question);
             
-            if($databasePackageEntryCreated && $databaseQuestionEntryCreated) {
-                $response['success'] = 1;
-                $response['message'] = "The package was successfully Duplicated.";
+                if($databasePackageEntryCreated && $databaseQuestionEntryCreated) {
+                    $success = 1;
+                    $message= "The package was successfully Duplicated.";
+                }
             }
-            echo json_encode($response);
+            else{
+                $message = " no questions founds";
+                $success = 0;
+            }
+            echo json_encode(array("success" => $success, "message" => $message));
         }
     }
 ?>

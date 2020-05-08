@@ -3,10 +3,11 @@
 class PackageController {
 
     private $conn;
-    private $PrimaryTable = 'package_questions';
+    private $PackageQuestionsTable = 'package_questions';
     private $QuestionsTable = 'questions';
     private $PackageTable = 'packages';
     private $VideoTable = 'videos';
+    private $ChoicesTable = 'choices';
     private $Date = null;
     private $Title = null;
     
@@ -57,6 +58,7 @@ class PackageController {
             $stmt->bind_param("sii", $title, $videoId, $instructorId);
             return $stmt->execute();
         }
+        return false;
     }
 
     public function update($id, $title, $instructorId, $videoId){
@@ -138,13 +140,13 @@ class PackageController {
         inner join choices As c on package_questions.QuestionID = c.QuestionID
         where PackageID = ?
         ORDER BY package_questions.QuestionID, ChoiceOrder ASC;"; */
-        $query = "Select FilePath, IsYouTube, p.Title, PackageID, package_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from package_questions 
-        Join packages As p on package_questions.PackageID = p.ID
-        Join videos on p.VideoID = videos.ID
-        Join questions on package_questions.QuestionID = Questions.ID
-        inner join choices As c on package_questions.QuestionID = c.QuestionID
+        $query = "Select FilePath, IsYouTube, p.Title, PackageID, $this->PackageQuestionsTable.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from $this->PackageQuestionsTable 
+        Join $this->PackageTable As p on $this->PackageQuestionsTable.PackageID = p.ID
+        Join $this->VideoTable on p.VideoID = $this->VideoTable.ID
+        Join $this->QuestionsTable on $this->PackageQuestionsTable.QuestionID = Questions.ID
+        inner join $this->ChoicesTable As c on $this->PackageQuestionsTable.QuestionID = c.QuestionID
         where PackageID = ?
-        ORDER BY package_questions.QuestionID, ChoiceOrder ASC;";
+        ORDER BY $this->PackageQuestionsTable.QuestionID, ChoiceOrder ASC;";
         $stmt = $this->conn->prepare($query);
         if($stmt == false){
             $error = $this->conn->errno . ' ' . $this->conn->error;
@@ -204,12 +206,12 @@ class PackageController {
 
     public function getPackages()
     {
-        $query = "Select FilePath, p.Title, PackageID, package_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from package_questions 
-		Join videos on package_questions.VideoID = videos.ID
-        Join packages As p on package_questions.PackageID = p.ID
-        Join questions on package_questions.QuestionID = Questions.ID
-        inner join choices As c on package_questions.QuestionID = c.QuestionID
-        ORDER BY PackageID,package_questions.QuestionID, ChoiceOrder ASC;";
+        $query = "Select FilePath, p.Title, PackageID, package_questions.QuestionID, QuestionTimeStamp, QuestionText, c.id As ChoiceID, ChoiceText, ChoiceOrder, correct from $this->PackageQuestionsTable 
+		Join $this->VideosTable on $this->PackageQuestionsTable.VideoID = videos.ID
+        Join $this->PackageTable As p on $this->PackageQuestionsTable.PackageID = p.ID
+        Join $this->QuestionTable on $this->PackageQuestionsTable.QuestionID = Questions.ID
+        inner join $this->ChoicesTable As c on $this->PackageQuestionsTable.QuestionID = c.QuestionID
+        ORDER BY PackageID,$this->PackageQuestionsTable.QuestionID, ChoiceOrder ASC;";
         $stmt = $this->conn->prepare($query);
         if($stmt == false){
             $error = $this->conn->errno . ' ' . $this->conn->error;

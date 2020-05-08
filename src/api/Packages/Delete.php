@@ -19,12 +19,12 @@
     $controller = new PackageController($db);
 
     if ($controller->delete($packageId)) {
-        $databaseEntryCreated = true;
+        $databaseEntryDeleted = true;
     }
 
     $response = array("success" => 0, "message" => "The package was not successfully deleted.");
 
-    if($databaseEntryCreated == true) {
+    if($databaseEntryDeleted == true) {
         $response['success'] = 1;
         $response['message'] = "The package was successfully deleted.";
     }

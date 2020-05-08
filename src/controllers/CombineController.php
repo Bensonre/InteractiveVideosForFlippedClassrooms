@@ -25,7 +25,9 @@ class CombineController {
         } else {
             //$stmt->bind_param("iiiid", $videoID, $questionID, $packageID, $instructorID, $timestamp);
             $stmt->bind_param("iiid", $questionID, $packageID, $instructorID, $timestamp);
-            return $stmt->execute();
+            if($stmt->execute() && $this->conn->affected_rows > 0){
+                return $this->conn->affected_rows;
+            }
         }
         return false;
     }
@@ -63,7 +65,7 @@ class CombineController {
         $packageID = htmlspecialchars(strip_tags($packageID));
         $instructorID = htmlspecialchars(strip_tags($instructorID));
 
-        $query = "SELECT a.ID, b.QuestionText, a.QuestionTimeStamp FROM $this->table a, $this->questionTable b WHERE `PackageID` = ? AND a.InstructorID = ? AND b.ID = a.QuestionID";
+        $query = "SELECT b.ID, b.QuestionText, a.QuestionTimeStamp FROM $this->table a, $this->questionTable b WHERE `PackageID` = ? AND a.InstructorID = ? AND b.ID = a.QuestionID";
         $stmt = $this->conn->prepare($query);
         if ($stmt == false) {
             $error = $this->conn->errno . ' ' . $this->conn->error;
