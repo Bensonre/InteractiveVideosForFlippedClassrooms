@@ -52,7 +52,7 @@ When the Application has started running sucessfully the red dot next to Apache 
 Navigate to localhost/InteractiveVideosForFlippedClassrooms/src
  
 ## UserCase:
-###1)Professor
+### 1)Professor
 You will be acting as a professor creating a Package or a video enchanced with interactive questions.
 1) Click instructor
 2)Navigate to the upload video page via the instructor drop down menu and upload a video from your home computer or provide a youtube url.
@@ -60,7 +60,7 @@ You will be acting as a professor creating a Package or a video enchanced with i
 4)Navigate to the Create Questions page via the instructor drop down menu and create one or more questions.
 5)Navigate to the Add Questions to Package page and Select the package you created and add the Question(s) you made to it at any time stamp you would like.
 
-###2) Student
+### 2) Student
       You will now act as a student viewing the package you created as a professor.
       1) Click Sudent
       2) Click on Browse Packages
