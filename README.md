@@ -21,6 +21,7 @@ http://web.engr.oregonstate.edu/~orourtim/Capstone/src/demo/Student.php?id=1   (
 http://web.engr.oregonstate.edu/~bensonre/Capstone/src/demo/UploadVideo.php 
 
 ### Option 2) Clone repository and run php project in xampp.
+#### Windows
 Here is a link to an article showing how to download and run a project in xampp: https://timetoprogram.com/run-php-project-xampp/
 
 Clone the repsitory into C:\xampp\htdocs\InteractiveVideosForFlippedClassrooms.
@@ -32,6 +33,22 @@ In the apache row click start.
 Navigate to Localhost/InteractiveVideosForFlippedClassrooms/src/demo
 
           
-          
+#### Mac
+Download Xampp here https://www.apachefriends.org/download.html. Choose the latest version for Mac.
+
+Once The dmg file is downloaded run it and install XAMPP in the Application folder. 
+If you have installed it else where move it to the application folder upon completion.
+
+Clone our repository into /Applications/XAMPP/htdocs.
+
+Start the Manager-osx application found in /Applications/XAMPP.
+
+Click on the Manage Servers tab.
+
+Once in the Manage Servers tab, click on Apache Web Server. Then on the right side of the Application click Start.
+
+When the Application has started running sucessfully the red dot next to Apache Web Server will become green. 
+
+Navigate to localhost/InteractiveVideosForFlippedClassrooms/src
  
 
