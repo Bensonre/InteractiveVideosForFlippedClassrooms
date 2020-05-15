@@ -118,7 +118,10 @@ function initializeStudentPlayer(packageInfo, overlays) {
 function questionAnswered(button) {
     button.disabled = true;
     const form = button.parentNode;
-    form.querySelector('input[type=radio]:checked').setAttribute('checked', true);
+    let radio = form.querySelector('input[type=radio]:checked');
+    if (radio) {
+        radio.setAttribute('checked', true); // Required to keep the selection checked so the user can see their choice
+    }
     const selection = form.querySelector('input[type=radio]:checked');
     if (selection) {
         const questionId = Number(form.querySelector('#questionId').getAttribute('data-value'));
