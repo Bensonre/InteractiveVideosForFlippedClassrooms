@@ -30,7 +30,7 @@ Start Xampp Control Panel
 
 In the apache row click start.
 
-Navigate to Localhost/InteractiveVideosForFlippedClassrooms/src/demo
+Navigate to Localhost/InteractiveVideosForFlippedClassrooms/src/
 
           
 #### Mac
@@ -51,4 +51,21 @@ When the Application has started running sucessfully the red dot next to Apache 
 
 Navigate to localhost/InteractiveVideosForFlippedClassrooms/src
  
+## UserCase:
+###1)Professor
+You will be acting as a professor creating a Package or a video enchanced with interactive questions.
+1) Click instructor
+2)Navigate to the upload video page via the instructor drop down menu and upload a video from your home computer or provide a youtube url.
+3)Navigate to the Create Package page via the instructor drop down menu and select the vido you uplaoded along with a new title.
+4)Navigate to the Create Questions page via the instructor drop down menu and create one or more questions.
+5)Navigate to the Add Questions to Package page and Select the package you created and add the Question(s) you made to it at any time stamp you would like.
 
+###2) Student
+      You will now act as a student viewing the package you created as a professor.
+      1) Click Sudent
+      2) Click on Browse Packages
+      3) Select the package you created above.
+      4) Play the video and wait for the question you created to appear.
+      5) The video should pause and your question should appear. Before Answering try to navigate past the question in the video. It should move the timeline back to where the question is so you can not skip it. 
+      6) Answer the Question.
+      7)The video should play again, rewind the video to the point in the time line where the question appeared. You should see it pop up with no option to submit and it shouldn't pause the video.
